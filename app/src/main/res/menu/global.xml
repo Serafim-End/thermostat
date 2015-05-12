@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/setup_dayNight"
+        android:title="@string/setup_day_night"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+    
+    <item android:id="@+id/online_help"
+        android:title="@string/online_help"
+        android:showAsAction="never" />
+    
+</menu>

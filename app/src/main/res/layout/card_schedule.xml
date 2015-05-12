@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@drawable/day_icon"
+        android:id="@+id/dayNight_icon" />
+    
+
+    <TextView
+        android:paddingTop="8dp"
+        android:paddingLeft="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:textColor="@color/black"
+        android:text="Cooling to 19 degrees"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/dayNight_icon"
+        android:id="@+id/temperature_textView" />
+    
+    <TextView
+        android:layout_below="@+id/temperature_textView"
+        android:paddingLeft="16dp"
+        android:id="@+id/time_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:text="7:30 - 8:30 AM"
+        android:layout_alignBottom="@+id/dayNight_icon"
+        android:layout_toEndOf="@+id/dayNight_icon" />
+
+
+    <ImageButton
+        android:id="@+id/more_button"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/more_icon"/>
+
+</RelativeLayout>

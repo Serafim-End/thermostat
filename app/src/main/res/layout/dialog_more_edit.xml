@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp"
+        android:layout_height="wrap_content">
+        
+        <ImageView
+            android:id="@+id/more_edit_clock_imageView"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/more_edit_clock_icon"/>
+        
+
+        <TextView
+            android:id="@+id/more_edit_startTime_textView"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start time"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/more_edit_clock_imageView" />
+
+        <TextView
+            android:id="@+id/more_edit_start_interval_textView"
+            android:layout_below="@+id/more_edit_startTime_textView"
+            android:layout_width="144dp"
+            android:layout_height="wrap_content"
+            android:text="Start time interval"
+            android:textSize="14dp"
+            android:layout_centerVertical="true"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_marginRight="8dp"
+            android:layout_toEndOf="@+id/more_edit_clock_imageView" />
+        
+        <TextView
+            android:id="@+id/start_time_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="8:30 AM"
+            android:textSize="24dp"
+            android:textColor="@color/black"
+            android:layout_alignTop="@+id/more_edit_startTime_textView"
+            android:layout_toEndOf="@+id/more_edit_start_interval_textView" />
+        
+        </RelativeLayout>
+
+    <RelativeLayout
+        android:paddingTop="8dp"
+        android:paddingBottom="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/more_edit_clock_imageView2"
+            android:layout_width="32dp"
+            android:layout_height="32dp"/>
+
+
+        <TextView
+            android:id="@+id/more_edit_startTime_textView2"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="End time"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/more_edit_clock_imageView2" />
+
+        <TextView
+            android:id="@+id/more_edit_start_interval_textView2"
+            android:layout_below="@+id/more_edit_startTime_textView2"
+            android:layout_width="144dp"
+            android:layout_height="wrap_content"
+            android:text="End time interval"
+            android:textSize="14dp"
+            android:layout_centerVertical="true"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_marginRight="8dp"
+            android:layout_toEndOf="@+id/more_edit_clock_imageView2" />
+
+        <TextView
+            android:id="@+id/end_time_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="9:30 AM"
+            android:textSize="24dp"
+            android:textColor="@color/black"
+            android:layout_toEndOf="@+id/more_edit_start_interval_textView2"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/settings_facebook_page"
+        android:background="#CCC" />
+    
+    <RelativeLayout
+        android:paddingTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp" 
+            android:background="@drawable/more_edit_day_mode"
+            android:id="@+id/more_edit_day_mode_imageView" />
+
+        <TextView
+            android:id="@+id/more_edit_temperature_textView"
+            android:layout_width="144dp"
+            android:layout_height="wrap_content"
+            android:text="Temperature"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_marginRight="24dp"
+            android:layout_alignTop="@+id/more_edit_day_mode_imageView"
+            android:layout_toEndOf="@+id/more_edit_day_mode_imageView" />
+
+        <TextView
+            android:id="@+id/more_edit_day_mode_textView"
+            android:layout_width="144dp"
+            android:layout_height="wrap_content"
+            android:text="day / night mode"
+            android:textSize="16dp"
+            android:paddingLeft="16dp"
+            android:layout_marginRight="24dp"
+            android:layout_below="@+id/more_edit_temperature_textView"
+            android:layout_toEndOf="@+id/more_edit_day_mode_imageView" />
+        
+        <Switch
+            android:id="@+id/dayNight_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignBottom="@+id/more_edit_day_mode_imageView"
+            android:layout_toEndOf="@+id/more_edit_temperature_textView" />
+        
+        </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="right"
+        android:gravity="right"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/more_edit_dismiss_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:background="@color/light_gray"
+            android:textColor="@color/black"
+            android:layout_gravity="right" />
+        
+        </LinearLayout>
+
+</LinearLayout>

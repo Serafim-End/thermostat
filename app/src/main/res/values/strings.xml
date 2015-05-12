@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Thermostat</string>
+
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example">Example action</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="more_edit_title">Edit interval</string>
+    <string name="title_activity_schedule">ScheduleActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="sunday">Sunday</string>
+    <string name="saturday">Saturday</string>
+    <string name="setup_day_night">Setup day and night</string>
+    <string name="online_help">Online help</string>
+
+</resources>
