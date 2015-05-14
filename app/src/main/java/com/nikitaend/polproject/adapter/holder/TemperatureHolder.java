@@ -1,6 +1,11 @@
 package com.nikitaend.polproject.adapter.holder;
 
 /**
+ * 
+ * holder for card list with temperatures
+ * activity - ScheduleActivity
+ * adapter - TemperatureAdapter
+ * xml screen  - card_schedule
  * @author Endaltsev Nikita
  *         start at 11.05.15.
  */

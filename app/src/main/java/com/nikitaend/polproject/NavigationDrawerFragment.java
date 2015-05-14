@@ -28,6 +28,7 @@ import com.nikitaend.polproject.adapter.holder.CurtainHolder;
 import java.util.ArrayList;
 
 /**
+ * left curtain customizing
  * Fragment used for managing interactions for and presentation of a navigation drawer.
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.

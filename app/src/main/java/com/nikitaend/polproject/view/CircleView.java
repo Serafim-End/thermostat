@@ -13,6 +13,9 @@ import android.view.View;
 
 import com.nikitaend.polproject.R;
 
+/**
+ * All views for customizing style element on the screen
+ */
 public class CircleView extends View {
 
     private static int DEFAULT_TITLE_COLOR = Color.CYAN;

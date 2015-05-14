@@ -14,6 +14,8 @@ import com.nikitaend.polproject.R;
 import java.util.ArrayList;
 
 /**
+ * adapter contains information about customizing every element in list
+ * every element of CurtainHolder type  and card_curtain card screen
  * @author Endaltsev Nikita
  *         start at 12.05.15.
  */

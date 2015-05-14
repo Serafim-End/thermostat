@@ -16,6 +16,10 @@ import com.nikitaend.polproject.activity.ScheduleActivity;
 import com.nikitaend.polproject.adapter.holder.TemperatureHolder;
 
 /**
+ * 
+ * i have made two same edit dialogs one for adding and editing and next
+ * for schedule which called from more_dialog
+ * these for  dialog_more_edit
  * @author Endaltsev Nikita
  *         start at 11.05.15.
  */

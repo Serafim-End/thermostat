@@ -13,6 +13,7 @@ import com.nikitaend.polproject.activity.MainActivity;
 import com.nikitaend.polproject.activity.ScheduleActivity;
 
 /**
+ * dialog which called from more dialog
  * @author Endaltsev Nikita
  *         start at 09.05.15.
  */

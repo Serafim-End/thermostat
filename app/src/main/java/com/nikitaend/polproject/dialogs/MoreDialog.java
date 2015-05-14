@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import com.nikitaend.polproject.R;
 
 /**
+ * when we press more button on schedule card
  * @author Endaltsev Nikita
  *         start at 09.05.15.
  */

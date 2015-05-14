@@ -16,6 +16,9 @@ import com.nikitaend.polproject.view.CircleView;
 import com.nikitaend.polproject.view.VerticalSeekBar;
 
 /**
+ * 
+ * it is editing on main screen with seek bar and clocks
+ * implementation of interface - put info to MainActivity
  * @author Endaltsev Nikita
  *         start at 09.05.15.
  */

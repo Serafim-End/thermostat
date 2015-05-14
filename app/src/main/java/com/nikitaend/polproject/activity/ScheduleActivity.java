@@ -19,7 +19,14 @@ import com.nikitaend.polproject.dialogs.EditDialog;
 import com.nikitaend.polproject.dialogs.TimePickerFragment;
 import com.nikitaend.polproject.view.FloatingActionButton;
 
-
+/**
+ * activity with list of cards (temperatures in out schedule)
+ * for every list somewhere exists adapter because of adapter
+ * we can form out cards with temperature customizes 
+ * TimePickerFragment.OnCompleteListener  - it is way to get information from picker
+ * EditDialog.OnCompleteListener - way to get info from edit dialog 
+ * xml screen activity_schedule
+ */
 public class ScheduleActivity extends Activity
         implements EditDialog.OnCompleteListener, TimePickerFragment.OnCompleteListener {
 

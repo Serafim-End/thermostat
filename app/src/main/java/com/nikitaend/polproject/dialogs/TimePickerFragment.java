@@ -10,6 +10,8 @@ import android.widget.TimePicker;
 import java.util.Calendar;
 
 /**
+ * it is time picker dialog to choose time and 
+ * * return changing to MoreDialog and ScheduleActivity
  * @author Endaltsev Nikita
  *         start at 12.05.15.
  */

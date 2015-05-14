@@ -29,7 +29,10 @@ import com.nikitaend.polproject.R;
 
 import java.util.ArrayList;
 
-
+/**
+ * The main activity of the application
+ * the main screen in xml called  activity_main
+ */
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
         EditMainDialog.OnCompleteListener {

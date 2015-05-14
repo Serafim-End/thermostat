@@ -18,6 +18,7 @@ import com.nikitaend.polproject.dialogs.MoreDialog;
 import java.util.ArrayList;
 
 /**
+ * every element of TemperatureHolder type  and card_schedule card screen
  * @author Endaltsev Nikita
  *         start at 11.05.15.
  */

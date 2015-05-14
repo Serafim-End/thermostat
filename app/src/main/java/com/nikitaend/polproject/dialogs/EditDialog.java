@@ -15,6 +15,12 @@ import android.widget.TextView;
 import com.nikitaend.polproject.R;
 
 /**
+ * In our application every dialog type of Fragment and we need fragmentManger to show dialog
+ * also we can exchange information
+ * get information with Bundle in newInstance static method
+ * and post information with OnCompleteListener interface
+ * 
+ * for every dialog i have made xml screen for these  dialog_more_edit
  * @author Endaltsev Nikita
  *         start at 09.05.15.
  */
