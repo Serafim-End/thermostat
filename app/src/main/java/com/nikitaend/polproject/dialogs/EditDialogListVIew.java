@@ -11,7 +11,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.nikitaend.polproject.R;
-import com.nikitaend.polproject.activity.MainActivity;
 import com.nikitaend.polproject.activity.ScheduleActivity;
 import com.nikitaend.polproject.adapter.holder.TemperatureHolder;
 
@@ -26,12 +25,32 @@ import com.nikitaend.polproject.adapter.holder.TemperatureHolder;
 public class EditDialogListVIew  extends DialogFragment {
     
     int indexOfElement;
+    String startTime;
+    String endTime;
+    String dayNight;
+    String title;
 
-    public static EditDialogListVIew newInstance(int index) {
+    public static EditDialogListVIew newInstance(int index, String title) {
         EditDialogListVIew editDialogListVIew = new EditDialogListVIew();
         
         Bundle args = new Bundle();
         args.putInt("index", index);
+        
+        editDialogListVIew.setArguments(args);
+        return editDialogListVIew;
+    }
+    
+    public static EditDialogListVIew newInstance(int indexOfElement, String startTime, 
+                                                 String endTime, String dayNight, String title) {
+        
+        EditDialogListVIew editDialogListVIew = new EditDialogListVIew();
+        
+        Bundle args = new Bundle();
+        args.putString("title", title);
+        args.putInt("index", indexOfElement);
+        args.putString("startTime", startTime);
+        args.putString("endTime", endTime);
+        args.putString("dayNight", dayNight);
         
         editDialogListVIew.setArguments(args);
         return editDialogListVIew;
@@ -42,7 +61,17 @@ public class EditDialogListVIew  extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        indexOfElement = getArguments().getInt("index");
+        Bundle args = getArguments();
+        
+        if (args != null) {
+            indexOfElement = args.getInt("index");
+            title = args.getString("title");
+            try {
+                startTime = args.getString("startTime");
+                endTime = args.getString("endTime");
+                dayNight = args.getString("dayNight");
+            } catch (Exception e) {}
+        }
     }
 
     
@@ -52,31 +81,55 @@ public class EditDialogListVIew  extends DialogFragment {
         getDialog().setTitle("Edit interval");
         View v = inflater.inflate(R.layout.dialog_more_edit, null);
 
+        final TextView endTimeTextView = (TextView) v.findViewById(R.id.end_time_textView);
+        if (endTime != null) { endTimeTextView.setText(endTime);}
+        
+        final Switch dayNightSwitch = (Switch) v.findViewById(R.id.dayNight_switch);
+        if (dayNight != null) {
+            if (dayNight == "PM") {
+                dayNightSwitch.setChecked(true);
+            } else {
+                dayNightSwitch.setChecked(true);
+            }
+        }
+
+
         final TextView startTimeTextView = (TextView) v.findViewById(R.id.start_time_textView);
+        if (startTime != null) { startTimeTextView.setText(startTime); }
         startTimeTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment newFragment =  TimePickerFragment.newInstance(true);
+                dayNight = dayNightSwitch.isChecked() ? "PM" : "AM";
+                startTime = startTimeTextView.getText().toString();
+                endTime = endTimeTextView.getText().toString();
+                DialogFragment newFragment =  
+                        TimePickerFragment.newInstance(true, indexOfElement,
+                                startTime, endTime, dayNight, title);
                 newFragment.show(getFragmentManager(), "timePicker");
+                dismiss();
             }
         });
-        
-        final TextView endTimeTextView = (TextView) v.findViewById(R.id.end_time_textView);
+
         endTimeTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment newFragment = TimePickerFragment.newInstance(false);
+                dayNight = dayNightSwitch.isChecked() ? "PM" : "AM";
+                startTime = startTimeTextView.getText().toString();
+                endTime = endTimeTextView.getText().toString();
+                DialogFragment newFragment = 
+                        TimePickerFragment.newInstance(false, indexOfElement,
+                                startTime, endTime, dayNight, title);
                 newFragment.show(getFragmentManager(), "timePicker");
+                dismiss();
             }
         });
         
-        final Switch dayNightSwitch = (Switch) v.findViewById(R.id.dayNight_switch);
-
         Button okBtn = (Button) v.findViewById(R.id.more_edit_dismiss_button);
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TemperatureHolder holder = MainActivity.temperatureHolderList.get(indexOfElement);
+                TemperatureHolder holder =
+                        ScheduleActivity.temperatureHoldersHash.get(title).get(indexOfElement);
                 
                 holder.startTime = startTimeTextView.getText().toString();
                 holder.endTime = endTimeTextView.getText().toString();
@@ -85,8 +138,8 @@ public class EditDialogListVIew  extends DialogFragment {
                     holder.dayNight = "PM";
                 } else { holder.dayNight = "AM"; }
                 ScheduleActivity.adapterCard.notifyDataSetChanged();
-                
-                MainActivity.temperatureHolderList.set(indexOfElement, holder);
+
+                ScheduleActivity.temperatureHoldersHash.get(title).set(indexOfElement, holder);
                 dismiss();
             }
         });

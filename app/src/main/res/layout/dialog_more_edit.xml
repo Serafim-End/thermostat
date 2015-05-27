@@ -48,9 +48,10 @@
             android:id="@+id/start_time_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingRight="16dp"
             android:gravity="right"
             android:text="8:30 AM"
-            android:textSize="24dp"
+            android:textSize="18dp"
             android:textColor="@color/black"
             android:layout_alignTop="@+id/more_edit_startTime_textView"
             android:layout_toEndOf="@+id/more_edit_start_interval_textView" />
@@ -98,9 +99,10 @@
             android:id="@+id/end_time_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingRight="16dp"
             android:gravity="right"
             android:text="9:30 AM"
-            android:textSize="24dp"
+            android:textSize="18dp"
             android:textColor="@color/black"
             android:layout_toEndOf="@+id/more_edit_start_interval_textView2"/>
 

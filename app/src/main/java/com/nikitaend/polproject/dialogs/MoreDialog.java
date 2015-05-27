@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.nikitaend.polproject.R;
+import com.nikitaend.polproject.activity.ScheduleActivity;
+import com.nikitaend.polproject.adapter.holder.TemperatureHolder;
 
 /**
  * when we press more button on schedule card
@@ -17,12 +19,14 @@ import com.nikitaend.polproject.R;
  */
 public class MoreDialog extends DialogFragment {
     int indexOfElement = -1;
+    String title;
 
-    public static MoreDialog newInstance(int indexOrElement) {
+    public static MoreDialog newInstance(int indexOrElement, String title) {
         MoreDialog moreDialog = new MoreDialog();
         
         Bundle args = new Bundle();
         args.putInt("index", indexOrElement);
+        args.putString("title", title);
         
         moreDialog.setArguments(args);
         return moreDialog;
@@ -32,7 +36,13 @@ public class MoreDialog extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        indexOfElement = getArguments().getInt("index");
+        Bundle args = getArguments();
+        if (args != null) {
+            indexOfElement = args.getInt("index");
+            title = args.getString("title");
+            
+        }
+       
     }
     
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,7 +61,12 @@ public class MoreDialog extends DialogFragment {
         editLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment editDialog = EditDialogListVIew.newInstance(indexOfElement);
+                TemperatureHolder holder =
+                        ScheduleActivity.temperatureHoldersHash.get(title).get(indexOfElement);
+                DialogFragment editDialog =
+                        EditDialogListVIew.newInstance(indexOfElement,
+                                holder.startTime, holder.endTime, holder.dayNight, title);
+                
                 editDialog.show(getFragmentManager(), "dialogEditListView");
                 dismiss();
             }
@@ -61,14 +76,7 @@ public class MoreDialog extends DialogFragment {
         removeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                Fragment prev = getFragmentManager().findFragmentByTag("dialog");
-//                if (prev != null) {
-//                    ft.remove(prev);
-//                }
-//                ft.addToBackStack(null);
-                
-               DialogFragment removeDialog = RemoveDialog.newInstance(indexOfElement);
+               DialogFragment removeDialog = RemoveDialog.newInstance(indexOfElement, title);
                removeDialog.show(getFragmentManager(), "dialogRemove");
                dismiss();
             }

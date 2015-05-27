@@ -18,21 +18,33 @@ import java.util.Calendar;
 public class TimePickerFragment extends DialogFragment 
         implements TimePickerDialog.OnTimeSetListener {
 
+    int indexOfElement;
     boolean startEndTime;
+    String startTime;
+    String endTime;
+    String dayNight;
+    String title;
 
-
-    public static interface OnCompleteListener {
-
-        public abstract void onComplete(boolean startEndTime, String timeHolder);
+    public static interface OnCompleteEditListener {
+        public abstract void onComplete(int indexOfLElement, String startTime, String endTime,
+                                        String dayNight, String title);
+        
     }
-
+    
+    public static interface OnCompleteListener {
+        public abstract void onComplete(boolean startEndTime, String timeHolder);
+        
+    }
+    
+    private OnCompleteEditListener mOnCompleteEditListener;
     private OnCompleteListener mListener;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            this.mListener = (OnCompleteListener)activity;
+            this.mListener = (OnCompleteListener) activity;
+            this.mOnCompleteEditListener = (OnCompleteEditListener) activity;
         }
         catch (final ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement OnCompleteListener");
@@ -54,12 +66,41 @@ public class TimePickerFragment extends DialogFragment
         timePickerFragment.setArguments(args);
         return timePickerFragment;        
     }
+    
+    public static TimePickerFragment newInstance(boolean startEndTime, 
+                                                 int indexOfElement, String startTime,
+                                                 String endTime, String dayNight, String title) {
+        TimePickerFragment timePickerFragment = new TimePickerFragment();
+        Bundle args = new Bundle();
+
+        args.putString("title", title);
+        args.putBoolean("startEndTime", startEndTime);
+        args.putInt("indexOfElement", indexOfElement);
+        args.putString("startTime", startTime);
+        args.putString("endTime", endTime);
+        args.putString("dayNight", dayNight);
+
+        timePickerFragment.setArguments(args);
+        return timePickerFragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        startEndTime = getArguments().getBoolean("startEndTime");
+        Bundle args = getArguments();
+        if (args != null) {
+            try {
+                startEndTime = args.getBoolean("startEndTime");
+            } catch (Exception e) {}
+            try {
+                title = args.getString("title");
+                indexOfElement = args.getInt("indexOfElement");
+                startTime = args.getString("startTime");
+                endTime = args.getString("endTime");
+                dayNight = args.getString("dayNight");
+            } catch (Exception e) {}
+        }
     }
 
     @Override
@@ -82,6 +123,15 @@ public class TimePickerFragment extends DialogFragment
             timeToHolder = hourOfDay + ":" + minute + " AM";
         }
 
-        mListener.onComplete(startEndTime, timeToHolder);
+        if (startEndTime) {
+            startTime = timeToHolder;
+        } else { endTime = timeToHolder; }
+        
+        if (startTime != null && endTime != null) {
+            try {
+                mOnCompleteEditListener.onComplete(indexOfElement, startTime, endTime, dayNight, title);
+            } catch (Exception e) { }
+            
+        } else { mListener.onComplete(startEndTime, timeToHolder); }
     }
 }

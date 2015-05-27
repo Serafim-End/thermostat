@@ -28,7 +28,16 @@ public class EditDialog extends DialogFragment
         implements DialogInterface.OnClickListener {
 
     Context mContext;
+    String title;
     
+    public static EditDialog newInstance(String title) {
+        EditDialog editDialog = new EditDialog();
+        Bundle args = new Bundle();
+        
+        args.putString("title", title);
+        editDialog.setArguments(args);
+        return editDialog;
+    }
     public static interface OnCompleteListener {
         /**
          * @param startTime - start time

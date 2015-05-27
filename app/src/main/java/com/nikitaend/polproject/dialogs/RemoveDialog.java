@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.nikitaend.polproject.R;
-import com.nikitaend.polproject.activity.MainActivity;
 import com.nikitaend.polproject.activity.ScheduleActivity;
 
 /**
@@ -20,12 +19,14 @@ import com.nikitaend.polproject.activity.ScheduleActivity;
 public class RemoveDialog extends DialogFragment {
     
     int indexOfElement = -1;
-
-    static RemoveDialog newInstance(int indexToRemove) {
+    String title;
+    
+    static RemoveDialog newInstance(int indexToRemove, String title) {
         RemoveDialog removeDialog = new RemoveDialog();
         
         Bundle args = new Bundle();
         args.putInt("index", indexToRemove);
+        args.putString("title", title);
         removeDialog.setArguments(args);
         return removeDialog;
     }
@@ -33,7 +34,12 @@ public class RemoveDialog extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        indexOfElement = getArguments().getInt("index");
+        
+        Bundle args = getArguments();
+        if (args != null) {
+            indexOfElement = args.getInt("index");
+            title = args.getString("title");
+        }
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,7 +53,7 @@ public class RemoveDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 try {
-                    MainActivity.temperatureHolderList.remove(indexOfElement);
+                    ScheduleActivity.temperatureHoldersHash.get(title).remove(indexOfElement);
                     ScheduleActivity.adapterCard.notifyDataSetChanged();
                 } catch (Exception e) { }
                 

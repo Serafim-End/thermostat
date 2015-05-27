@@ -4,6 +4,7 @@ package com.nikitaend.polproject;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -22,6 +23,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.nikitaend.polproject.activity.ScheduleActivity;
+import com.nikitaend.polproject.activity.ScheduleDaysActivity;
 import com.nikitaend.polproject.adapter.CurtainAdapter;
 import com.nikitaend.polproject.adapter.holder.CurtainHolder;
 
@@ -74,6 +77,7 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         // Read in the flag indicating whether or not the user has demonstrated awareness of the
         // drawer. See PREF_USER_LEARNED_DRAWER for details.
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -112,18 +116,19 @@ public class NavigationDrawerFragment extends Fragment {
 
         mDrawerListView.addHeaderView(paddingView);
 
-
+        curtainHolders = makeCurtainData();
+        mAdapter = new CurtainAdapter(getActivity(), R.layout.card_curtain, curtainHolders);
 
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), ScheduleActivity.class);
+                intent.putExtra("title", ScheduleDaysActivity.weekDays[position - 1]);
+                startActivity(intent);
                 selectItem(position);
             }
         });
 
-
-        curtainHolders = makeCurtainData();
-        mAdapter = new CurtainAdapter(getActivity(), R.layout.card_curtain, curtainHolders);
         mDrawerListView.setAdapter(mAdapter);
         
         
@@ -304,13 +309,13 @@ public class NavigationDrawerFragment extends Fragment {
     
     public ArrayList<CurtainHolder> makeCurtainData() {
         curtainHolders = new ArrayList<>();
-        curtainHolders.add(new CurtainHolder(R.drawable.monday_icon, R.string.monday));
-        curtainHolders.add(new CurtainHolder(R.drawable.tuesday_icon, R.string.tuesday));
-        curtainHolders.add(new CurtainHolder(R.drawable.wednesday_icon, R.string.wednesday));
-        curtainHolders.add(new CurtainHolder(R.drawable.thursday_icon, R.string.thursday));
-        curtainHolders.add(new CurtainHolder(R.drawable.friday_icon, R.string.friday));
-        curtainHolders.add(new CurtainHolder(R.drawable.saturday_icon, R.string.saturday));
-        curtainHolders.add(new CurtainHolder(R.drawable.sunday_icon, R.string.sunday));
+        curtainHolders.add(new CurtainHolder(R.drawable.monday_icon, getString(R.string.monday)));
+        curtainHolders.add(new CurtainHolder(R.drawable.tuesday_icon, getString(R.string.tuesday)));
+        curtainHolders.add(new CurtainHolder(R.drawable.wednesday_icon, getString(R.string.wednesday)));
+        curtainHolders.add(new CurtainHolder(R.drawable.thursday_icon, getString(R.string.thursday)));
+        curtainHolders.add(new CurtainHolder(R.drawable.friday_icon, getString(R.string.friday)));
+        curtainHolders.add(new CurtainHolder(R.drawable.saturday_icon, getString(R.string.saturday)));
+        curtainHolders.add(new CurtainHolder(R.drawable.sunday_icon, getString(R.string.sunday)));
         
         return curtainHolders;
     }

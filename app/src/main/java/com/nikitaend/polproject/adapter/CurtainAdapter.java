@@ -43,7 +43,7 @@ public class CurtainAdapter extends ArrayAdapter<CurtainHolder> {
         dayImage.setImageDrawable(mContext.getDrawable(item.resourceOfImage));
 
         TextView dayTitle = (TextView) convertView.findViewById(R.id.curtain_day_title);
-        dayTitle.setText(mContext.getString(item.titleOfSection));
+        dayTitle.setText(item.titleOfSection);
         
         return convertView;
     }

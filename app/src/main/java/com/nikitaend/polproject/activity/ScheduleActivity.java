@@ -16,8 +16,12 @@ import com.nikitaend.polproject.R;
 import com.nikitaend.polproject.adapter.TemperatureAdapter;
 import com.nikitaend.polproject.adapter.holder.TemperatureHolder;
 import com.nikitaend.polproject.dialogs.EditDialog;
+import com.nikitaend.polproject.dialogs.EditDialogListVIew;
 import com.nikitaend.polproject.dialogs.TimePickerFragment;
 import com.nikitaend.polproject.view.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * activity with list of cards (temperatures in out schedule)
@@ -28,16 +32,26 @@ import com.nikitaend.polproject.view.FloatingActionButton;
  * xml screen activity_schedule
  */
 public class ScheduleActivity extends Activity
-        implements EditDialog.OnCompleteListener, TimePickerFragment.OnCompleteListener {
+        implements EditDialog.OnCompleteListener, TimePickerFragment.OnCompleteListener,
+        TimePickerFragment.OnCompleteEditListener {
+
+    public static HashMap<String, ArrayList<TemperatureHolder>> temperatureHoldersHash;
+
 
     public static TemperatureAdapter adapterCard;
     DialogFragment editFragment;
+    String title;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_schedule);
+        
+        Bundle args = getIntent().getExtras();
+        if (args != null) {
+            title = args.getString("title");
+        }
 
         FloatingActionButton fabButton = new FloatingActionButton.Builder(this)
                 .withDrawable(getDrawable(R.drawable.plus_icon))
@@ -49,14 +63,14 @@ public class ScheduleActivity extends Activity
         fabButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editFragment = new EditDialog();
+                editFragment = EditDialog.newInstance(title);
                 editFragment.show(getFragmentManager(), "editMainDialog");
             }
         });
         
         ListView cardListView = (ListView) findViewById(R.id.card_schedule_listView);
         adapterCard = new TemperatureAdapter(this, R.layout.card_schedule,
-                MainActivity.temperatureHolderList);
+                ScheduleActivity.temperatureHoldersHash.get(title), title);
         cardListView.setAdapter(adapterCard);
     }
 
@@ -93,8 +107,9 @@ public class ScheduleActivity extends Activity
             dayOrNight = "PM";
         }
 
-        adapterCard.mTemperatureHolderList.add(
-                new TemperatureHolder(startTime, endTime, dayOrNight));
+        TemperatureHolder temperatureHolder = new TemperatureHolder(startTime, endTime, dayOrNight);
+        ScheduleActivity.temperatureHoldersHash.get(title).add(temperatureHolder);
+//        adapterCard.mTemperatureHolderList.add(temperatureHolder);
         adapterCard.notifyDataSetChanged();
     }
 
@@ -123,5 +138,12 @@ public class ScheduleActivity extends Activity
                 endView.setText(timeHolder);
             }
         }
+    }
+
+    @Override
+    public void onComplete(int indexOfElement, String startTime, String endTime, String dayNight, String title) {
+        DialogFragment editDialogListVIew =
+                EditDialogListVIew.newInstance(indexOfElement, startTime, endTime, dayNight, title);
+        editDialogListVIew.show(getFragmentManager(), "editDialog");
     }
 }

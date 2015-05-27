@@ -13,9 +13,9 @@ package com.nikitaend.polproject.adapter.holder;
 public class CurtainHolder {
     
     public int resourceOfImage;
-    public int titleOfSection;
+    public String titleOfSection;
     
-    public CurtainHolder(int resourceOfImage, int titleOfSection) {
+    public CurtainHolder(int resourceOfImage, String titleOfSection) {
         this.resourceOfImage = resourceOfImage;
         this.titleOfSection = titleOfSection;
     }

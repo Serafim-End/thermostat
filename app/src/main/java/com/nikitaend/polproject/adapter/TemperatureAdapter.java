@@ -26,14 +26,16 @@ public class TemperatureAdapter extends ArrayAdapter<TemperatureHolder> {
     
     public ArrayList<TemperatureHolder> mTemperatureHolderList;
     public DialogFragment dialogFragment;
+    String title;
     Context mContext;
     
     public TemperatureAdapter(Context context, int resource,
-                              ArrayList<TemperatureHolder> temperatureHolders) {
+                              ArrayList<TemperatureHolder> temperatureHolders, String title) {
         super(context, R.layout.card_schedule, temperatureHolders);
         
         this.mTemperatureHolderList = temperatureHolders;
         this.mContext = context;
+        this.title = title;
     }
 
     @Override
@@ -55,7 +57,7 @@ public class TemperatureAdapter extends ArrayAdapter<TemperatureHolder> {
             @Override
             public void onClick(View v) {
                 FragmentManager fragmentManager = ((Activity) mContext).getFragmentManager();
-                dialogFragment = MoreDialog.newInstance(position);
+                dialogFragment = MoreDialog.newInstance(position, title);
                 dialogFragment.show(fragmentManager, "editDialogListView");
             }
         });

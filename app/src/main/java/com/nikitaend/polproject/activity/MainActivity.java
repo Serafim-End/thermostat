@@ -20,14 +20,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.nikitaend.polproject.NavigationDrawerFragment;
+import com.nikitaend.polproject.R;
 import com.nikitaend.polproject.adapter.holder.TemperatureHolder;
 import com.nikitaend.polproject.dialogs.EditMainDialog;
 import com.nikitaend.polproject.view.CircleView;
 import com.nikitaend.polproject.view.FloatingActionButton;
-import com.nikitaend.polproject.NavigationDrawerFragment;
-import com.nikitaend.polproject.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * The main activity of the application
@@ -41,7 +42,7 @@ public class MainActivity extends Activity
 
     final Context mContext = this;
 
-    public static ArrayList<TemperatureHolder> temperatureHolderList = new ArrayList<>();
+
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -51,11 +52,19 @@ public class MainActivity extends Activity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+        
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        if (ScheduleActivity.temperatureHoldersHash == null) {
+            ScheduleActivity.temperatureHoldersHash = new HashMap<>();
+            for (String day : ScheduleDaysActivity.weekDays) {
+                ScheduleActivity.temperatureHoldersHash.put(day, new ArrayList<TemperatureHolder>());
+            }
+        }
         
         setContentView(R.layout.activity_main);
 
@@ -99,8 +108,8 @@ public class MainActivity extends Activity
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent weekSchedule = new Intent(mContext, ScheduleActivity.class);
-                        startActivity(weekSchedule);
+                        Intent weekDays = new Intent(mContext, ScheduleDaysActivity.class);
+                        startActivity(weekDays);
                     }
                 });
 
