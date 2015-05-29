@@ -17,6 +17,7 @@ import com.nikitaend.polproject.adapter.TemperatureAdapter;
 import com.nikitaend.polproject.adapter.holder.TemperatureHolder;
 import com.nikitaend.polproject.dialogs.EditDialog;
 import com.nikitaend.polproject.dialogs.EditDialogListVIew;
+import com.nikitaend.polproject.dialogs.SameDialog;
 import com.nikitaend.polproject.dialogs.TimePickerFragment;
 import com.nikitaend.polproject.view.FloatingActionButton;
 
@@ -53,6 +54,9 @@ public class ScheduleActivity extends Activity
             title = args.getString("title");
         }
 
+        if (title != null) {
+            setTitle(title);
+        }
         FloatingActionButton fabButton = new FloatingActionButton.Builder(this)
                 .withDrawable(getDrawable(R.drawable.plus_icon))
                 .withButtonColor(Color.WHITE)
@@ -90,8 +94,9 @@ public class ScheduleActivity extends Activity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.the_same_for_all) {
+            DialogFragment sameDialog = SameDialog.newInstance(title);
+            sameDialog.show(getFragmentManager(), "sameDialog");
         }
 
         return super.onOptionsItemSelected(item);

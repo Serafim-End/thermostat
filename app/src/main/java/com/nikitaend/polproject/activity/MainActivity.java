@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
@@ -141,23 +140,15 @@ public class MainActivity extends Activity
 
     public void restoreActionBar() {
         ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3F51B5")));
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle("Thermostat");
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
             getMenuInflater().inflate(R.menu.menu_main, menu);
-            restoreActionBar();
-            return true;
-        }
-        return super.onCreateOptionsMenu(menu);
+//        }
+        return true;
     }
 
     @Override
@@ -168,8 +159,9 @@ public class MainActivity extends Activity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.day_and_night) {
+            Intent intent = new Intent(this, SettingsActiviy.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

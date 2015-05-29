@@ -1,12 +1,8 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:id="@+id/setup_dayNight"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:compat="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/day_and_night"
         android:title="@string/setup_day_night"
         android:orderInCategory="100"
-        android:showAsAction="never" />
-    
-    <item android:id="@+id/online_help"
-        android:title="@string/online_help"
-        android:showAsAction="never" />
+        compat:showAsAction="ifRoom" />
     
 </menu>

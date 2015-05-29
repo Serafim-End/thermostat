@@ -21,7 +21,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.nikitaend.polproject.activity.ScheduleActivity;
 import com.nikitaend.polproject.activity.ScheduleDaysActivity;
@@ -273,8 +272,8 @@ public class NavigationDrawerFragment extends Fragment {
             return true;
         }
 
-        if (item.getItemId() == R.id.action_example) {
-            Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
+        if (item.getItemId() == R.id.day_and_night) {
+//            Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
             return true;
         }
 
@@ -290,6 +289,7 @@ public class NavigationDrawerFragment extends Fragment {
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setTitle(R.string.app_name);
+        actionBar.show();
     }
 
     private ActionBar getActionBar() {
