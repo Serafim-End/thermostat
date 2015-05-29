@@ -24,13 +24,13 @@ import com.nikitaend.polproject.view.VerticalSeekBar;
  */
 public class EditMainDialog extends DialogFragment implements DialogInterface.OnClickListener {
     
-    private int targetTemperature;
+    private double targetTemperature;
     
-    public static EditMainDialog newInstance(int targetTemperature) {
+    public static EditMainDialog newInstance(double targetTemperature) {
         EditMainDialog editMainDialog = new EditMainDialog();
         
         Bundle args = new Bundle();
-        args.putInt("targetTemperature", targetTemperature);
+        args.putDouble("targetTemperature", targetTemperature);
         editMainDialog.setArguments(args);
         
         return editMainDialog;
@@ -38,7 +38,7 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
 
     public static interface OnCompleteListener {
 
-        public abstract void onComplete(int targetTemperature, Boolean setPermanently);
+        public abstract void onComplete(double targetTemperature, Boolean setPermanently);
     }
 
     private OnCompleteListener mListener;
@@ -57,7 +57,7 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        targetTemperature = getArguments().getInt("targetTemperature");
+        targetTemperature = getArguments().getDouble("targetTemperature");
     }
 
     @Override
@@ -76,12 +76,13 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
         editTarget.setTitleText(targetTemperature + "");
         
         final VerticalSeekBar seekBar = (VerticalSeekBar) v.findViewById(R.id.vertical_Seekbar);
-        seekBar.setProgress((targetTemperature - 5) * 4);
+        seekBar.setMax(25);
+        seekBar.setProgress((int)targetTemperature);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                progress = (progress / 4) + 5;
-                editTarget.setTitleText(progress + "");
+                targetTemperature = progress + 5;
+                editTarget.setTitleText(targetTemperature + "");
             }
 
             @Override
@@ -98,7 +99,8 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onComplete(seekBar.getProgress(), permanently.isEnabled());
+                targetTemperature = seekBar.getProgress() + 5;
+                mListener.onComplete(targetTemperature, permanently.isEnabled());
                 dismiss();
             }
         });

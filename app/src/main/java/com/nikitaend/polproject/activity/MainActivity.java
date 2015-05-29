@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
@@ -17,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.nikitaend.polproject.NavigationDrawerFragment;
@@ -37,11 +39,16 @@ public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
         EditMainDialog.OnCompleteListener {
     
-    int targetTemperature = 25;
+    double targetTemperature = 25;
 
     final Context mContext = this;
 
 
+    // time
+//    TimeZone timeZone = new SimpleTimeZone(3, TimeZone.getAvailableIDs(3)[0]);
+//    Calendar calendar = Calendar.getInstance(timeZone, Locale.getDefault());
+
+    
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -66,9 +73,11 @@ public class MainActivity extends Activity
         }
         
         setContentView(R.layout.activity_main);
+        
+        
 
         final CircleView targetCircle = (CircleView) findViewById(R.id.main_screen_target);
-        targetTemperature = Integer.parseInt(targetCircle.getTitleText());
+        targetTemperature = Double.parseDouble(targetCircle.getTitleText());
         
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -79,13 +88,18 @@ public class MainActivity extends Activity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        FloatingActionButton fabButton = new FloatingActionButton.Builder(this)
-                .withDrawable(getDrawable(R.drawable.edit))
-                .withButtonColor(Color.WHITE)
-                .withGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT)
-                .withMargins(0, 0, 4, -48)
-                .create();
-        
+        View fabButton;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            fabButton = new FloatingActionButton.Builder(this)
+                    .withDrawable(getDrawable(R.drawable.edit))
+                    .withButtonColor(Color.WHITE)
+                    .withGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT)
+                    .withMargins(0, 0, 4, -48)
+                    .create();
+        } else {
+            fabButton = new Button(this);
+            fabButton.bringToFront();
+        }
         
         targetCircle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,9 +182,9 @@ public class MainActivity extends Activity
     }
 
     @Override
-    public void onComplete(int target, Boolean setPermanently) {
+    public void onComplete(double target, Boolean setPermanently) {
         CircleView targetCircle = (CircleView) findViewById(R.id.main_screen_target);
-        targetTemperature = (target / 4) + 5;
+        targetTemperature = target;
         targetCircle.setTitleText(targetTemperature + "");
     }
 
