@@ -79,11 +79,11 @@ public class EditSettingsDialog extends DialogFragment implements DialogInterfac
         editTarget.setTitleText(temperature + "");
 
         final VerticalSeekBar seekBar = (VerticalSeekBar) v.findViewById(R.id.vertical_settings_Seekbar);
-        seekBar.setMax(25);
+        seekBar.setMax(250);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                temperature = progress + 5;
+                temperature = (progress / 10.0) + 5;
                 editTarget.setTitleText(temperature + "");
             }
 
@@ -101,7 +101,7 @@ public class EditSettingsDialog extends DialogFragment implements DialogInterfac
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                temperature = seekBar.getProgress() + 5;
+                temperature = (seekBar.getProgress() / 10.0) + 5;
                 mListener.onComplete(dayNight, temperature);
                 dismiss();
             }

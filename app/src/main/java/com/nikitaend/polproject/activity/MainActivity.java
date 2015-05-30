@@ -73,8 +73,7 @@ public class MainActivity extends Activity
         }
         
         setContentView(R.layout.activity_main);
-        
-        
+
 
         final CircleView targetCircle = (CircleView) findViewById(R.id.main_screen_target);
         targetTemperature = Double.parseDouble(targetCircle.getTitleText());

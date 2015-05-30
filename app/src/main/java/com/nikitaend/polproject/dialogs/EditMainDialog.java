@@ -76,12 +76,12 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
         editTarget.setTitleText(targetTemperature + "");
         
         final VerticalSeekBar seekBar = (VerticalSeekBar) v.findViewById(R.id.vertical_Seekbar);
-        seekBar.setMax(25);
+        seekBar.setMax(250);
         seekBar.setProgress((int)targetTemperature);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                targetTemperature = progress + 5;
+                targetTemperature = (progress / 10.0) + 5;
                 editTarget.setTitleText(targetTemperature + "");
             }
 
@@ -94,18 +94,41 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
 
             }
         });
+
+//        ImageButton minBtn = (ImageButton) v.findViewById(R.id.min_temperature);
+//        minBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                seekBar.setProgress((seekBar.getProgress() - 1));
+//                targetTemperature = (seekBar.getProgress() / 10) + 5;
+//            }
+//        });
+//
+//        ImageButton maxBtn = (ImageButton) v.findViewById(R.id.max_temperature);
+//        maxBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                seekBar.setProgress((seekBar.getProgress() + 1));
+//                targetTemperature = (seekBar.getProgress() / 10) + 5;
+//            }
+//        });
         
         Button editBtn = (Button) v.findViewById(R.id.edit_main_dialog_button);
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                targetTemperature = seekBar.getProgress() + 5;
+                targetTemperature = (seekBar.getProgress() / 10.0) + 5;
                 mListener.onComplete(targetTemperature, permanently.isEnabled());
                 dismiss();
             }
         });
 
         return v;
+    }
+
+    public static double roundToDecimals(double d, int c) {
+        int temp = (int)((d * Math.pow(10, c)));
+        return (((double)temp)/Math.pow(10,c));
     }
 
     public void onDismiss(DialogInterface dialog) {
