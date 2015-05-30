@@ -23,12 +23,14 @@ import android.widget.LinearLayout;
 
 import com.nikitaend.polproject.NavigationDrawerFragment;
 import com.nikitaend.polproject.R;
+import com.nikitaend.polproject.TimeManager;
 import com.nikitaend.polproject.adapter.holder.TemperatureHolder;
 import com.nikitaend.polproject.dialogs.EditMainDialog;
 import com.nikitaend.polproject.view.CircleView;
 import com.nikitaend.polproject.view.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -37,7 +39,7 @@ import java.util.HashMap;
  */
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
-        EditMainDialog.OnCompleteListener {
+        EditMainDialog.OnCompleteListener , TimeManager.ManagerListener {
     
     double targetTemperature = 25;
 
@@ -53,11 +55,11 @@ public class MainActivity extends Activity
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
-
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    private static TimeManager mTimeManager;
         
 
     @Override
@@ -65,6 +67,9 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        mTimeManager = new TimeManager(this);
+
+        
         if (ScheduleActivity.temperatureHoldersHash == null) {
             ScheduleActivity.temperatureHoldersHash = new HashMap<>();
             for (String day : ScheduleDaysActivity.weekDays) {
@@ -185,6 +190,11 @@ public class MainActivity extends Activity
         CircleView targetCircle = (CircleView) findViewById(R.id.main_screen_target);
         targetTemperature = target;
         targetCircle.setTitleText(targetTemperature + "");
+    }
+
+    @Override
+    public void timeDidChanged(Date date) {
+        System.out.println(date.toString());
     }
 
     /**

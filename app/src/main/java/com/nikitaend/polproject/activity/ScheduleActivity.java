@@ -112,9 +112,9 @@ public class ScheduleActivity extends Activity
             dayOrNight = "PM";
         }
 
-        TemperatureHolder temperatureHolder = new TemperatureHolder(startTime, endTime, dayOrNight);
+        TemperatureHolder temperatureHolder =
+                new TemperatureHolder(startTime, endTime, dayOrNight, false);
         ScheduleActivity.temperatureHoldersHash.get(title).add(temperatureHolder);
-//        adapterCard.mTemperatureHolderList.add(temperatureHolder);
         adapterCard.notifyDataSetChanged();
     }
 

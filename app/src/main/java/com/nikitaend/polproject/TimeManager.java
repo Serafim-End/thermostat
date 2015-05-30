@@ -2,16 +2,13 @@ package com.nikitaend.polproject;
 
 import java.util.Date;
 
-/**
- * Created by denis on 29.05.15.
- */
-
-
 public class TimeManager implements Runnable {
     Date date;
     ManagerListener listener;
-    int interval = 60000;
-    TimeManager(ManagerListener l) {
+    
+    int interval = 120000;
+    
+    public TimeManager(ManagerListener l) {
         date = new Date();
         listener = l;
     }
@@ -30,5 +27,9 @@ public class TimeManager implements Runnable {
 
     Date updateTime () {
         return new Date(date.getTime() + interval);
+    }
+
+    public static interface ManagerListener {
+        void timeDidChanged(Date date);
     }
 }

@@ -14,11 +14,13 @@ public class TemperatureHolder {
     public String startTime;
     public String endTime;
     public String dayNight; // AM or PM
+    public boolean isEnabled;
     
-    public TemperatureHolder(String startTime, String endTime, String dayNight) {
+    public TemperatureHolder(String startTime, String endTime, String dayNight, boolean isEnabled) {
         this.dayNight = dayNight;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.isEnabled = isEnabled;
         
     }
 }

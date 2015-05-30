@@ -30,6 +30,7 @@
             android:layout_gravity="center_vertical"
             android:textColor="@color/black"/>
         <Switch
+            android:id="@+id/enabled_element"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="16dp"

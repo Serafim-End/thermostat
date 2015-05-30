@@ -15,6 +15,7 @@
         android:paddingBottom="32dp">
 
         <TextView
+            android:id="@+id/main_time_textView"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
             android:gravity="center"

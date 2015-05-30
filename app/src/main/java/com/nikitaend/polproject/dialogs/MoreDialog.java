@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 
 import com.nikitaend.polproject.R;
 import com.nikitaend.polproject.activity.ScheduleActivity;
@@ -20,6 +21,7 @@ import com.nikitaend.polproject.adapter.holder.TemperatureHolder;
 public class MoreDialog extends DialogFragment {
     int indexOfElement = -1;
     String title;
+    boolean isEnabled = false;
 
     public static MoreDialog newInstance(int indexOrElement, String title) {
         MoreDialog moreDialog = new MoreDialog();
@@ -56,6 +58,26 @@ public class MoreDialog extends DialogFragment {
                 // something if on and else
             }
         });
+
+        final Switch isEnabledSwitch = (Switch) v.findViewById(R.id.enabled_element);
+        if (isEnabledSwitch.isChecked()) {
+            isEnabled = true;
+        }
+        
+        isEnabledSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+                if (isEnabledSwitch.isChecked()) {
+                    isEnabled = true;
+                } else { isEnabled = false; }
+
+                TemperatureHolder holder =
+                        ScheduleActivity.temperatureHoldersHash.get(title).get(indexOfElement);
+                holder.isEnabled = isEnabled;
+                ScheduleActivity.temperatureHoldersHash.get(title).set(indexOfElement, holder);
+            }
+        });
         
         LinearLayout editLayout = (LinearLayout) v.findViewById(R.id.edit_dialog_layout);
         editLayout.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +85,7 @@ public class MoreDialog extends DialogFragment {
             public void onClick(View v) {
                 TemperatureHolder holder =
                         ScheduleActivity.temperatureHoldersHash.get(title).get(indexOfElement);
+                
                 DialogFragment editDialog =
                         EditDialogListVIew.newInstance(indexOfElement,
                                 holder.startTime, holder.endTime, holder.dayNight, title);

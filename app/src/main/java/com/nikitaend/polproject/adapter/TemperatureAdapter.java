@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,8 +49,10 @@ public class TemperatureAdapter extends ArrayAdapter<TemperatureHolder> {
                 .setText(data.startTime + " - " + data.endTime);
         
         if (data.dayNight == "PM") {
-            ((ImageView) convertView.findViewById(R.id.dayNight_icon))
-                    .setImageDrawable(mContext.getDrawable(R.drawable.night_icon));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ((ImageView) convertView.findViewById(R.id.dayNight_icon))
+                        .setImageDrawable(mContext.getDrawable(R.drawable.night_icon));
+            } else { }
         }
         
         
