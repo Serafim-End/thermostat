@@ -1,4 +1,4 @@
-package com.nikitaend.polproject;
+package com.nikitaend.polproject.time;
 
 import java.util.Date;
 
