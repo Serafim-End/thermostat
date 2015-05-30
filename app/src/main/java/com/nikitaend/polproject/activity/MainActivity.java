@@ -20,17 +20,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.nikitaend.polproject.NavigationDrawerFragment;
+import com.nikitaend.polproject.time.NewTime;
 import com.nikitaend.polproject.R;
-import com.nikitaend.polproject.TimeManager;
 import com.nikitaend.polproject.adapter.holder.TemperatureHolder;
 import com.nikitaend.polproject.dialogs.EditMainDialog;
+import com.nikitaend.polproject.time.Prototype;
 import com.nikitaend.polproject.view.CircleView;
 import com.nikitaend.polproject.view.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -39,11 +40,14 @@ import java.util.HashMap;
  */
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
-        EditMainDialog.OnCompleteListener , TimeManager.ManagerListener {
+        EditMainDialog.OnCompleteListener {
     
     double targetTemperature = 25;
 
     final Context mContext = this;
+
+    private Prototype.ChangeTimeTemperatureListener mChangeTimeTemperatureListener;
+    
 
 
     // time
@@ -59,7 +63,6 @@ public class MainActivity extends Activity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-    private static TimeManager mTimeManager;
         
 
     @Override
@@ -67,8 +70,7 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        mTimeManager = new TimeManager(this);
-
+//        makeSomeGoal();
         
         if (ScheduleActivity.temperatureHoldersHash == null) {
             ScheduleActivity.temperatureHoldersHash = new HashMap<>();
@@ -130,7 +132,7 @@ public class MainActivity extends Activity
                     }
                 });
 
-
+        fastTime();
     }
 
     @Override
@@ -192,11 +194,73 @@ public class MainActivity extends Activity
         targetCircle.setTitleText(targetTemperature + "");
     }
 
-    @Override
-    public void timeDidChanged(Date date) {
-        System.out.println(date.toString());
+
+    /**
+     * Methods to make time higher 
+     */
+    
+    private int currentDay;
+    private NewTime currentTime = new NewTime(0, 0);
+    private double delta;
+    public long lastTick = System.currentTimeMillis();
+
+    public void addToCurrentTime(long millis) {
+        double min = millis / (60.0 * 1000.0) + delta;
+        int m = (int) min;
+        int h = currentTime.getHours();
+        delta = (min - m);
+        m = m + currentTime.getMinutes();
+        h += m / 60;
+        m %= 60;
+        boolean dayChanged = false;
+        while (h >= 24) {
+            h -= 24;
+            currentDay++;
+            dayChanged = true;
+        }
+        currentDay = currentDay % 7;
+        NewTime newTime = new NewTime(h, m);
+//        if (!permanent) {
+//            if (!dayChanged) {
+//                updateTemperature(currentTime, newTime);
+//            } else {
+//                updateTemperature(new NewTime(0, 0), newTime);
+//            }
+//        }
+        currentTime = newTime;
     }
 
+    private void tickTack() {
+        final long currentTimeMillis = System.currentTimeMillis();
+        addToCurrentTime((currentTimeMillis - lastTick) * 300);
+        lastTick = currentTimeMillis;
+        updateClock();
+
+    }
+
+    public void updateClock() {
+        TextView timeTextView = (TextView) findViewById(R.id.main_time_textView);
+        timeTextView.setText(
+                NewTime.getWeekDay(currentDay) + " " + currentTime);
+    }
+    
+    private static int timeID = 0;
+    private void fastTime() {
+        final android.os.Handler handler = new android.os.Handler();
+        final int id = ++timeID;
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (id == timeID) {
+                    tickTack();
+                    handler.postDelayed(this, 200);
+                }
+            }
+        }, 200);
+    }
+    // end of methods that make time higher
+    
+    
     /**
      * A placeholder fragment containing a simple view.
      */

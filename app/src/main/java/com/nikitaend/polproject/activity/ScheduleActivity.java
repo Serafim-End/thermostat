@@ -57,12 +57,15 @@ public class ScheduleActivity extends Activity
         if (title != null) {
             setTitle(title);
         }
-        FloatingActionButton fabButton = new FloatingActionButton.Builder(this)
+        
+        View fabButton;
+        fabButton = new FloatingActionButton.Builder(this)
                 .withDrawable(getDrawable(R.drawable.plus_icon))
                 .withButtonColor(Color.WHITE)
                 .withGravity(Gravity.BOTTOM | Gravity.RIGHT)
                 .withMargins(0, 0, 4, 4)
                 .create();
+
 
         fabButton.setOnClickListener(new View.OnClickListener() {
             @Override
