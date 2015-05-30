@@ -23,15 +23,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nikitaend.polproject.NavigationDrawerFragment;
-import com.nikitaend.polproject.time.NewTime;
 import com.nikitaend.polproject.R;
 import com.nikitaend.polproject.adapter.holder.TemperatureHolder;
 import com.nikitaend.polproject.dialogs.EditMainDialog;
+import com.nikitaend.polproject.time.NewTime;
 import com.nikitaend.polproject.time.Prototype;
 import com.nikitaend.polproject.view.CircleView;
 import com.nikitaend.polproject.view.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 /**
@@ -200,7 +201,16 @@ public class MainActivity extends Activity
      */
     
     private int currentDay;
-    private NewTime currentTime = new NewTime(0, 0);
+    private NewTime currentTime = parseNewTimeForInstance();
+    
+    private NewTime parseNewTimeForInstance() {
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        return new NewTime(hour, minute);
+        
+    }
+    
     private double delta;
     public long lastTick = System.currentTimeMillis();
 
