@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nikitaend.polproject.R;
 import com.nikitaend.polproject.dialogs.EditSettingsDialog;
@@ -85,7 +86,9 @@ public class SettingsActiviy extends Activity implements TimePickerFragment.OnCo
             
             try {
                 MainActivity.thermostat.setDayTemperatureValue(temperature);
-            } catch (Exception e) {}
+            } catch (Exception e) {
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();                
+            }
             
             SettingsActiviy.dayTemperature = temperature;
 
@@ -95,7 +98,9 @@ public class SettingsActiviy extends Activity implements TimePickerFragment.OnCo
             
             try {
                 MainActivity.thermostat.setNightTemperatureValue(temperature);
-            } catch (Exception e) {}
+            } catch (Exception e) {
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+            }
             
             SettingsActiviy.nightTemperature = temperature;
         }
