@@ -77,6 +77,18 @@ public class SameDialog extends DialogFragment {
     }
 
 
+    private String parseTime(String time, String dayOrNight) {
+        String newStartTime;
+        if (dayOrNight == "AM") newStartTime = time;
+        else {
+            String[] tempTimes = time.split(":");
+            newStartTime = Integer.parseInt(tempTimes[0]) + ":" + tempTimes[1];
+        }
+
+        return newStartTime;
+    }
+
+
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
     }

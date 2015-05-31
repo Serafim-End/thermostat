@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.nikitaend.polproject.R;
+import com.nikitaend.polproject.activity.MainActivity;
 import com.nikitaend.polproject.activity.ScheduleActivity;
+import com.nikitaend.polproject.time.Weekday;
 
 /**
  * dialog which called from more dialog
@@ -55,6 +57,9 @@ public class RemoveDialog extends DialogFragment {
                 try {
                     ScheduleActivity.temperatureHoldersHash.get(title).remove(indexOfElement);
                     ScheduleActivity.adapterCard.notifyDataSetChanged();
+
+                    MainActivity.thermostat.removeIntervalByIndex(indexOfElement, 
+                            Weekday.getWeekDayByString(title.substring(0,3)));
                 } catch (Exception e) { }
                 
                 dismiss();

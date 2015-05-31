@@ -86,6 +86,7 @@ public class MainActivity extends Activity
 
         } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+            e.printStackTrace();
         }
 
         final CircleView targetCircle = (CircleView) findViewById(R.id.main_screen_target);

@@ -80,6 +80,7 @@ public class Thermostat implements Runnable {
 
         // Current time observers
         currentTimeListeners = new ArrayList<>();
+        
 
         // TODO: Remove this
         insertInitialsData();
@@ -112,6 +113,14 @@ public class Thermostat implements Runnable {
     public void removeIntervalByIndex(int intervalIndex, Weekday weekday) {
         schedule.removeIntervalByIndex(intervalIndex, weekday);
     }
+
+    public WeekSchedule getSchedule() {
+        return schedule;
+    }
+    
+    public void setSchedule(WeekSchedule schedule) {
+        this.schedule = schedule;
+    } 
 
     /**
      * Возвращает текушую температуру, установленную в термостате
