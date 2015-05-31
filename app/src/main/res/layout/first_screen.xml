@@ -64,6 +64,22 @@
 
         </LinearLayout>
     </LinearLayout>
+    
+    <com.melnykov.fab.FloatingActionButton
+        xmlns:fab="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fab_main_screen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="295dp"
+        android:layout_gravity="right"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:src="@drawable/edit"
+        fab:fab_colorNormal="@color/pink_seek"
+        fab:fab_colorPressed="@color/red"
+        fab:fab_colorRipple="@color/pink_seek" />
 
     <LinearLayout
         android:id="@+id/modeLayout"

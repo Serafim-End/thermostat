@@ -154,4 +154,5 @@ public class ScheduleActivity extends Activity
                 EditDialogListVIew.newInstance(indexOfElement, startTime, endTime, dayNight, title);
         editDialogListVIew.show(getFragmentManager(), "editDialog");
     }
+
 }

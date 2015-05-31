@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.nikitaend.polproject.R;
@@ -84,14 +83,14 @@ public class EditDialogListVIew  extends DialogFragment {
         final TextView endTimeTextView = (TextView) v.findViewById(R.id.end_time_textView);
         if (endTime != null) { endTimeTextView.setText(endTime);}
         
-        final Switch dayNightSwitch = (Switch) v.findViewById(R.id.dayNight_switch);
-        if (dayNight != null) {
-            if (dayNight == "PM") {
-                dayNightSwitch.setChecked(true);
-            } else {
-                dayNightSwitch.setChecked(true);
-            }
-        }
+//        final Switch dayNightSwitch = (Switch) v.findViewById(R.id.dayNight_switch);
+//        if (dayNight != null) {
+//            if (dayNight == "PM") {
+//                dayNightSwitch.setChecked(true);
+//            } else {
+//                dayNightSwitch.setChecked(true);
+//            }
+//        }
 
 
         final TextView startTimeTextView = (TextView) v.findViewById(R.id.start_time_textView);
@@ -99,7 +98,8 @@ public class EditDialogListVIew  extends DialogFragment {
         startTimeTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dayNight = dayNightSwitch.isChecked() ? "PM" : "AM";
+//                dayNight = dayNightSwitch.isChecked() ? "PM" : "AM";
+                dayNight = "AM";
                 startTime = startTimeTextView.getText().toString();
                 endTime = endTimeTextView.getText().toString();
                 DialogFragment newFragment =  
@@ -113,7 +113,8 @@ public class EditDialogListVIew  extends DialogFragment {
         endTimeTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dayNight = dayNightSwitch.isChecked() ? "PM" : "AM";
+//                dayNight = dayNightSwitch.isChecked() ? "PM" : "AM";
+                dayNight = "AM";
                 startTime = startTimeTextView.getText().toString();
                 endTime = endTimeTextView.getText().toString();
                 DialogFragment newFragment = 
@@ -123,6 +124,7 @@ public class EditDialogListVIew  extends DialogFragment {
                 dismiss();
             }
         });
+        
         
         Button okBtn = (Button) v.findViewById(R.id.more_edit_dismiss_button);
         okBtn.setOnClickListener(new View.OnClickListener() {
@@ -134,12 +136,21 @@ public class EditDialogListVIew  extends DialogFragment {
                 holder.startTime = startTimeTextView.getText().toString();
                 holder.endTime = endTimeTextView.getText().toString();
                 
-                if (dayNightSwitch.isChecked()) {
-                    holder.dayNight = "PM";
-                } else { holder.dayNight = "AM"; }
+//                if (dayNightSwitch.isChecked()) {
+//                    holder.dayNight = "PM";
+//                } else { holder.dayNight = "AM"; }
+                holder.dayNight = "AM";
                 ScheduleActivity.adapterCard.notifyDataSetChanged();
 
                 ScheduleActivity.temperatureHoldersHash.get(title).set(indexOfElement, holder);
+                dismiss();
+            }
+        });
+
+        Button backBtn = (Button) v.findViewById(R.id.cancel_edit_dismiss_button);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 dismiss();
             }
         });

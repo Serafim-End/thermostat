@@ -8,17 +8,13 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,7 +25,6 @@ import com.nikitaend.polproject.dialogs.EditMainDialog;
 import com.nikitaend.polproject.time.NewTime;
 import com.nikitaend.polproject.time.Prototype;
 import com.nikitaend.polproject.view.CircleView;
-import com.nikitaend.polproject.view.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -95,19 +90,11 @@ public class MainActivity extends Activity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        View fabButton;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            fabButton = new FloatingActionButton.Builder(this)
-                    .withDrawable(getDrawable(R.drawable.edit))
-                    .withButtonColor(Color.WHITE)
-                    .withGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT)
-                    .withMargins(0, 0, 4, -48)
-                    .create();
-        } else {
-            fabButton = new Button(this);
-            fabButton.bringToFront();
-        }
-        
+
+        com.melnykov.fab.FloatingActionButton fabButton =
+                (com.melnykov.fab.FloatingActionButton) findViewById(R.id.fab_main_screen);
+        fabButton.show();
+
         targetCircle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -268,6 +255,7 @@ public class MainActivity extends Activity
             }
         }, 200);
     }
+
     // end of methods that make time higher
     
     

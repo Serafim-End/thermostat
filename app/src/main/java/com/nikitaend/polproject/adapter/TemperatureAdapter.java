@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nikitaend.polproject.R;
+import com.nikitaend.polproject.activity.SettingsActiviy;
 import com.nikitaend.polproject.adapter.holder.TemperatureHolder;
 import com.nikitaend.polproject.dialogs.MoreDialog;
 
@@ -54,6 +55,9 @@ public class TemperatureAdapter extends ArrayAdapter<TemperatureHolder> {
                         .setImageDrawable(mContext.getDrawable(R.drawable.night_icon));
             } else { }
         }
+        
+        ((TextView) convertView.findViewById(R.id.card_temperature_textView))
+                .setText("Day Mode " + SettingsActiviy.dayTemperature);
         
         
         convertView.findViewById(R.id.more_button).setOnClickListener(new View.OnClickListener() {

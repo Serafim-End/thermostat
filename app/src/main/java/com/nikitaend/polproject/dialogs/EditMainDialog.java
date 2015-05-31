@@ -122,6 +122,14 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
                 dismiss();
             }
         });
+        
+        Button cancelBtn = (Button) v.findViewById(R.id.cancel_main_dialog_button);
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
 
         return v;
     }
