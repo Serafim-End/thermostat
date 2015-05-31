@@ -1,5 +1,9 @@
 package com.nikitaend.polproject.time;
 
+import com.nikitaend.polproject.activity.ScheduleActivity;
+import com.nikitaend.polproject.activity.ScheduleDaysActivity;
+import com.nikitaend.polproject.adapter.holder.TemperatureHolder;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -84,6 +88,7 @@ public class Thermostat implements Runnable {
 
         // TODO: Remove this
         insertInitialsData();
+        insertIntervalDataHash();
     }
 
 
@@ -249,6 +254,23 @@ public class Thermostat implements Runnable {
         schedule.addInterval(Weekday.MONDAY, interval);
         schedule.addInterval(Weekday.MONDAY, interval2);
         schedule.addInterval(Weekday.MONDAY, interval3);
+        
+    }
+    
+    public void insertIntervalDataHash() {
+        try {
+            for (int i = 0; i < ScheduleActivity.temperatureHoldersHash.size(); i++) {
+                ArrayList<TemperatureHolder> temperatureHolders = ScheduleActivity.temperatureHoldersHash.get(ScheduleDaysActivity.weekDays[i]);
+                for (TemperatureHolder temperatureHolder : temperatureHolders) {
+                    String newTitle = ScheduleDaysActivity.weekDays[i].substring(0, 3);
+                    Time startTime = new Time(newTitle + temperatureHolder.startTime);
+                    Time endTime = new Time(newTitle + temperatureHolder.endTime);
+
+                    TimeInterval interval1 = new TimeInterval(getCurrentTemperature(), startTime, endTime);
+                    schedule.addInterval(Weekday.getWeekDayByString(newTitle), interval1);
+                }
+            }
+        } catch (Exception e) {}
     }
 
     private class TemperatureWatcher extends TimerTask {
