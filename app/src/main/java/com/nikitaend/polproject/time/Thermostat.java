@@ -172,6 +172,11 @@ public class Thermostat implements Runnable {
     public double getDayTemperatureValue() {
         return dayTemperature.getValue();
     }
+    
+    public void setDayTemperatureValue(double value) throws Exception{
+        Temperature dayTemperature = new Temperature(value);
+        this.dayTemperature = dayTemperature;
+    }
 
     @Override
     public String toString() {
