@@ -1,4 +1,4 @@
-package ru.kholodnyak.Thermostat;
+package com.nikitaend.polproject.time;
 
 /**
  * Следит за изменением текущего времени

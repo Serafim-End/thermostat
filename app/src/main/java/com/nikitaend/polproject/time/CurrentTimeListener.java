@@ -1,4 +1,4 @@
-package ru.kholodnyak.Thermostat;
+package com.nikitaend.polproject.time;
 
 
 public class CurrentTimeListener implements CurrentTimeObserver {

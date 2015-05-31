@@ -22,12 +22,12 @@ import com.nikitaend.polproject.NavigationDrawerFragment;
 import com.nikitaend.polproject.R;
 import com.nikitaend.polproject.adapter.holder.TemperatureHolder;
 import com.nikitaend.polproject.dialogs.EditMainDialog;
-import com.nikitaend.polproject.time.NewTime;
+import com.nikitaend.polproject.time.CurrentTimeObserver;
 import com.nikitaend.polproject.time.Prototype;
+import com.nikitaend.polproject.time.Thermostat;
 import com.nikitaend.polproject.view.CircleView;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 
 /**
@@ -36,7 +36,7 @@ import java.util.HashMap;
  */
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
-        EditMainDialog.OnCompleteListener {
+        EditMainDialog.OnCompleteListener, CurrentTimeObserver {
     
     double targetTemperature = 25;
 
@@ -76,7 +76,12 @@ public class MainActivity extends Activity
         }
         
         setContentView(R.layout.activity_main);
-
+        
+        try {
+            Thermostat thermostat = 
+                    Thermostat.getInstance(SettingsActiviy.nightTemperature, SettingsActiviy.dayTemperature);
+            thermostat.run();
+        } catch (Exception e) {}
 
         final CircleView targetCircle = (CircleView) findViewById(R.id.main_screen_target);
         targetTemperature = Double.parseDouble(targetCircle.getTitleText());
@@ -120,7 +125,7 @@ public class MainActivity extends Activity
                     }
                 });
 
-        fastTime();
+//        fastTime();
     }
 
     @Override
@@ -186,74 +191,82 @@ public class MainActivity extends Activity
     /**
      * Methods to make time higher 
      */
-    
-    private int currentDay;
-    private NewTime currentTime = parseNewTimeForInstance();
-    
-    private NewTime parseNewTimeForInstance() {
-        Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-        return new NewTime(hour, minute);
-        
-    }
-    
-    private double delta;
-    public long lastTick = System.currentTimeMillis();
-
-    public void addToCurrentTime(long millis) {
-        double min = millis / (60.0 * 1000.0) + delta;
-        int m = (int) min;
-        int h = currentTime.getHours();
-        delta = (min - m);
-        m = m + currentTime.getMinutes();
-        h += m / 60;
-        m %= 60;
-        boolean dayChanged = false;
-        while (h >= 24) {
-            h -= 24;
-            currentDay++;
-            dayChanged = true;
-        }
-        currentDay = currentDay % 7;
-        NewTime newTime = new NewTime(h, m);
-//        if (!permanent) {
-//            if (!dayChanged) {
-//                updateTemperature(currentTime, newTime);
-//            } else {
-//                updateTemperature(new NewTime(0, 0), newTime);
-//            }
+//
+//    private int currentDay;
+//    private NewTime currentTime = parseNewTimeForInstance();
+//
+//    private NewTime parseNewTimeForInstance() {
+//        Calendar calendar = Calendar.getInstance();
+//        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+//        int minute = calendar.get(Calendar.MINUTE);
+//        return new NewTime(hour, minute);
+//
+//    }
+//
+//    private double delta;
+//    public long lastTick = System.currentTimeMillis();
+//
+//    public void addToCurrentTime(long millis) {
+//        double min = millis / (60.0 * 1000.0) + delta;
+//        int m = (int) min;
+//        int h = currentTime.getHours();
+//        delta = (min - m);
+//        m = m + currentTime.getMinutes();
+//        h += m / 60;
+//        m %= 60;
+//        boolean dayChanged = false;
+//        while (h >= 24) {
+//            h -= 24;
+//            currentDay++;
+//            dayChanged = true;
 //        }
-        currentTime = newTime;
-    }
+//        currentDay = currentDay % 7;
+//        NewTime newTime = new NewTime(h, m);
+////        if (!permanent) {
+////            if (!dayChanged) {
+////                updateTemperature(currentTime, newTime);
+////            } else {
+////                updateTemperature(new NewTime(0, 0), newTime);
+////            }
+////        }
+//        currentTime = newTime;
+//    }
+//
+//    private void tickTack() {
+//        final long currentTimeMillis = System.currentTimeMillis();
+//        addToCurrentTime((currentTimeMillis - lastTick) * 300);
+//        lastTick = currentTimeMillis;
+//        updateClock();
+//
+//    }
+//
+//    public void updateClock() {
+//        TextView timeTextView = (TextView) findViewById(R.id.main_time_textView);
+//        timeTextView.setText(
+//                NewTime.getWeekDay(currentDay) + " " + currentTime);
+//    }
+//
+//    private static int timeID = 0;
+//    private void fastTime() {
+//        final android.os.Handler handler = new android.os.Handler();
+//        final int id = ++timeID;
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                if (id == timeID) {
+//                    tickTack();
+//                    handler.postDelayed(this, 200);
+//                }
+//            }
+//        }, 200);
+//    }
 
-    private void tickTack() {
-        final long currentTimeMillis = System.currentTimeMillis();
-        addToCurrentTime((currentTimeMillis - lastTick) * 300);
-        lastTick = currentTimeMillis;
-        updateClock();
-
-    }
-
-    public void updateClock() {
+    @Override
+    public void update(String currentTime) {
+        
         TextView timeTextView = (TextView) findViewById(R.id.main_time_textView);
         timeTextView.setText(
-                NewTime.getWeekDay(currentDay) + " " + currentTime);
-    }
-    
-    private static int timeID = 0;
-    private void fastTime() {
-        final android.os.Handler handler = new android.os.Handler();
-        final int id = ++timeID;
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (id == timeID) {
-                    tickTack();
-                    handler.postDelayed(this, 200);
-                }
-            }
-        }, 200);
+                 currentTime);
     }
 
     // end of methods that make time higher

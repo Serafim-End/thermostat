@@ -1,7 +1,6 @@
-package ru.kholodnyak.Thermostat;
+package com.nikitaend.polproject.time;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Класс, представляющий сущность "Время".

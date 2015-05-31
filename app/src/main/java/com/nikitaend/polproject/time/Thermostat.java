@@ -1,7 +1,11 @@
-package ru.kholodnyak.Thermostat;
+package com.nikitaend.polproject.time;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Главный класс модели.

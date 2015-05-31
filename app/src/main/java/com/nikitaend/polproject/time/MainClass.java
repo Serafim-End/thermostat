@@ -1,9 +1,4 @@
-package ru.kholodnyak.Thermostat;
-
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+package com.nikitaend.polproject.time;
 
 public class MainClass {
 
