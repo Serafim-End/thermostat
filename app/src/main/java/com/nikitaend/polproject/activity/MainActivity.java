@@ -17,18 +17,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nikitaend.polproject.NavigationDrawerFragment;
 import com.nikitaend.polproject.R;
 import com.nikitaend.polproject.adapter.holder.TemperatureHolder;
 import com.nikitaend.polproject.dialogs.EditMainDialog;
 import com.nikitaend.polproject.time.CurrentTimeListener;
+import com.nikitaend.polproject.time.NewTime;
 import com.nikitaend.polproject.time.TemperatureListener;
 import com.nikitaend.polproject.time.Thermostat;
 import com.nikitaend.polproject.view.CircleView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 /**
@@ -47,9 +48,6 @@ public class MainActivity extends Activity
 
 
     // time
-//    TimeZone timeZone = new SimpleTimeZone(3, TimeZone.getAvailableIDs(3)[0]);
-//    Calendar calendar = Calendar.getInstance(timeZone, Locale.getDefault());
-
     
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -77,17 +75,16 @@ public class MainActivity extends Activity
         
         setContentView(R.layout.activity_main);
         
-        try {
-            Thermostat thermostat = 
-                    Thermostat.getInstance(SettingsActiviy.nightTemperature, SettingsActiviy.dayTemperature);
-            thermostat.addCurrentTimeListener(this);
-            thermostat.addTemperatureListener(this);
-            thermostat.run();
-
-        } catch (Exception e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
+//        try {
+//            Thermostat thermostat =
+//                    Thermostat.getInstance(SettingsActiviy.nightTemperature, SettingsActiviy.dayTemperature);
+//            thermostat.addCurrentTimeListener(this);
+//            thermostat.addTemperatureListener(this);
+//            thermostat.run();
+//
+//        } catch (Exception e) {
+//            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+//        }
 
         final CircleView targetCircle = (CircleView) findViewById(R.id.main_screen_target);
         targetTemperature = Double.parseDouble(targetCircle.getTitleText());
@@ -130,6 +127,8 @@ public class MainActivity extends Activity
                         startActivity(weekDays);
                     }
                 });
+        
+        fastTime();
     }
 
     @Override
@@ -221,8 +220,76 @@ public class MainActivity extends Activity
             }
         });
 
-//        System.out.println(targetTemperature + " cur: " + currentTemperature);
+    }
 
+
+    private int currentDay;
+    private NewTime currentTime = parseNewTimeForInstance();
+
+    private NewTime parseNewTimeForInstance() {
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        return new NewTime(hour, minute);
+
+    }
+
+    private double delta;
+    public long lastTick = System.currentTimeMillis();
+
+    public void addToCurrentTime(long millis) {
+        double min = millis / (60.0 * 1000.0) + delta;
+        int m = (int) min;
+        int h = currentTime.getHours();
+        delta = (min - m);
+        m = m + currentTime.getMinutes();
+        h += m / 60;
+        m %= 60;
+        boolean dayChanged = false;
+        while (h >= 24) {
+            h -= 24;
+            currentDay++;
+            dayChanged = true;
+        }
+        currentDay = currentDay % 7;
+        NewTime newTime = new NewTime(h, m);
+        currentTime = newTime;
+    }
+
+    private void tickTack() {
+        final long currentTimeMillis = System.currentTimeMillis();
+        addToCurrentTime((currentTimeMillis - lastTick) * 300);
+        lastTick = currentTimeMillis;
+        updateClock();
+
+    }
+
+    public void updateClock() {
+        TextView timeTextView = (TextView) findViewById(R.id.main_time_textView);
+        String temp = "";
+        if (currentTime.getHours() > 12) {
+            temp = (currentTime.getHours() - 12) + ":"  +currentTime.getMinutes()  + " PM";
+        } else {
+            temp = currentTime.getHours() + ":" + currentTime.getMinutes() + " AM";
+        }
+        
+        timeTextView.setText(
+                NewTime.getWeekDay(currentDay) + " " +temp);
+    }
+
+    private static int timeID = 0;
+    private void fastTime() {
+        final android.os.Handler handler = new android.os.Handler();
+        final int id = ++timeID;
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (id == timeID) {
+                    tickTack();
+                    handler.postDelayed(this, 200);
+                }
+            }
+        }, 200);
     }
 
     // end of methods that make time higher

@@ -11,17 +11,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nikitaend.polproject.R;
-import com.nikitaend.polproject.adapter.TemperatureNewAdapter;
+import com.nikitaend.polproject.adapter.TemperatureAdapter;
 import com.nikitaend.polproject.adapter.holder.TemperatureHolder;
 import com.nikitaend.polproject.dialogs.EditDialog;
 import com.nikitaend.polproject.dialogs.EditDialogListVIew;
 import com.nikitaend.polproject.dialogs.SameDialog;
 import com.nikitaend.polproject.dialogs.TimePickerFragment;
-import com.nikitaend.polproject.time.TimeInterval;
-import com.nikitaend.polproject.time.Weekday;
 import com.nikitaend.polproject.view.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -42,8 +39,8 @@ public class ScheduleActivity extends Activity
     public static HashMap<String, ArrayList<TemperatureHolder>> temperatureHoldersHash;
 
 
-//    public static TemperatureAdapter adapterCard;
-    public static TemperatureNewAdapter adapterCard;
+    public static TemperatureAdapter adapterCard;
+//    public static TemperatureNewAdapter adapterCard;
     
     DialogFragment editFragment;
     String title;
@@ -81,15 +78,15 @@ public class ScheduleActivity extends Activity
         });
         
         ListView cardListView = (ListView) findViewById(R.id.card_schedule_listView);
-//        adapterCard = new TemperatureAdapter(this, R.layout.card_schedule,
-//                ScheduleActivity.temperatureHoldersHash.get(title), title);
+        adapterCard = new TemperatureAdapter(this, R.layout.card_schedule,
+                ScheduleActivity.temperatureHoldersHash.get(title), title);
 
-        System.out.println("substring is: " + title.substring(0,3));
-        ArrayList<TimeInterval> intervals =  
-                MainActivity.thermostat.getSchedule(Weekday.getWeekDayByString(title.substring(0, 3).toLowerCase()));
-        adapterCard = new TemperatureNewAdapter(this,
-                R.layout.card_schedule,
-               intervals, title);
+//        System.out.println("substring is: " + title.substring(0,3));
+//        ArrayList<TimeInterval> intervals =
+//                MainActivity.thermostat.getSchedule(Weekday.getWeekDayByString(title.substring(0, 3).toLowerCase()));
+//        adapterCard = new TemperatureNewAdapter(this,
+//                R.layout.card_schedule,
+//               intervals, title);
         
         cardListView.setAdapter(adapterCard);
     }
@@ -132,14 +129,14 @@ public class ScheduleActivity extends Activity
                 new TemperatureHolder(startTime, endTime, dayOrNight, false);
         ScheduleActivity.temperatureHoldersHash.get(title).add(temperatureHolder);
         
-        try {
-            String newTitle = title.substring(0,3);
-            MainActivity.thermostat.addInterval(newTitle + " " + parseTime(temperatureHolder.startTime, temperatureHolder.dayNight),
-                    newTitle + " " + parseTime(temperatureHolder.endTime, dayOrNight));
-        } catch (Exception e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-        }
-        
+//        try {
+//            String newTitle = title.substring(0,3);
+//            MainActivity.thermostat.addInterval(newTitle + " " + parseTime(temperatureHolder.startTime, temperatureHolder.dayNight),
+//                    newTitle + " " + parseTime(temperatureHolder.endTime, dayOrNight));
+//        } catch (Exception e) {
+//            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+//        }
+//
         adapterCard.notifyDataSetChanged();
     }
     

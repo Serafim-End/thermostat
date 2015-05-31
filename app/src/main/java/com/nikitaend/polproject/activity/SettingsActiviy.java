@@ -6,7 +6,6 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nikitaend.polproject.R;
 import com.nikitaend.polproject.dialogs.EditSettingsDialog;
@@ -84,23 +83,23 @@ public class SettingsActiviy extends Activity implements TimePickerFragment.OnCo
             TextView dayTextView = (TextView) findViewById(R.id.settings_day_temperature);
             dayTextView.setText(temperature + degree);
             
-            try {
-                MainActivity.thermostat.setDayTemperatureValue(temperature);
-            } catch (Exception e) {
-                Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();                
-            }
+//            try {
+//                MainActivity.thermostat.setDayTemperatureValue(temperature);
+//            } catch (Exception e) {
+//                Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+//            }
             
             SettingsActiviy.dayTemperature = temperature;
 
         } else {
             TextView nightTextView = (TextView) findViewById(R.id.settings_night_temperature);
             nightTextView.setText(temperature + degree);
-            
-            try {
-                MainActivity.thermostat.setNightTemperatureValue(temperature);
-            } catch (Exception e) {
-                Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-            }
+//
+//            try {
+//                MainActivity.thermostat.setNightTemperatureValue(temperature);
+//            } catch (Exception e) {
+//                Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+//            }
             
             SettingsActiviy.nightTemperature = temperature;
         }
