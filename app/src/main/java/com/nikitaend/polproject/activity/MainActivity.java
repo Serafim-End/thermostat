@@ -59,6 +59,7 @@ public class MainActivity extends Activity
      */
     private CharSequence mTitle;
     public static Thermostat thermostat;
+    public static boolean vocation = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +117,13 @@ public class MainActivity extends Activity
             @Override
             public void onClick(View v) {
                 if (thermostat != null) {
-                    thermostat.setVacationMode(true);
+                    if (!vocation) {
+                        thermostat.setVacationMode(true);
+                        vocation = true;
+                    } else {
+                        thermostat.setVacationMode(false);
+                        vocation = false;
+                    }
                 }
             }
         });
