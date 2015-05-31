@@ -1,9 +1,8 @@
 package com.nikitaend.polproject.time;
 
-public class TemperatureListener implements TemperatureObserver {
-    @Override
-    public void update(double currentTemperature, double targetTemperature) {
-        System.out.println("Current Temperature is " + currentTemperature);
-        System.out.println("Target Temperature is " + targetTemperature);
-    }
+/**
+ * Следит за изменением текущей температуры
+ */
+public interface TemperatureListener {
+    void update(double currentTemperature, double targetTemperature);
 }

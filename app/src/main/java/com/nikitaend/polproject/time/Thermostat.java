@@ -51,12 +51,12 @@ public class Thermostat implements Runnable {
     /**
      * Temperature observers
      */
-    ArrayList<TemperatureObserver> temperatureObservers;
+    ArrayList<TemperatureListener> temperatureListeners;
 
     /**
      * Current Time observers
      */
-    ArrayList<CurrentTimeObserver> currentTimeObservers;
+    ArrayList<CurrentTimeListener> currentTimeListeners;
 
     private boolean isVacationMode = false;
 
@@ -76,16 +76,15 @@ public class Thermostat implements Runnable {
         this.targetTemperature = new Temperature(this.dayTemperature.getValue());
 
         // Temperature observers
-        temperatureObservers = new ArrayList<>();
-        temperatureObservers.add(new TemperatureListener());
+        temperatureListeners = new ArrayList<>();
 
         // Current time observers
-        currentTimeObservers = new ArrayList<>();
-        currentTimeObservers.add(new CurrentTimeListener());
+        currentTimeListeners = new ArrayList<>();
 
         // TODO: Remove this
         insertInitialsData();
     }
+
 
     /**
      * Singleton
@@ -180,15 +179,23 @@ public class Thermostat implements Runnable {
     }
 
     private void updateTemperature() {
-        for (TemperatureObserver temperatureObserver : temperatureObservers) {
+        for (TemperatureListener temperatureObserver : temperatureListeners) {
             temperatureObserver.update(this.currentTemperature.getValue(), this.targetTemperature.getValue());
         }
     }
 
     private void updateCurrentTime() {
-        for (CurrentTimeObserver currentTimeObserver : currentTimeObservers) {
+        for (CurrentTimeListener currentTimeObserver : currentTimeListeners) {
             currentTimeObserver.update(this.currentTime.toString());
         }
+    }
+
+    public void addCurrentTimeListener(CurrentTimeListener listener) {
+        currentTimeListeners.add(listener);
+    }
+
+    public void addTemperatureListener(TemperatureListener listener) {
+        temperatureListeners.add(listener);
     }
 
     //TODO: Remove all after this line
@@ -235,6 +242,14 @@ public class Thermostat implements Runnable {
         @Override
         public void run() {
             observeTemperature();
+
+            updateTimer();
+            updateCurrentTime();
+            // System.out.println(currentTime);
+            System.out.println(currentTemperature.getValue());
+        }
+
+        private void updateTimer() {
             currDate.add(GregorianCalendar.MINUTE, MINUTES_PER_ONE);
             String[] fulltime = getCurrTime().split(" ");
 
@@ -250,9 +265,6 @@ public class Thermostat implements Runnable {
                 System.out.println(e.getMessage());
             }
 
-            updateCurrentTime();
-            // System.out.println(currentTime);
-            System.out.println(currentTemperature.getValue());
         }
 
         private void observeTemperature() {
