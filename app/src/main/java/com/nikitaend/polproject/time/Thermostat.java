@@ -263,8 +263,10 @@ public class Thermostat implements Runnable {
                 ArrayList<TemperatureHolder> temperatureHolders = ScheduleActivity.temperatureHoldersHash.get(ScheduleDaysActivity.weekDays[i]);
                 for (TemperatureHolder temperatureHolder : temperatureHolders) {
                     String newTitle = ScheduleDaysActivity.weekDays[i].substring(0, 3);
-                    Time startTime = new Time(newTitle + temperatureHolder.startTime);
-                    Time endTime = new Time(newTitle + temperatureHolder.endTime);
+                    String[] temp1 = temperatureHolder.startTime.split(" ");
+                    Time startTime = new Time(newTitle + temp1[0]);
+                    String[] temp2 = temperatureHolder.endTime.split(" ");
+                    Time endTime = new Time(newTitle + temp2[0]);
 
                     TimeInterval interval1 = new TimeInterval(getCurrentTemperature(), startTime, endTime);
                     schedule.addInterval(Weekday.getWeekDayByString(newTitle), interval1);
