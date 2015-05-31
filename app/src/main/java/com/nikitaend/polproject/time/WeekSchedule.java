@@ -105,8 +105,12 @@ public class WeekSchedule implements Serializable {
     private void initSchedule() {
         daySchedules = new ArrayList<>();
 
-        for (Weekday weekday : Weekday.values()) {
-            daySchedules.add(new DaySchedule(weekday));
+        Weekday[] weekdays = {Weekday.MONDAY, Weekday.TUESDAY,
+                Weekday.WEDNESDAY, Weekday.THURSDAY, Weekday.FRIDAY, Weekday.SATURDAY, Weekday.SUNDAY};
+        for (Weekday weekday : weekdays) {
+            if (weekday != Weekday.EMPTY) {
+                daySchedules.add(new DaySchedule(weekday));
+            }
         }
     }
 
