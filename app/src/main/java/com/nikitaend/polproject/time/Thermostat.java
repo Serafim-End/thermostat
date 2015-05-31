@@ -3,6 +3,7 @@ package com.nikitaend.polproject.time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -219,7 +220,7 @@ public class Thermostat implements Runnable {
     }
 
     public String getCurrTime() {
-        SimpleDateFormat timeFormat = new SimpleDateFormat("E HH:mm");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("E HH:mm", Locale.US);
         timeFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
         String time = timeFormat.format(currDate.getTime());
         return time;

@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.nikitaend.polproject.NavigationDrawerFragment;
@@ -57,7 +58,7 @@ public class MainActivity extends Activity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-        
+    public static Thermostat thermostat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +77,7 @@ public class MainActivity extends Activity
         setContentView(R.layout.activity_main);
         
         try {
-            Thermostat thermostat = 
+            thermostat =
                     Thermostat.getInstance(SettingsActiviy.nightTemperature, SettingsActiviy.dayTemperature);
             thermostat.addCurrentTimeListener(this);
             thermostat.addTemperatureListener(this);
@@ -106,6 +107,17 @@ public class MainActivity extends Activity
             public void onClick(View v) {
                 DialogFragment dialogFragment = EditMainDialog.newInstance(targetTemperature);
                 dialogFragment.show(getFragmentManager(), "editMainDialog");
+            }
+        });
+
+
+        Switch permanent = (Switch) findViewById(R.id.radioButton);
+        permanent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (thermostat != null) {
+                    thermostat.setVacationMode(true);
+                }
             }
         });
         
