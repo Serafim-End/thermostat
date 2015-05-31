@@ -178,6 +178,13 @@ public class Thermostat implements Runnable {
         this.dayTemperature = dayTemperature;
     }
 
+    public void seDayTemperatureValue(double value) throws Exception {
+        // This variable is not redundant
+        Temperature dayTemperature = new Temperature(value);
+
+        this.dayTemperature = nightTemperature;
+    }
+    
     @Override
     public String toString() {
         return schedule.toString();
@@ -293,6 +300,9 @@ public class Thermostat implements Runnable {
                         }
 
                         System.out.println("bingo!");
+                        updateTemperature();
+                    } else {
+                        currentTemperature = nightTemperature;
                         updateTemperature();
                     }
                 }
