@@ -41,6 +41,7 @@ public class MainActivity extends Activity
     double targetTemperature = 25;
 
     final Context mContext = this;
+    public static Thermostat thermostat;
     
 
 
