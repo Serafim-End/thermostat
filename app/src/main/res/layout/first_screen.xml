@@ -33,6 +33,7 @@
             android:paddingRight="16dp">
 
             <com.nikitaend.polproject.view.CircleView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/main_screen_current"
                 android:layout_width="225dp"
                 android:layout_height="225dp"
                 android:layout_alignParentTop="true"

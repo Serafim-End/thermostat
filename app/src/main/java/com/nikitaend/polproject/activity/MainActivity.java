@@ -23,6 +23,7 @@ import com.nikitaend.polproject.R;
 import com.nikitaend.polproject.adapter.holder.TemperatureHolder;
 import com.nikitaend.polproject.dialogs.EditMainDialog;
 import com.nikitaend.polproject.time.CurrentTimeListener;
+import com.nikitaend.polproject.time.TemperatureListener;
 import com.nikitaend.polproject.time.Thermostat;
 import com.nikitaend.polproject.view.CircleView;
 
@@ -35,7 +36,7 @@ import java.util.HashMap;
  */
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
-        EditMainDialog.OnCompleteListener, CurrentTimeListener {
+        EditMainDialog.OnCompleteListener, CurrentTimeListener, TemperatureListener {
     
     double targetTemperature = 25;
 
@@ -78,6 +79,7 @@ public class MainActivity extends Activity
             Thermostat thermostat = 
                     Thermostat.getInstance(SettingsActiviy.nightTemperature, SettingsActiviy.dayTemperature);
             thermostat.addCurrentTimeListener(this);
+            thermostat.addTemperatureListener(this);
             thermostat.run();
 
         } catch (Exception e) {}
@@ -201,6 +203,23 @@ public class MainActivity extends Activity
         });
 
         System.out.println(currentTime);
+    }
+
+    @Override
+    public void update(final double currentTemperature, final double targetTemperature) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                CircleView target = (CircleView) findViewById(R.id.main_screen_target);
+                target.setTitleText(targetTemperature + "");
+                
+                CircleView current = (CircleView) findViewById(R.id.main_screen_current);
+                current.setTitleText(currentTemperature + "");
+            }
+        });
+
+        System.out.println(targetTemperature + " cur: " + currentTemperature);
+
     }
 
     // end of methods that make time higher
