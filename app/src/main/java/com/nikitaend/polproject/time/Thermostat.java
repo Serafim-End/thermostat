@@ -1,5 +1,9 @@
 package com.nikitaend.polproject.time;
 
+import android.widget.ArrayAdapter;
+
+import com.nikitaend.polproject.adapter.holder.TemperatureHolder;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -142,11 +146,11 @@ public class Thermostat implements Runnable {
 
     /**
      * Устанавливает в термостат расписание "отпуска".
-     * <p>
+     * <p/>
      * В этом режиме температура в термостате остается
      * постоянной. Расписание интервалов с температурами
      * в этом режиме тоже не действует.
-     * <p>
+     * <p/>
      * Температура в режиме "отпуска" равна ночной температуре.
      */
     public void setVacationMode(boolean isWorking) {
@@ -181,10 +185,30 @@ public class Thermostat implements Runnable {
     public double getDayTemperatureValue() {
         return dayTemperature.getValue();
     }
-    
-    public void setDayTemperatureValue(double value) throws Exception{
+
+    public void setDayTemperatureValue(double value) throws Exception {
         Temperature dayTemperature = new Temperature(value);
         this.dayTemperature = dayTemperature;
+    }
+
+
+    public ArrayList<TimeInterval> getSchedule(Weekday weekday) {
+        return schedule.getDaySchedule(weekday).getIntervals();
+    }
+
+    public ArrayList<TemperatureHolder> getHolderSchedule(Weekday weekday) {
+        ArrayList<TimeInterval> intervals = schedule.getDaySchedule(weekday).getIntervals();
+        ArrayList<TemperatureHolder> intervalsHolder = new ArrayList<>();
+
+        for (TimeInterval interval : intervals) {
+
+            TemperatureHolder holder = new TemperatureHolder(interval.getStartTime().toString(),
+                    interval.getEndTime().toString(), "AM", true);
+            intervalsHolder.add(holder);
+        }
+
+        return intervalsHolder;
+
     }
 
     public void seDayTemperatureValue(double value) throws Exception {
@@ -193,7 +217,7 @@ public class Thermostat implements Runnable {
 
         this.dayTemperature = nightTemperature;
     }
-    
+
     @Override
     public String toString() {
         return schedule.toString();
