@@ -205,8 +205,8 @@ public class MainActivity extends Activity
             }
         });
 
-//        System.out.println(currentTime);
     }
+    
 
     @Override
     public void update(final double currentTemperature, final double targetTemperature) {

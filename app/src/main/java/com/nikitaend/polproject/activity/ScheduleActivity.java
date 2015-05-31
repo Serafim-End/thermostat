@@ -86,9 +86,7 @@ public class ScheduleActivity extends Activity
 
         System.out.println("substring is: " + title.substring(0,3));
         ArrayList<TimeInterval> intervals =  
-                MainActivity.thermostat.getSchedule()
-                        .getDaySchedule(Weekday.getWeekDayByString(title.substring(0, 3).toLowerCase()))
-                        .getIntervals();
+                MainActivity.thermostat.getSchedule(Weekday.getWeekDayByString(title.substring(0, 3).toLowerCase()));
         adapterCard = new TemperatureNewAdapter(this,
                 R.layout.card_schedule,
                intervals, title);
