@@ -20,7 +20,7 @@ public class Prototype implements Runnable {
         public abstract void OnTimeTemperatureChanged(double temperature, String time);
     }
     
-    public static int SECONDS_PER_ONE = 3;
+    public static int SECONDS_PER_ONE = 300;
     
     public static double currentTemperature;
     public static String currentTime;
