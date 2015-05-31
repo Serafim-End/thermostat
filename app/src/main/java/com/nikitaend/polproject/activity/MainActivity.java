@@ -70,8 +70,6 @@ public class MainActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-//        makeSomeGoal();
         
         if (ScheduleActivity.temperatureHoldersHash == null) {
             ScheduleActivity.temperatureHoldersHash = new HashMap<>();
@@ -134,6 +132,10 @@ public class MainActivity extends Activity
                 });
 
         fastTime();
+        
+        if (currentTime == null) {
+            currentTime = parseNewTimeForInstance();
+        }
     }
 
     @Override
@@ -201,7 +203,7 @@ public class MainActivity extends Activity
      */
     
     private int currentDay;
-    private NewTime currentTime = parseNewTimeForInstance();
+    private static NewTime currentTime;
     
     private NewTime parseNewTimeForInstance() {
         Calendar calendar = Calendar.getInstance();
@@ -239,6 +241,64 @@ public class MainActivity extends Activity
 //        }
         currentTime = newTime;
     }
+
+    private void updateTemperature(NewTime time, NewTime newTime) {
+        ArrayList<TemperatureHolder> temperatureHolders = 
+                ScheduleActivity.temperatureHoldersHash.get(NewTime.getWeekDay(currentDay));
+        
+        TemperatureHolder temperatureHolder = new TemperatureHolder("23:59", "23,59", "AM", true);
+        for (int i = 0; i < temperatureHolders.size(); i++) {
+            TemperatureHolder temp = temperatureHolders.get(i);
+            if (temp.isEnabled) {
+                temperatureHolder = 
+                        makeTemperatureHolder(temp.startTime, temp.endTime, temp.dayNight, 
+                                newTime, temperatureHolder);
+            }
+        }
+        
+        if (temperatureHolder.startTime != "23:59") {
+            CircleView currentCircleView = (CircleView) findViewById(R.id.main_current_temperature);
+            if (temperatureHolder.dayNight == "AM") {
+                String[] mHourMinutes = temperatureHolder.startTime.split(":");
+                int hour = Integer.parseInt(mHourMinutes[0]);
+                int minutes = Integer.parseInt(mHourMinutes[1]);
+                double delta = (SettingsActiviy.dayTemperature - targetTemperature) 
+                        / ((newTime.getHours() * 60 + newTime.getMinutes() - hour * 60 - minutes) / 3);
+                targetTemperature += delta;
+                currentCircleView.setTitleText(targetTemperature + "");
+            } else {
+                String[] mHourMinutes = temperatureHolder.startTime.split(":");
+                int hour = Integer.parseInt(mHourMinutes[0]);
+                int minutes = Integer.parseInt(mHourMinutes[1]);
+                double delta = (SettingsActiviy.nightTemperature - targetTemperature)
+                        / ((newTime.getHours() * 60 + newTime.getMinutes() - hour * 60 - minutes) / 3);
+                targetTemperature += delta;
+                currentCircleView.setTitleText(targetTemperature + "");
+            }
+        }
+    }
+    
+    private TemperatureHolder makeTemperatureHolder(String startTime, String endTime, String dayNight,
+                                                    NewTime newTime,
+                                                    TemperatureHolder temperatureHolder) {
+
+        String[] mHourMinutes = startTime.split(":");
+        int hour = Integer.parseInt(mHourMinutes[0]);
+        int minutes = Integer.parseInt(mHourMinutes[1]);
+        
+        String[] mHourMinutesTemp = temperatureHolder.startTime.split(":");
+        int hourTemp = Integer.parseInt(mHourMinutesTemp[0]);
+        int minutesTemp = Integer.parseInt(mHourMinutesTemp[1]);
+
+        long newMinuteTime = newTime.getHours() * 60 + newTime.getMinutes();
+        if (((hour * 60 + minutes) < (newMinuteTime)) 
+                && (newMinuteTime > (hourTemp * 60 + minutesTemp))) {
+            return new TemperatureHolder(newTime.getHours() + ":" + newTime.getMinutes(), endTime, dayNight, true);
+        }
+        
+        return temperatureHolder;
+    }
+    
 
     private void tickTack() {
         final long currentTimeMillis = System.currentTimeMillis();

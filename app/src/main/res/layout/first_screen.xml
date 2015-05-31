@@ -33,6 +33,7 @@
             android:layout_height="wrap_content">
 
             <com.nikitaend.polproject.view.CircleView
+                android:id="@+id/main_current_temperature"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_gravity="center"
                 android:layout_width="225dp"
