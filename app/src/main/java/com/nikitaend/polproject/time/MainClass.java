@@ -5,6 +5,8 @@ package com.nikitaend.polproject.time;
 import com.nikitaend.polproject.time.TemperatureListener;
 import com.nikitaend.polproject.time.CurrentTimeListener;
 
+import java.util.ArrayList;
+
 public class MainClass {
 
     public static void main(String[] args) throws Exception {
@@ -29,27 +31,29 @@ public class MainClass {
 //        System.out.println(interval);
 
 
-//        Thermostat thermostat = Thermostat.getInstance(23, 19);
-//
-//        TemperatureObserver temperatureListener = new TemperatureObserver();
-//
+        Thermostat thermostat = Thermostat.getInstance(23, 19);
+
+//        TemperatureObserver temperatureListener = new TemperatureListen();
+
 //        CurrentTimeObserver timeListener = new CurrentTimeListener();
-//
+
 //        thermostat.addCurrentTimeListener(timeListener);
 //
 //        thermostat.addTemperatureListener(temperatureListener);
 
 
-//        thermostat.addInterval("Mon 2:35", "Mon 2:40");
-//        System.out.println(thermostat);
-//
-//        thermostat.removeIntervalByIndex(0, Weekday.MONDAY);
-//
-//        System.out.println(thermostat);
-//
-//        Thread thread = new Thread(thermostat);
-//        thread.start();
-//        thermostat.run();
+        thermostat.addInterval("Mon 2:35", "Mon 2:40");
+
+        System.out.println(thermostat);
+
+        thermostat.removeIntervalByIndex(0, Weekday.MONDAY);
+
+        System.out.println(thermostat);
+
+        ArrayList<TimeInterval> intervals = thermostat.getSchedule(Weekday.MONDAY);
+
+        Thread thread = new Thread(thermostat);
+        thread.start();
 
 //        WeekSchedule schedule = new WeekSchedule();
 //

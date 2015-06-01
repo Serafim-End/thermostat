@@ -280,7 +280,7 @@ public class Thermostat implements Runnable {
 
         schedule.addInterval(Weekday.MONDAY, interval);
         schedule.addInterval(Weekday.MONDAY, interval2);
-        schedule.addInterval(Weekday.MONDAY, interval3);
+        schedule.addInterval(Weekday.TUESDAY, interval3);
     }
 
     private class TemperatureWatcher extends TimerTask {
