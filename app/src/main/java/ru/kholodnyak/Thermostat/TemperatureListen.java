@@ -1,6 +1,6 @@
 package ru.kholodnyak.Thermostat;
 
-public class TemperatureListener implements TemperatureObserver{
+public class TemperatureListen implements TemperatureListener {
     @Override
     public void update(double currentTemperature, double targetTemperature) {
         System.out.println("Current Temperature is " + currentTemperature);

@@ -1,10 +1,5 @@
 package ru.kholodnyak.Thermostat;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 public class MainClass {
 
     public static void main(String[] args) throws Exception {
@@ -30,6 +25,15 @@ public class MainClass {
 
 
         Thermostat thermostat = Thermostat.getInstance(23, 19);
+
+        TemperatureListener temperatureListener = new TemperatureListen();
+
+        CurrentTimeListener timeListener = new CurrentTimeListen();
+
+        thermostat.addCurrentTimeListener(timeListener);
+
+        thermostat.addTemperatureListener(temperatureListener);
+
 
         thermostat.addInterval("Mon 2:35", "Mon 2:40");
         System.out.println(thermostat);
