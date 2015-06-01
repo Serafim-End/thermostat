@@ -178,6 +178,11 @@ public class Thermostat implements Runnable {
         this.dayTemperature = dayTemperature;
     }
 
+
+    public WeekSchedule getSchedule() {
+        return schedule;
+    }
+
     public void seDayTemperatureValue(double value) throws Exception {
         // This variable is not redundant
         Temperature dayTemperature = new Temperature(value);
