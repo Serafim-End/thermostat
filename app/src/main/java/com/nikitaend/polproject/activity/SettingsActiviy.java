@@ -19,6 +19,12 @@ public class SettingsActiviy extends Activity implements TimePickerFragment.OnCo
         EditSettingsDialog.OnCompleteListener, TimePickerFragment.OnCompleteEditListener
 {
 
+    public static interface TemperatureChangedListener {
+        public abstract void OnTemperatureChanged(double dayTemperature, double nightTemperature);
+    }
+    
+    public TemperatureChangedListener temperatureChangedListener;
+    
     public static double dayTemperature = 25.2;
     public static double nightTemperature = 19.3;
     public static String dayTime = "08:30 AM";
@@ -76,9 +82,14 @@ public class SettingsActiviy extends Activity implements TimePickerFragment.OnCo
         if (dayNight) {
             TextView dayTextView = (TextView) findViewById(R.id.settings_day_temperature);
             dayTextView.setText(temperature + degree);
+            SettingsActiviy.dayTemperature = temperature;
+            
+            
+
         } else {
             TextView nightTextView = (TextView) findViewById(R.id.settings_night_temperature);
             nightTextView.setText(temperature + degree);
+            SettingsActiviy.nightTemperature = temperature;
         }
     }
 

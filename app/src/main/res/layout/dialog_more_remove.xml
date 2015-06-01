@@ -27,12 +27,22 @@
         android:gravity="right">
 
         <Button
+            android:id="@+id/cancel_remove_button"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@color/light_gray"
+            android:text="Cancel"
+            android:textColor="@color/black"/>
+        
+        <Button
             android:id="@+id/more_remove_button"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:background="@color/light_gray"
             android:text="Remove"
-            android:textColor="@color/black"/>
+            android:textColor="@color/red"/>
         
         </LinearLayout>
 

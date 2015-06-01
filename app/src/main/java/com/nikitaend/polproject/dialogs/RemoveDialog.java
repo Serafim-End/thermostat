@@ -48,6 +48,15 @@ public class RemoveDialog extends DialogFragment {
         getDialog().setTitle("Remove interval");
         View v = inflater.inflate(R.layout.dialog_more_remove, null);
         
+        
+        Button cancelBtn = (Button) v.findViewById(R.id.cancel_remove_button);
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+        
         Button removeBtn = (Button) v.findViewById(R.id.more_remove_button);
         removeBtn.setOnClickListener(new View.OnClickListener() {
             @Override

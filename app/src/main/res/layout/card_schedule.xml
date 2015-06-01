@@ -23,10 +23,10 @@
         android:text="Cooling to 19 degrees"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/dayNight_icon"
-        android:id="@+id/temperature_textView" />
+        android:id="@+id/card_temperature_textView" />
     
     <TextView
-        android:layout_below="@+id/temperature_textView"
+        android:layout_below="@+id/card_temperature_textView"
         android:paddingLeft="16dp"
         android:id="@+id/time_textView"
         android:layout_width="wrap_content"

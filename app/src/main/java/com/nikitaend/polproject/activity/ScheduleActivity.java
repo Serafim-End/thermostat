@@ -119,6 +119,7 @@ public class ScheduleActivity extends Activity
                 new TemperatureHolder(startTime, endTime, dayOrNight, false);
         ScheduleActivity.temperatureHoldersHash.get(title).add(temperatureHolder);
         adapterCard.notifyDataSetChanged();
+//        MainActivity.thermostat.insertIntervalDataHash();
     }
 
     @Override
@@ -154,4 +155,5 @@ public class ScheduleActivity extends Activity
                 EditDialogListVIew.newInstance(indexOfElement, startTime, endTime, dayNight, title);
         editDialogListVIew.show(getFragmentManager(), "editDialog");
     }
+
 }

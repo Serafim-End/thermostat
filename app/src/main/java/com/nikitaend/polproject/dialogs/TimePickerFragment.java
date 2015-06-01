@@ -24,6 +24,8 @@ public class TimePickerFragment extends DialogFragment
     String endTime;
     String dayNight;
     String title;
+    
+    
 
     public static interface OnCompleteEditListener {
         public abstract void onComplete(int indexOfLElement, String startTime, String endTime,
@@ -117,6 +119,13 @@ public class TimePickerFragment extends DialogFragment
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         String timeToHolder = "";
+        minute = minute - (minute % 5);
+//                + (int)(Math.abs((double)(minute % TIME_PICKER_INTERVAL)/TIME_PICKER_INTERVAL) * TIME_PICKER_INTERVAL);
+        if (minute == 60) {
+            minute = 0;
+            hourOfDay += 1;
+        }
+        
         if (hourOfDay > 12) {
             timeToHolder = (hourOfDay - 12) + ":" + minute + " PM";
         } else {
@@ -134,4 +143,6 @@ public class TimePickerFragment extends DialogFragment
             
         } else { mListener.onComplete(startEndTime, timeToHolder); }
     }
+
+    private static final int TIME_PICKER_INTERVAL = 5;
 }

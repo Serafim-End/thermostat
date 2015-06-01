@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.nikitaend.polproject.R;
@@ -81,17 +80,27 @@ public class EditDialog extends DialogFragment
         });
 
 
-        final Switch dayNightSwitch = (Switch) v.findViewById(R.id.dayNight_switch);
+//        final Switch dayNightSwitch = (Switch) v.findViewById(R.id.dayNight_switch);
         
         Button okBtn = (Button) v.findViewById(R.id.more_edit_dismiss_button);
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Boolean dayNight = !(dayNightSwitch).isChecked();
+//                Boolean dayNight = !(dayNightSwitch).isChecked();
+                Boolean dayNight = true;
                 String startTime = startTimeTextView.getText().toString();
                 String endTime = endTimeTextView.getText().toString();
                 
                 mListener.onComplete(startTime, endTime, dayNight);
+                dismiss();
+            }
+        });
+        
+        
+        Button backBtn = (Button) v.findViewById(R.id.cancel_edit_dismiss_button);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 dismiss();
             }
         });

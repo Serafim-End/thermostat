@@ -1,177 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <LinearLayout
         android:id="@+id/temperatureLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="16dp"
         android:background="@color/main_background"
-        android:paddingBottom="32dp">
+        android:orientation="vertical"
+        android:paddingBottom="32dp"
+        android:paddingTop="16dp">
 
         <TextView
             android:id="@+id/main_time_textView"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp"
             android:text="24 degrees will be in 3 minutes"
             android:textColor="#FFFFFF"
-            android:textSize="18dp"/>
+            android:textSize="18dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="right"
-            android:paddingRight="16dp"
-            android:layout_height="wrap_content">
+            android:paddingRight="16dp">
 
+<<<<<<< HEAD
             <com.nikitaend.polproject.view.CircleView
                 android:id="@+id/main_current_temperature"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_gravity="center"
+=======
+            <com.nikitaend.polproject.view.CircleView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/main_screen_current"
+>>>>>>> back-branch
                 android:layout_width="225dp"
                 android:layout_height="225dp"
-                app:titleText="23.5"
-                app:subtitleText="CURRENT"
-                app:titleSize="91dp"
-                app:subtitleSize="24dp"
-                app:titleColor="@color/black"
-                app:subtitleColor="@color/black"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
                 app:fillColor="@color/white"
                 app:fillRadius="1"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true">
-            </com.nikitaend.polproject.view.CircleView>
+                app:subtitleColor="@color/black"
+                app:subtitleSize="24dp"
+                app:subtitleText="CURRENT"
+                app:titleColor="@color/black"
+                app:titleSize="91dp"
+                app:titleText="23.5" />
 
-            <com.nikitaend.polproject.view.CircleView
+            <com.nikitaend.polproject.view.CircleView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/main_screen_target"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
-                app:titleText="26.5"
-                app:subtitleText="TARGET"
-                app:titleSize="32dp"
-                app:subtitleSize="12dp"
-                app:titleColor="#000000"
-                app:subtitleColor="@color/black"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
                 app:fillColor="@color/white"
                 app:fillRadius="1"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true">
-            </com.nikitaend.polproject.view.CircleView>
+                app:subtitleColor="@color/black"
+                app:subtitleSize="12dp"
+                app:subtitleText="TARGET"
+                app:titleColor="#000000"
+                app:titleSize="32dp"
+                app:titleText="26.5" />
 
         </LinearLayout>
     </LinearLayout>
+    
+    <com.melnykov.fab.FloatingActionButton
+        xmlns:fab="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fab_main_screen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="295dp"
+        android:layout_gravity="right"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:src="@drawable/edit"
+        fab:fab_colorNormal="@color/pink_seek"
+        fab:fab_colorPressed="@color/red"
+        fab:fab_colorRipple="@color/pink_seek" />
 
     <LinearLayout
         android:id="@+id/modeLayout"
-        android:layout_below="@+id/temperatureLayout"
         android:layout_width="match_parent"
-        android:orientation="vertical"
         android:layout_height="match_parent"
+        android:layout_below="@+id/temperatureLayout"
+        android:orientation="vertical"
         android:paddingTop="8dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
             android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
             android:paddingTop="8dp"
-            android:textSize="18dp"
             android:text="Mode"
-            android:textColor="@color/grey"/>
+            android:textColor="@color/grey"
+            android:textSize="18dp" />
 
 
         <LinearLayout
             android:id="@+id/calendarLayout"
-            android:paddingLeft="16dp"
-            android:paddingBottom="16dp"
-            android:paddingTop="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:paddingBottom="16dp"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
             android:weightSum="1">
 
             <ImageView
-                android:background="@drawable/calendar"
                 android:layout_width="32dp"
-                android:layout_height="32dp" />
+                android:layout_height="32dp"
+                android:background="@drawable/calendar" />
 
             <TextView
-                android:paddingLeft="16dp"
-                android:paddingRight="8dp"
-                android:layout_gravity="center"
-                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="7.69"
+                android:paddingLeft="16dp"
+                android:paddingRight="8dp"
                 android:text="Week Schedule"
-                android:textSize="18dp"
-                android:layout_weight="7.69" />
+                android:textColor="@color/black"
+                android:textSize="18dp" />
 
         </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/planeLayout"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            android:paddingLeft="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="16dp"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp">
 
             <ImageView
+                android:id="@+id/planeView"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:background="@drawable/plane_icon"
-                android:id="@+id/planeView" />
+                android:background="@drawable/plane_icon" />
 
 
             <LinearLayout
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:layout_toRightOf="@+id/planeView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-                
+                android:layout_toRightOf="@+id/planeView"
+                android:orientation="vertical"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Permanent"
                     android:textColor="@color/black"
-                    android:textSize="18dp"/>
-                
+                    android:textSize="18dp" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Freezes the current temperature"
-                    android:textSize="16dp"/>
-                
-                </LinearLayout>
-            
+                    android:textSize="16dp" />
+
+            </LinearLayout>
+
             <Switch
-                android:layout_gravity="center"
+                android:id="@+id/radioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/radioButton"
-                android:gravity="center_vertical"
-                android:paddingLeft="16dp"
-                android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
                 android:layout_marginEnd="14dp"
-                android:layout_toEndOf="@+id/planeView" />
+                android:layout_toEndOf="@+id/planeView"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp" />
 
         </RelativeLayout>
 
     </LinearLayout>
-
 
 
 </RelativeLayout>

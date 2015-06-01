@@ -8,31 +8,27 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.nikitaend.polproject.NavigationDrawerFragment;
 import com.nikitaend.polproject.R;
 import com.nikitaend.polproject.adapter.holder.TemperatureHolder;
 import com.nikitaend.polproject.dialogs.EditMainDialog;
-import com.nikitaend.polproject.time.NewTime;
-import com.nikitaend.polproject.time.Prototype;
+import com.nikitaend.polproject.time.CurrentTimeListener;
+import com.nikitaend.polproject.time.TemperatureListener;
+import com.nikitaend.polproject.time.Thermostat;
 import com.nikitaend.polproject.view.CircleView;
-import com.nikitaend.polproject.view.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 
 /**
@@ -41,13 +37,11 @@ import java.util.HashMap;
  */
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
-        EditMainDialog.OnCompleteListener {
+        EditMainDialog.OnCompleteListener, CurrentTimeListener, TemperatureListener {
     
     double targetTemperature = 25;
 
     final Context mContext = this;
-
-    private Prototype.ChangeTimeTemperatureListener mChangeTimeTemperatureListener;
     
 
 
@@ -64,7 +58,8 @@ public class MainActivity extends Activity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-        
+    public static Thermostat thermostat;
+    public static boolean vocation = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +74,15 @@ public class MainActivity extends Activity
         }
         
         setContentView(R.layout.activity_main);
+        
+        try {
+            thermostat =
+                    Thermostat.getInstance(SettingsActiviy.nightTemperature, SettingsActiviy.dayTemperature);
+            thermostat.addCurrentTimeListener(this);
+            thermostat.addTemperatureListener(this);
+            thermostat.run();
 
+        } catch (Exception e) {}
 
         final CircleView targetCircle = (CircleView) findViewById(R.id.main_screen_target);
         targetTemperature = Double.parseDouble(targetCircle.getTitleText());
@@ -93,24 +96,33 @@ public class MainActivity extends Activity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        View fabButton;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            fabButton = new FloatingActionButton.Builder(this)
-                    .withDrawable(getDrawable(R.drawable.edit))
-                    .withButtonColor(Color.WHITE)
-                    .withGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT)
-                    .withMargins(0, 0, 4, -48)
-                    .create();
-        } else {
-            fabButton = new Button(this);
-            fabButton.bringToFront();
-        }
-        
+
+        com.melnykov.fab.FloatingActionButton fabButton =
+                (com.melnykov.fab.FloatingActionButton) findViewById(R.id.fab_main_screen);
+        fabButton.show();
+
         targetCircle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment dialogFragment = EditMainDialog.newInstance(targetTemperature);
                 dialogFragment.show(getFragmentManager(), "editMainDialog");
+            }
+        });
+
+
+        Switch permanent = (Switch) findViewById(R.id.radioButton);
+        permanent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (thermostat != null) {
+                    if (!vocation) {
+                        thermostat.setVacationMode(true);
+                        vocation = true;
+                    } else {
+                        thermostat.setVacationMode(false);
+                        vocation = false;
+                    }
+                }
             }
         });
         
@@ -131,11 +143,15 @@ public class MainActivity extends Activity
                     }
                 });
 
+<<<<<<< HEAD
         fastTime();
         
         if (currentTime == null) {
             currentTime = parseNewTimeForInstance();
         }
+=======
+//        fastTime();
+>>>>>>> back-branch
     }
 
     @Override
@@ -198,6 +214,7 @@ public class MainActivity extends Activity
     }
 
 
+<<<<<<< HEAD
     /**
      * Methods to make time higher 
      */
@@ -305,29 +322,41 @@ public class MainActivity extends Activity
         addToCurrentTime((currentTimeMillis - lastTick) * 300);
         lastTick = currentTimeMillis;
         updateClock();
+=======
 
-    }
-
-    public void updateClock() {
-        TextView timeTextView = (TextView) findViewById(R.id.main_time_textView);
-        timeTextView.setText(
-                NewTime.getWeekDay(currentDay) + " " + currentTime);
-    }
-    
-    private static int timeID = 0;
-    private void fastTime() {
-        final android.os.Handler handler = new android.os.Handler();
-        final int id = ++timeID;
-        handler.postDelayed(new Runnable() {
+    @Override
+    public void update(final String currentTime) {
+        
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (id == timeID) {
-                    tickTack();
-                    handler.postDelayed(this, 200);
-                }
+                TextView timeTextView = (TextView) findViewById(R.id.main_time_textView);
+                timeTextView.setText(
+                        currentTime);
             }
-        }, 200);
+        });
+>>>>>>> back-branch
+
+        System.out.println(currentTime);
     }
+
+    @Override
+    public void update(final double currentTemperature, final double targetTemperature) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                CircleView target = (CircleView) findViewById(R.id.main_screen_target);
+                target.setTitleText(targetTemperature + "");
+                
+                CircleView current = (CircleView) findViewById(R.id.main_screen_current);
+                current.setTitleText(currentTemperature + "");
+            }
+        });
+
+        System.out.println(targetTemperature + " cur: " + currentTemperature);
+
+    }
+
     // end of methods that make time higher
     
     

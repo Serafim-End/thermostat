@@ -1,8 +1,4 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:compat="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/day_and_night"
-        android:title="@string/setup_day_night"
-        android:orderInCategory="100"
-        compat:showAsAction="ifRoom" />
-    
+
 </menu>

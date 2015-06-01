@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:paddingLeft="16dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     
@@ -9,6 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:paddingTop="16dp"
+        android:layout_marginLeft="16dp"
         android:paddingBottom="8dp"
         android:layout_height="wrap_content">
         
@@ -51,7 +51,7 @@
             android:paddingRight="16dp"
             android:gravity="right"
             android:text="8:30 AM"
-            android:textSize="18dp"
+            android:textSize="14dp"
             android:textColor="@color/black"
             android:layout_alignTop="@+id/more_edit_startTime_textView"
             android:layout_toEndOf="@+id/more_edit_start_interval_textView" />
@@ -60,7 +60,8 @@
 
     <RelativeLayout
         android:paddingTop="8dp"
-        android:paddingBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:paddingBottom="24dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -102,72 +103,84 @@
             android:paddingRight="16dp"
             android:gravity="right"
             android:text="9:30 AM"
-            android:textSize="18dp"
+            android:textSize="14dp"
             android:textColor="@color/black"
             android:layout_toEndOf="@+id/more_edit_start_interval_textView2"/>
 
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/settings_facebook_page"
-        android:background="#CCC" />
-    
-    <RelativeLayout
-        android:paddingTop="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp" 
-            android:background="@drawable/more_edit_day_mode"
-            android:id="@+id/more_edit_day_mode_imageView" />
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_below="@+id/settings_facebook_page"-->
+        <!--android:background="#CCC" />-->
+    <!---->
+    <!--<RelativeLayout-->
+        <!--android:paddingTop="16dp"-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:paddingBottom="16dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+        <!---->
+        <!--<ImageView-->
+            <!--android:layout_width="32dp"-->
+            <!--android:layout_height="32dp" -->
+            <!--android:background="@drawable/more_edit_day_mode"-->
+            <!--android:id="@+id/more_edit_day_mode_imageView" />-->
 
-        <TextView
-            android:id="@+id/more_edit_temperature_textView"
-            android:layout_width="144dp"
-            android:layout_height="wrap_content"
-            android:text="Temperature"
-            android:textColor="@color/black"
-            android:textSize="18dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:layout_marginRight="24dp"
-            android:layout_alignTop="@+id/more_edit_day_mode_imageView"
-            android:layout_toEndOf="@+id/more_edit_day_mode_imageView" />
+        <!--<TextView-->
+            <!--android:id="@+id/more_edit_temperature_textView"-->
+            <!--android:layout_width="144dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Temperature"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:textSize="18dp"-->
+            <!--android:paddingLeft="16dp"-->
+            <!--android:paddingRight="16dp"-->
+            <!--android:layout_marginRight="24dp"-->
+            <!--android:layout_alignTop="@+id/more_edit_day_mode_imageView"-->
+            <!--android:layout_toEndOf="@+id/more_edit_day_mode_imageView" />-->
 
-        <TextView
-            android:id="@+id/more_edit_day_mode_textView"
-            android:layout_width="144dp"
-            android:layout_height="wrap_content"
-            android:text="day / night mode"
-            android:textSize="16dp"
-            android:paddingLeft="16dp"
-            android:layout_marginRight="24dp"
-            android:layout_below="@+id/more_edit_temperature_textView"
-            android:layout_toEndOf="@+id/more_edit_day_mode_imageView" />
-        
-        <Switch
-            android:id="@+id/dayNight_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignBottom="@+id/more_edit_day_mode_imageView"
-            android:layout_toEndOf="@+id/more_edit_temperature_textView" />
-        
-        </RelativeLayout>
+        <!--<TextView-->
+            <!--android:id="@+id/more_edit_day_mode_textView"-->
+            <!--android:layout_width="144dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="day / night mode"-->
+            <!--android:textSize="16dp"-->
+            <!--android:paddingLeft="16dp"-->
+            <!--android:layout_marginRight="24dp"-->
+            <!--android:layout_below="@+id/more_edit_temperature_textView"-->
+            <!--android:layout_toEndOf="@+id/more_edit_day_mode_imageView" />-->
+        <!---->
+        <!--<Switch-->
+            <!--android:id="@+id/dayNight_switch"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_alignBottom="@+id/more_edit_day_mode_imageView"-->
+            <!--android:layout_toEndOf="@+id/more_edit_temperature_textView" />-->
+        <!---->
+        <!--</RelativeLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_gravity="right"
-        android:gravity="right"
         android:layout_height="wrap_content">
 
         <Button
+            android:id="@+id/cancel_edit_dismiss_button"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:background="@color/light_gray"
+            android:textColor="@color/black"
+            android:layout_gravity="right" />
+
+        <Button
             android:id="@+id/more_edit_dismiss_button"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="OK"
             android:background="@color/light_gray"
