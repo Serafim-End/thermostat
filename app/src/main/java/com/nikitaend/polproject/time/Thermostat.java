@@ -179,8 +179,8 @@ public class Thermostat implements Runnable {
     }
 
 
-    public WeekSchedule getSchedule() {
-        return schedule;
+    public ArrayList<TimeInterval> getSchedule(Weekday weekday) {
+        return schedule.getDaySchedule(weekday).getIntervals();
     }
 
     public void seDayTemperatureValue(double value) throws Exception {

@@ -54,6 +54,7 @@ public class DaySchedule implements Serializable {
     }
 
 
+
     /**
      * Removes interval
      *
