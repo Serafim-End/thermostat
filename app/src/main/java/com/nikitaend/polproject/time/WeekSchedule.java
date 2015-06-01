@@ -7,17 +7,6 @@ import java.util.ArrayList;
  * Расписание интервалов температур на неделю.
  */
 public class WeekSchedule implements Serializable {
-
-    public DaySchedule getDaySchedule(Weekday weekday) {
-        for (DaySchedule daySchedule : daySchedules) {
-            if (daySchedule.getWeekday() == weekday) {
-                return daySchedule;
-            }
-        }
-        return null;
-    }
-
-
     /**
      * Список расписаний на каждый день недели
      */
@@ -105,9 +94,7 @@ public class WeekSchedule implements Serializable {
     private void initSchedule() {
         daySchedules = new ArrayList<>();
 
-        Weekday[] days = {Weekday.MONDAY, Weekday.TUESDAY, Weekday.WEDNESDAY,
-        Weekday.THURSDAY, Weekday.FRIDAY, Weekday.SATURDAY, Weekday.SUNDAY};
-        for (Weekday weekday : days) {
+        for (Weekday weekday : Weekday.values()) {
             daySchedules.add(new DaySchedule(weekday));
         }
     }

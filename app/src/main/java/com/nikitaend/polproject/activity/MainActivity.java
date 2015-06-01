@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nikitaend.polproject.NavigationDrawerFragment;
 import com.nikitaend.polproject.R;
@@ -84,10 +83,7 @@ public class MainActivity extends Activity
             thermostat.addTemperatureListener(this);
             thermostat.run();
 
-        } catch (Exception e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
+        } catch (Exception e) {}
 
         final CircleView targetCircle = (CircleView) findViewById(R.id.main_screen_target);
         targetTemperature = Double.parseDouble(targetCircle.getTitleText());
@@ -130,6 +126,8 @@ public class MainActivity extends Activity
                         startActivity(weekDays);
                     }
                 });
+
+//        fastTime();
     }
 
     @Override
@@ -205,8 +203,8 @@ public class MainActivity extends Activity
             }
         });
 
+        System.out.println(currentTime);
     }
-    
 
     @Override
     public void update(final double currentTemperature, final double targetTemperature) {
@@ -221,7 +219,7 @@ public class MainActivity extends Activity
             }
         });
 
-//        System.out.println(targetTemperature + " cur: " + currentTemperature);
+        System.out.println(targetTemperature + " cur: " + currentTemperature);
 
     }
 

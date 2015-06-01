@@ -44,7 +44,7 @@ public enum Weekday implements Serializable {
         return this.value;
     }
 
-    public static Weekday getWeekDayByString(String weekday) {
+    static Weekday getWeekDayByString(String weekday) {
         weekday = weekday.toLowerCase().trim();
 
         // :-(
