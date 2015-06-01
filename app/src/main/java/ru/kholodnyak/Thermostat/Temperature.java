@@ -48,7 +48,7 @@ public class Temperature implements Serializable {
      * @param value значение температуры
      * @throws Exception если значение температуры вышло за допустимые пределы
      */
-    private void setValue(double value) throws Exception {
+    public void setValue(double value) throws Exception {
         if (value < Temperature.MINIMUM || value > Temperature.MAXIMUM) {
             throw new Exception("Temperature must be in [" +
                     Temperature.MINIMUM + ";" + Temperature.MAXIMUM + "]");

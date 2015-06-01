@@ -47,6 +47,47 @@ public class WeekSchedule implements Serializable {
         }
     }
 
+    public void removeIntervalByIndex(int intervalIndex, Weekday weekday) {
+        for (DaySchedule daySchedule : daySchedules) {
+            if (daySchedule.getWeekday() == weekday) {
+                daySchedule.removeIntervalByIndex(intervalIndex);
+                return;
+            }
+        }
+    }
+
+    /**
+     * Gets intervals of a week
+     *
+     * @return intervalse of a week
+     */
+    public ArrayList<DaySchedule> getDaysSchedule() {
+        return daySchedules;
+    }
+
+    /**
+     * Gets next interval
+     *
+     * @return next interval
+     */
+    public TimeInterval getNextInterval(TimeInterval interval) {
+        int counter = 0;
+        for (DaySchedule daySchedule : daySchedules) {
+            if (daySchedule.getNextInterval(interval) != null) {
+                return daySchedule.getNextInterval(interval);
+            }
+        }
+
+        for (DaySchedule daySchedule : daySchedules) {
+            if (daySchedule.getFirstInterval() != null) {
+                if (!daySchedule.getFirstInterval().equals(interval)) {
+                    return daySchedule.getFirstInterval();
+                }
+            }
+        }
+        return null;
+    }
+
     /**
      * Creates and initialize week schedule
      */

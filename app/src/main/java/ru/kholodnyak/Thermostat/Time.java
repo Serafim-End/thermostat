@@ -207,6 +207,36 @@ public class Time implements Serializable {
     }
 
     /**
+     * Check whether the current time is later or equal than the other time
+     *
+     * @param time the other time
+     * @return true, if current time is later or equal, else false
+     */
+    public boolean isLaterOrEqualThan(Time time) {
+        return this.equals(time) || this.isLaterThan(time);
+    }
+
+    public int minusAnother(Time time) throws Exception {
+        if (time.getWeekday() != this.getWeekday()) {
+            throw new Exception("You can compare the dates only for one day!");
+        }
+
+        if (time.equals(this)) {
+            return 0;
+        }
+
+        int minutesInHour = 60;
+
+        int currentTotalMinutes = this.hours * minutesInHour + minutes;
+        int anotherTimeTotalMinutes = time.getHours() * minutesInHour + time.getMinutes();
+
+//        if (time.isLaterThan(this)) {
+//            return anotherTimeTotalMinutes - currentTotalMinutes;
+//        }
+        return currentTotalMinutes - anotherTimeTotalMinutes;
+    }
+
+    /**
      * Возвращает принадлежность значения интервалу.
      *
      * @param value проверяемое значение

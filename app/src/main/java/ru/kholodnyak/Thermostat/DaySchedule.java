@@ -69,6 +69,49 @@ public class DaySchedule implements Serializable {
     }
 
     /**
+     * Removes by interval
+     *
+     * @param intervalIndex interval index
+     */
+    public void removeIntervalByIndex(int intervalIndex) {
+        if (intervals.size() < intervalIndex) {
+            return;
+        }
+
+        intervals.remove(intervalIndex);
+    }
+
+    /**
+     * Gets intervals of a day
+     *
+     * @return intervalse of a day
+     */
+    public ArrayList<TimeInterval> getIntervals() {
+        return intervals;
+    }
+
+    public TimeInterval getNextInterval(TimeInterval interval) {
+        boolean flag = false;
+        for (TimeInterval currentInterval : intervals) {
+            if (flag) {
+                return currentInterval;
+            }
+            if (currentInterval.equals(interval)) {
+                flag = true;
+            }
+        }
+        return null;
+    }
+
+    public TimeInterval getFirstInterval() {
+        if (intervals.size() == 0) {
+            return null;
+        }
+
+        return intervals.get(0);
+    }
+
+    /**
      * Is it possible to add one more interval in this day.
      *
      * @return true, if it is possible, else false.

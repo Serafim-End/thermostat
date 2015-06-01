@@ -1,6 +1,7 @@
 package ru.kholodnyak.Thermostat;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Интервал c заданной температурой.
@@ -94,7 +95,7 @@ public class TimeInterval implements Serializable {
      */
 
     public boolean isIntersectWith(TimeInterval interval) {
-        // Checks weekdays
+        // Check weekdays
         if (this.startTime.weekday != interval.startTime.getWeekday()) {
             return false;
         }
@@ -104,6 +105,18 @@ public class TimeInterval implements Serializable {
         } else {
             return !(this.startTime.isLaterThan(interval.getEndTime()));
         }
+    }
+
+    public boolean containsTime(Time time) {
+
+        return time.isLaterOrEqualThan(this.startTime) && this.endTime.isLaterOrEqualThan(time);
+    }
+
+    public boolean equals(TimeInterval o) {
+
+        return ((this.getStartTime() == o.getStartTime() &&
+                this.getEndTime() == o.getEndTime()
+        ));
     }
 
     /**

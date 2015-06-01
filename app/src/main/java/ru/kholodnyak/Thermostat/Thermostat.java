@@ -1,10 +1,7 @@
 package ru.kholodnyak.Thermostat;
 
 import java.text.SimpleDateFormat;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 /**
  * Главный класс модели.
@@ -13,6 +10,12 @@ import java.util.TimerTask;
  * через него происходит все взаимодействие с "железкой".
  */
 public class Thermostat implements Runnable {
+
+    /**
+     * Singleton instance of Thermostat
+     */
+    private static Thermostat instance;
+
     private WeekSchedule schedule;
 
     /**
@@ -26,17 +29,85 @@ public class Thermostat implements Runnable {
     private Temperature dayTemperature;
 
     /**
+     * Current temperature
+     */
+    private Temperature currentTemperature;
+
+    /**
+     * Target temperature
+     */
+    private Temperature targetTemperature;
+
+    /**
      * Текущее время.
      * По условию, оно течёт быстрее стандартного в 300 раз
      */
     private Time currentTime;
 
+    /**
+     * Temperature observers
+     */
+    ArrayList<TemperatureObserver> temperatureObservers;
+
+    /**
+     * Current Time observers
+     */
+    ArrayList<CurrentTimeObserver> currentTimeObservers;
+
+    private boolean isVacationMode = false;
+
+    private boolean isManualMode = false;
 
     private final static int MINUTES_PER_ONE = 5;
 
-    public Thermostat() throws Exception {
+    private Thermostat(double nightTemperature, double dayTemperature) throws Exception {
         schedule = new WeekSchedule();
         currentTime = new Time(getCurrTime());
+
+        //TODO: Edit constant:
+        this.dayTemperature = new Temperature(dayTemperature);
+        this.nightTemperature = new Temperature(nightTemperature);
+
+        this.currentTemperature = new Temperature(this.dayTemperature.getValue());
+        this.targetTemperature = new Temperature(this.dayTemperature.getValue());
+
+        // Temperature observers
+        temperatureObservers = new ArrayList<>();
+        temperatureObservers.add(new TemperatureListener());
+
+        // Current time observers
+        currentTimeObservers = new ArrayList<>();
+        currentTimeObservers.add(new CurrentTimeListener());
+
+        // TODO: Remove this
+        insertInitialsData();
+    }
+
+    /**
+     * Singleton
+     *
+     * @return Thermostat instance
+     * @throws Exception if something going wrong
+     */
+    public static Thermostat getInstance(double nightTemperature, double dayTemperature) throws Exception {
+        if (instance == null) {
+            instance = new Thermostat(nightTemperature, dayTemperature);
+        }
+        return instance;
+    }
+
+
+    public void addInterval(String startTimeString, String endTimeString) throws Exception {
+
+        Time startTime = new Time(startTimeString);
+        Time endTime = new Time(endTimeString);
+
+        TimeInterval interval = new TimeInterval(this.dayTemperature, startTime, endTime);
+        schedule.addInterval(startTime.getWeekday(), interval);
+    }
+
+    public void removeIntervalByIndex(int intervalIndex, Weekday weekday) {
+        schedule.removeIntervalByIndex(intervalIndex, weekday);
     }
 
     /**
@@ -45,8 +116,7 @@ public class Thermostat implements Runnable {
      * @return текущая температура в термостате
      */
     public double getCurrentTemperature() {
-        // TODO: Implement
-        return 0;
+        return currentTemperature.getValue();
     }
 
     /**
@@ -55,8 +125,7 @@ public class Thermostat implements Runnable {
      * @return tatget-температура в термостате
      */
     public double getTargetTemperature() {
-        // TODO : Implement
-        return 0;
+        return targetTemperature.getValue();
     }
 
     /**
@@ -68,8 +137,12 @@ public class Thermostat implements Runnable {
      * <p>
      * Температура в режиме "отпуска" равна ночной температуре.
      */
-    public void setPermanentMode(boolean isVacation) {
-        // TODO: Implement
+    public void setVacationMode(boolean isWorking) {
+        this.isVacationMode = isWorking;
+    }
+
+    public void setManualMode(boolean isWorking) {
+        this.isManualMode = isWorking;
     }
 
     /**
@@ -97,9 +170,21 @@ public class Thermostat implements Runnable {
         return dayTemperature.getValue();
     }
 
+    @Override
+    public String toString() {
+        return schedule.toString();
+    }
 
-    private void findNearesInterval() {
-//        this.currentTime
+    private void updateTemperature() {
+        for (TemperatureObserver temperatureObserver : temperatureObservers) {
+            temperatureObserver.update(this.currentTemperature.getValue(), this.targetTemperature.getValue());
+        }
+    }
+
+    private void updateCurrentTime() {
+        for (CurrentTimeObserver currentTimeObserver : currentTimeObservers) {
+            currentTimeObserver.update(this.currentTime.toString());
+        }
     }
 
     //TODO: Remove all after this line
@@ -107,7 +192,7 @@ public class Thermostat implements Runnable {
     @Override
     public void run() {
         Timer timer = new Timer();
-        timer.schedule(new TestTask(), 0, 100);
+        timer.schedule(new TemperatureWatcher(), 0, 1000);
     }
 
     public String getCurrTime() {
@@ -119,9 +204,33 @@ public class Thermostat implements Runnable {
 
     private GregorianCalendar currDate = new GregorianCalendar();
 
-    private class TestTask extends TimerTask {
+
+    private void insertInitialsData() throws Exception {
+        Time startTime1 = new Time("Mon 4:25");
+        Time endTime1 = new Time("Mon 4:30");
+
+        Time startTime2 = new Time("Mon 03:20");
+        Time endTime2 = new Time("Mon 03:21");
+
+        Time startTime3 = new Time("Tue 05:20");
+        Time endTime3 = new Time("Tue 10:20");
+
+        Temperature temperature = new Temperature(6.0);
+
+        TimeInterval interval = new TimeInterval(10, startTime1, endTime1);
+        TimeInterval interval2 = new TimeInterval(temperature.getValue() + 1, startTime2, endTime2);
+        TimeInterval interval3 = new TimeInterval(temperature.getValue() + 2, startTime3, endTime3);
+
+
+        schedule.addInterval(Weekday.MONDAY, interval);
+        schedule.addInterval(Weekday.MONDAY, interval2);
+        schedule.addInterval(Weekday.MONDAY, interval3);
+    }
+
+    private class TemperatureWatcher extends TimerTask {
         @Override
         public void run() {
+            observeTemperature();
             currDate.add(GregorianCalendar.MINUTE, MINUTES_PER_ONE);
             String[] fulltime = getCurrTime().split(" ");
 
@@ -129,7 +238,7 @@ public class Thermostat implements Runnable {
             String[] time = fulltime[1].split(":");
             int hours = Integer.parseInt(time[0]);
             int minutes = Integer.parseInt(time[1]);
-
+            minutes -= (minutes % 5);
             try {
                 currentTime.setHours(hours);
                 currentTime.setMinutes(minutes);
@@ -137,9 +246,36 @@ public class Thermostat implements Runnable {
                 System.out.println(e.getMessage());
             }
 
-            System.out.println(currentTime);
+            updateCurrentTime();
+            // System.out.println(currentTime);
+            System.out.println(currentTemperature.getValue());
         }
 
+        private void observeTemperature() {
 
+            if (isVacationMode) {
+                currentTemperature = nightTemperature;
+                targetTemperature = nightTemperature;
+                updateTemperature();
+            }
+
+            for (DaySchedule daySchedule : schedule.getDaysSchedule()) {
+                for (TimeInterval interval : daySchedule.getIntervals()) {
+
+                    if (interval.containsTime(currentTime)) {
+                        currentTemperature = interval.getTemperature();
+                        TimeInterval nextInterval = schedule.getNextInterval(interval);
+                        if (nextInterval != null) {
+                            targetTemperature = nextInterval.getTemperature();
+                        } else {
+                            targetTemperature = currentTemperature;
+                        }
+
+                        System.out.println("bingo!");
+                        updateTemperature();
+                    }
+                }
+            }
+        }
     }
 }
