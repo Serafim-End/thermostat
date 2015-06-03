@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.SeekBar;
-import android.widget.Toast;
 
 import com.nikitaend.polproject.R;
 import com.nikitaend.polproject.activity.MainActivity;
@@ -72,7 +71,6 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
         getDialog().setTitle("Temperature editing");
         final View v = inflater.inflate(R.layout.dialog_main_edit, null);
 
-<<<<<<< HEAD
         final CheckBox permanently = (CheckBox) v.findViewById(R.id.permanently_checkBox);
         permanently.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,22 +82,18 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
                 }
             }
         });
-        
-        final CircleView editTarget = (CircleView) v.findViewById(R.id.edit_target_circleView);
-        editTarget.setTitleText(targetTemperature + "");
-        
+
         if (MainActivity.thermostat.isVacationMode == true) {
             permanently.setChecked(true);
         } else {
             permanently.setChecked(false);
         }
-        
-=======
+
 //        final CheckBox permanently = (CheckBox) v.findViewById(R.id.permanently_checkBox);
         final CircleView editTarget = (CircleView) v.findViewById(R.id.edit_target_circleView);
         editTarget.setTitleText(targetTemperature + "");
 
->>>>>>> bea19e326cd75c8e59343bc1817860e1d0b175d0
+
         final VerticalSeekBar seekBar = (VerticalSeekBar) v.findViewById(R.id.vertical_Seekbar);
         seekBar.setMax(250);
         seekBar.setProgress((int) targetTemperature);
