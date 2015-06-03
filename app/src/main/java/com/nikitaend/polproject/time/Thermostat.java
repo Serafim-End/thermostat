@@ -59,7 +59,7 @@ public class Thermostat implements Runnable {
      */
     ArrayList<CurrentTimeListener> currentTimeListeners;
 
-    private boolean isVacationMode = false;
+    public boolean isVacationMode = false;
 
     private boolean isManualMode = false;
 
