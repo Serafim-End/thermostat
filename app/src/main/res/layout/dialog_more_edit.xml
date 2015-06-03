@@ -14,7 +14,8 @@
         
         <ImageView
             android:id="@+id/more_edit_clock_imageView"
-            android:layout_width="32dp"
+            android:paddingLeft="5dp"
+            android:layout_width="27dp"
             android:layout_height="32dp"
             android:background="@drawable/more_edit_clock_icon"/>
         
@@ -50,7 +51,7 @@
             android:layout_height="wrap_content"
             android:paddingRight="16dp"
             android:gravity="right"
-            android:text="8:30 AM"
+            android:text="8:30"
             android:textSize="14dp"
             android:textColor="@color/black"
             android:layout_alignTop="@+id/more_edit_startTime_textView"
@@ -102,7 +103,7 @@
             android:layout_height="wrap_content"
             android:paddingRight="16dp"
             android:gravity="right"
-            android:text="9:30 AM"
+            android:text="9:30"
             android:textSize="14dp"
             android:textColor="@color/black"
             android:layout_toEndOf="@+id/more_edit_start_interval_textView2"/>

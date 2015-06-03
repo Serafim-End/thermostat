@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nikitaend.polproject.NavigationDrawerFragment;
 import com.nikitaend.polproject.R;
@@ -38,18 +39,17 @@ import java.util.HashMap;
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
         EditMainDialog.OnCompleteListener, CurrentTimeListener, TemperatureListener {
-    
+
     double targetTemperature = 25;
 
     final Context mContext = this;
-    
 
 
     // time
 //    TimeZone timeZone = new SimpleTimeZone(3, TimeZone.getAvailableIDs(3)[0]);
 //    Calendar calendar = Calendar.getInstance(timeZone, Locale.getDefault());
 
-    
+
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -72,9 +72,9 @@ public class MainActivity extends Activity
                 ScheduleActivity.temperatureHoldersHash.put(day, new ArrayList<TemperatureHolder>());
             }
         }
-        
+
         setContentView(R.layout.activity_main);
-        
+
         try {
             thermostat =
                     Thermostat.getInstance(SettingsActiviy.nightTemperature, SettingsActiviy.dayTemperature);
@@ -82,11 +82,13 @@ public class MainActivity extends Activity
             thermostat.addTemperatureListener(this);
             thermostat.run();
 
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
 
         final CircleView targetCircle = (CircleView) findViewById(R.id.main_screen_target);
         targetTemperature = Double.parseDouble(targetCircle.getTitleText());
-        
+
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -101,7 +103,8 @@ public class MainActivity extends Activity
                 (com.melnykov.fab.FloatingActionButton) findViewById(R.id.fab_main_screen);
         fabButton.show();
 
-        targetCircle.setOnClickListener(new View.OnClickListener() {
+        final CircleView currentCircle = (CircleView) findViewById(R.id.main_screen_current);
+        currentCircle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment dialogFragment = EditMainDialog.newInstance(targetTemperature);
@@ -110,22 +113,27 @@ public class MainActivity extends Activity
         });
 
 
+        vocation = MainActivity.thermostat.isVacationMode;
         Switch permanent = (Switch) findViewById(R.id.radioButton);
         permanent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (thermostat != null) {
-                    if (!vocation) {
+                    if (!MainActivity.thermostat.isVacationMode) {
                         thermostat.setVacationMode(true);
-                        vocation = true;
                     } else {
                         thermostat.setVacationMode(false);
-                        vocation = false;
                     }
                 }
             }
         });
-        
+
+        if (thermostat.isVacationMode == true) {
+            permanent.setChecked(true);
+        } else {
+            permanent.setChecked(false);
+        }
+
         fabButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,7 +141,7 @@ public class MainActivity extends Activity
                 dialogFragment.show(getFragmentManager(), "editMainDialog");
             }
         });
-        
+
         ((LinearLayout) findViewById(R.id.calendarLayout)).setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -143,15 +151,6 @@ public class MainActivity extends Activity
                     }
                 });
 
-<<<<<<< HEAD
-        fastTime();
-        
-        if (currentTime == null) {
-            currentTime = parseNewTimeForInstance();
-        }
-=======
-//        fastTime();
->>>>>>> back-branch
     }
 
     @Override
@@ -185,7 +184,7 @@ public class MainActivity extends Activity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-            getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
 //        }
         return true;
     }
@@ -210,123 +209,17 @@ public class MainActivity extends Activity
     public void onComplete(double target, Boolean setPermanently) {
         CircleView targetCircle = (CircleView) findViewById(R.id.main_screen_target);
         targetTemperature = target;
+
+        Switch permanent = (Switch) findViewById(R.id.radioButton);
         targetCircle.setTitleText(targetTemperature + "");
+        permanent.setChecked(setPermanently);
     }
 
 
-<<<<<<< HEAD
-    /**
-     * Methods to make time higher 
-     */
-    
-    private int currentDay;
-    private static NewTime currentTime;
-    
-    private NewTime parseNewTimeForInstance() {
-        Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-        return new NewTime(hour, minute);
-        
-    }
-    
-    private double delta;
-    public long lastTick = System.currentTimeMillis();
-
-    public void addToCurrentTime(long millis) {
-        double min = millis / (60.0 * 1000.0) + delta;
-        int m = (int) min;
-        int h = currentTime.getHours();
-        delta = (min - m);
-        m = m + currentTime.getMinutes();
-        h += m / 60;
-        m %= 60;
-        boolean dayChanged = false;
-        while (h >= 24) {
-            h -= 24;
-            currentDay++;
-            dayChanged = true;
-        }
-        currentDay = currentDay % 7;
-        NewTime newTime = new NewTime(h, m);
-//        if (!permanent) {
-//            if (!dayChanged) {
-//                updateTemperature(currentTime, newTime);
-//            } else {
-//                updateTemperature(new NewTime(0, 0), newTime);
-//            }
-//        }
-        currentTime = newTime;
-    }
-
-    private void updateTemperature(NewTime time, NewTime newTime) {
-        ArrayList<TemperatureHolder> temperatureHolders = 
-                ScheduleActivity.temperatureHoldersHash.get(NewTime.getWeekDay(currentDay));
-        
-        TemperatureHolder temperatureHolder = new TemperatureHolder("23:59", "23,59", "AM", true);
-        for (int i = 0; i < temperatureHolders.size(); i++) {
-            TemperatureHolder temp = temperatureHolders.get(i);
-            if (temp.isEnabled) {
-                temperatureHolder = 
-                        makeTemperatureHolder(temp.startTime, temp.endTime, temp.dayNight, 
-                                newTime, temperatureHolder);
-            }
-        }
-        
-        if (temperatureHolder.startTime != "23:59") {
-            CircleView currentCircleView = (CircleView) findViewById(R.id.main_current_temperature);
-            if (temperatureHolder.dayNight == "AM") {
-                String[] mHourMinutes = temperatureHolder.startTime.split(":");
-                int hour = Integer.parseInt(mHourMinutes[0]);
-                int minutes = Integer.parseInt(mHourMinutes[1]);
-                double delta = (SettingsActiviy.dayTemperature - targetTemperature) 
-                        / ((newTime.getHours() * 60 + newTime.getMinutes() - hour * 60 - minutes) / 3);
-                targetTemperature += delta;
-                currentCircleView.setTitleText(targetTemperature + "");
-            } else {
-                String[] mHourMinutes = temperatureHolder.startTime.split(":");
-                int hour = Integer.parseInt(mHourMinutes[0]);
-                int minutes = Integer.parseInt(mHourMinutes[1]);
-                double delta = (SettingsActiviy.nightTemperature - targetTemperature)
-                        / ((newTime.getHours() * 60 + newTime.getMinutes() - hour * 60 - minutes) / 3);
-                targetTemperature += delta;
-                currentCircleView.setTitleText(targetTemperature + "");
-            }
-        }
-    }
-    
-    private TemperatureHolder makeTemperatureHolder(String startTime, String endTime, String dayNight,
-                                                    NewTime newTime,
-                                                    TemperatureHolder temperatureHolder) {
-
-        String[] mHourMinutes = startTime.split(":");
-        int hour = Integer.parseInt(mHourMinutes[0]);
-        int minutes = Integer.parseInt(mHourMinutes[1]);
-        
-        String[] mHourMinutesTemp = temperatureHolder.startTime.split(":");
-        int hourTemp = Integer.parseInt(mHourMinutesTemp[0]);
-        int minutesTemp = Integer.parseInt(mHourMinutesTemp[1]);
-
-        long newMinuteTime = newTime.getHours() * 60 + newTime.getMinutes();
-        if (((hour * 60 + minutes) < (newMinuteTime)) 
-                && (newMinuteTime > (hourTemp * 60 + minutesTemp))) {
-            return new TemperatureHolder(newTime.getHours() + ":" + newTime.getMinutes(), endTime, dayNight, true);
-        }
-        
-        return temperatureHolder;
-    }
-    
-
-    private void tickTack() {
-        final long currentTimeMillis = System.currentTimeMillis();
-        addToCurrentTime((currentTimeMillis - lastTick) * 300);
-        lastTick = currentTimeMillis;
-        updateClock();
-=======
 
     @Override
     public void update(final String currentTime) {
-        
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -334,10 +227,8 @@ public class MainActivity extends Activity
                 timeTextView.setText(
                         currentTime);
             }
-        });
->>>>>>> back-branch
 
-        System.out.println(currentTime);
+        });
     }
 
     @Override
@@ -347,19 +238,19 @@ public class MainActivity extends Activity
             public void run() {
                 CircleView target = (CircleView) findViewById(R.id.main_screen_target);
                 target.setTitleText(targetTemperature + "");
-                
+
                 CircleView current = (CircleView) findViewById(R.id.main_screen_current);
                 current.setTitleText(currentTemperature + "");
             }
         });
 
-        System.out.println(targetTemperature + " cur: " + currentTemperature);
+        // System.out.println(targetTemperature + " cur: " + currentTemperature);
 
     }
 
     // end of methods that make time higher
-    
-    
+
+
     /**
      * A placeholder fragment containing a simple view.
      */

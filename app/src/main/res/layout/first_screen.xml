@@ -32,15 +32,8 @@
             android:gravity="right"
             android:paddingRight="16dp">
 
-<<<<<<< HEAD
-            <com.nikitaend.polproject.view.CircleView
-                android:id="@+id/main_current_temperature"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_gravity="center"
-=======
             <com.nikitaend.polproject.view.CircleView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/main_screen_current"
->>>>>>> back-branch
                 android:layout_width="225dp"
                 android:layout_height="225dp"
                 android:layout_alignParentTop="true"
@@ -53,7 +46,7 @@
                 app:subtitleText="CURRENT"
                 app:titleColor="@color/black"
                 app:titleSize="91dp"
-                app:titleText="23.5" />
+                app:titleText="16.0" />
 
             <com.nikitaend.polproject.view.CircleView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/main_screen_target"
@@ -68,11 +61,11 @@
                 app:subtitleText="TARGET"
                 app:titleColor="#000000"
                 app:titleSize="32dp"
-                app:titleText="26.5" />
+                app:titleText="16.0" />
 
         </LinearLayout>
     </LinearLayout>
-    
+
     <com.melnykov.fab.FloatingActionButton
         xmlns:fab="http://schemas.android.com/apk/res-auto"
         android:id="@+id/fab_main_screen"

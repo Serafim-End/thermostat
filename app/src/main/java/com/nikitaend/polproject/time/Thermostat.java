@@ -43,6 +43,8 @@ public class Thermostat implements Runnable {
      */
     private Temperature targetTemperature;
 
+    private Temperature manualTemperature;
+
     /**
      * Текущее время.
      * По условию, оно течёт быстрее стандартного в 300 раз
@@ -59,11 +61,11 @@ public class Thermostat implements Runnable {
      */
     ArrayList<CurrentTimeListener> currentTimeListeners;
 
-    private boolean isVacationMode = false;
+    public boolean isVacationMode = false;
 
     private boolean isManualMode = false;
 
-    private final static int MINUTES_PER_ONE = 5;
+    private final static int MINUTES_PER_ONE = 1;
 
     private Thermostat(double nightTemperature, double dayTemperature) throws Exception {
         schedule = new WeekSchedule();
@@ -101,6 +103,9 @@ public class Thermostat implements Runnable {
         return instance;
     }
 
+    public boolean isVacationMode() {
+        return isVacationMode;
+    }
 
     public void addInterval(String startTimeString, String endTimeString) throws Exception {
 
@@ -135,11 +140,11 @@ public class Thermostat implements Runnable {
 
     /**
      * Устанавливает в термостат расписание "отпуска".
-     * <p>
+     * <p/>
      * В этом режиме температура в термостате остается
      * постоянной. Расписание интервалов с температурами
      * в этом режиме тоже не действует.
-     * <p>
+     * <p/>
      * Температура в режиме "отпуска" равна ночной температуре.
      */
     public void setVacationMode(boolean isWorking) {
@@ -174,19 +179,16 @@ public class Thermostat implements Runnable {
     public double getDayTemperatureValue() {
         return dayTemperature.getValue();
     }
-    
-    public void setDayTemperatureValue(double value) throws Exception{
-        Temperature dayTemperature = new Temperature(value);
-        this.dayTemperature = dayTemperature;
+
+    public void setDayTemperatureValue(double value) throws Exception {
+        this.dayTemperature = new Temperature(value);
+        updateDayTimeTemperature();
     }
 
-    public void seDayTemperatureValue(double value) throws Exception {
-        // This variable is not redundant
-        Temperature dayTemperature = new Temperature(value);
-
-        this.dayTemperature = nightTemperature;
+    public void setManualTemperatureValue(double value) throws Exception {
+        this.manualTemperature = new Temperature(value);
     }
-    
+
     @Override
     public String toString() {
         return schedule.toString();
@@ -217,42 +219,41 @@ public class Thermostat implements Runnable {
     @Override
     public void run() {
         Timer timer = new Timer();
-        timer.schedule(new TemperatureWatcher(), 0, 1000);
+        timer.schedule(new TemperatureWatcher(), 0, 200);
     }
 
     public String getCurrTime() {
         SimpleDateFormat timeFormat = new SimpleDateFormat("E HH:mm", Locale.US);
         timeFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-        String time = timeFormat.format(currDate.getTime());
-        return time;
+        return timeFormat.format(currDate.getTime());
     }
 
     private GregorianCalendar currDate = new GregorianCalendar();
 
 
     private void insertInitialsData() throws Exception {
-        Time startTime1 = new Time("Mon 4:25");
-        Time endTime1 = new Time("Mon 4:30");
+//        Time startTime1 = new Time("Mon 4:25");
+//        Time endTime1 = new Time("Mon 4:30");
+//
+//        Time startTime2 = new Time("Mon 03:20");
+//        Time endTime2 = new Time("Mon 03:21");
+//
+//        Time startTime3 = new Time("Tue 05:20");
+//        Time endTime3 = new Time("Tue 10:20");
+//
+//        Temperature temperature = new Temperature(6.0);
+//
+//        TimeInterval interval = new TimeInterval(10, startTime1, endTime1);
+//        TimeInterval interval2 = new TimeInterval(temperature.getValue() + 1, startTime2, endTime2);
+//        TimeInterval interval3 = new TimeInterval(temperature.getValue() + 2, startTime3, endTime3);
+//
+//
+//        schedule.addInterval(Weekday.MONDAY, interval);
+//        schedule.addInterval(Weekday.MONDAY, interval2);
+//        schedule.addInterval(Weekday.TUESDAY, interval3);
 
-        Time startTime2 = new Time("Mon 03:20");
-        Time endTime2 = new Time("Mon 03:21");
-
-        Time startTime3 = new Time("Tue 05:20");
-        Time endTime3 = new Time("Tue 10:20");
-
-        Temperature temperature = new Temperature(6.0);
-
-        TimeInterval interval = new TimeInterval(10, startTime1, endTime1);
-        TimeInterval interval2 = new TimeInterval(temperature.getValue() + 1, startTime2, endTime2);
-        TimeInterval interval3 = new TimeInterval(temperature.getValue() + 2, startTime3, endTime3);
-
-
-        schedule.addInterval(Weekday.MONDAY, interval);
-        schedule.addInterval(Weekday.MONDAY, interval2);
-        schedule.addInterval(Weekday.MONDAY, interval3);
-        
     }
-    
+
 //    public void insertIntervalDataHash() {
 //        try {
 //            for (int i = 0; i < ScheduleActivity.temperatureHoldersHash.size(); i++) {
@@ -271,6 +272,18 @@ public class Thermostat implements Runnable {
 //        } catch (Exception e) {}
 //    }
 
+    /**
+     * Устанавливает новую дневную температуру для уже существующих интервалов
+     */
+    private void updateDayTimeTemperature() {
+        for (DaySchedule dayShedule : schedule.getDaysSchedule()) {
+            for (TimeInterval interval : dayShedule.getIntervals()) {
+
+                interval.setTemperature(this.dayTemperature);
+            }
+        }
+    }
+
     private class TemperatureWatcher extends TimerTask {
         @Override
         public void run() {
@@ -279,7 +292,7 @@ public class Thermostat implements Runnable {
             updateTimer();
             updateCurrentTime();
             // System.out.println(currentTime);
-            System.out.println(currentTemperature.getValue());
+//            System.out.println(currentTemperature.getValue());
         }
 
         private void updateTimer() {
@@ -290,7 +303,7 @@ public class Thermostat implements Runnable {
             String[] time = fulltime[1].split(":");
             int hours = Integer.parseInt(time[0]);
             int minutes = Integer.parseInt(time[1]);
-            minutes -= (minutes % 5);
+//            minutes -= (minutes % 5);
             try {
                 currentTime.setHours(hours);
                 currentTime.setMinutes(minutes);
@@ -301,32 +314,50 @@ public class Thermostat implements Runnable {
         }
 
         private void observeTemperature() {
-
             if (isVacationMode) {
                 currentTemperature = nightTemperature;
                 targetTemperature = nightTemperature;
                 updateTemperature();
+                return;
+            }
+
+            if (isManualMode) {
+                if (currentTime.isMidnight()) {
+                    setManualMode(false);
+                    return;
+                }
+                currentTemperature = manualTemperature;
+                targetTemperature = getTargetTemperature();
+                updateTemperature();
+
             }
 
             for (DaySchedule daySchedule : schedule.getDaysSchedule()) {
                 for (TimeInterval interval : daySchedule.getIntervals()) {
 
                     if (interval.containsTime(currentTime)) {
+                        setManualMode(false);
                         currentTemperature = interval.getTemperature();
-                        TimeInterval nextInterval = schedule.getNextInterval(interval);
-                        if (nextInterval != null) {
-                            targetTemperature = nextInterval.getTemperature();
-                        } else {
-                            targetTemperature = currentTemperature;
-                        }
+                        targetTemperature = nightTemperature;
+                        updateTemperature();
+                        return;
 
-                        System.out.println("bingo!");
-                        updateTemperature();
-                    } else {
-                        currentTemperature = nightTemperature;
-                        updateTemperature();
                     }
                 }
+            }
+            if (!isManualMode) {
+                currentTemperature = nightTemperature;
+                targetTemperature = getTargetTemperature();
+            }
+            updateTemperature();
+        }
+
+        private Temperature getTargetTemperature() {
+            TimeInterval nextInterval = schedule.getNextInterval(currentTime);
+            if (nextInterval != null) {
+                return nextInterval.getTemperature();
+            } else {
+                return nightTemperature;
             }
         }
     }

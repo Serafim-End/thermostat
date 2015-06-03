@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nikitaend.polproject.R;
+import com.nikitaend.polproject.activity.MainActivity;
 import com.nikitaend.polproject.activity.SettingsActiviy;
 import com.nikitaend.polproject.adapter.holder.TemperatureHolder;
 import com.nikitaend.polproject.dialogs.MoreDialog;
@@ -30,7 +31,8 @@ public class TemperatureAdapter extends ArrayAdapter<TemperatureHolder> {
     public DialogFragment dialogFragment;
     String title;
     Context mContext;
-    
+    private String degree =  (char) 0x00B0 + "C";
+
     public TemperatureAdapter(Context context, int resource,
                               ArrayList<TemperatureHolder> temperatureHolders, String title) {
         super(context, R.layout.card_schedule, temperatureHolders);
@@ -47,7 +49,7 @@ public class TemperatureAdapter extends ArrayAdapter<TemperatureHolder> {
         
         TemperatureHolder data = getItem(position);
         ((TextView) convertView.findViewById(R.id.time_textView))
-                .setText(data.startTime + " - " + data.endTime);
+                .setText(data.startTime + " – " + data.endTime);
         
         if (data.dayNight == "PM") {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -57,7 +59,7 @@ public class TemperatureAdapter extends ArrayAdapter<TemperatureHolder> {
         }
         
         ((TextView) convertView.findViewById(R.id.card_temperature_textView))
-                .setText("Day Mode " + SettingsActiviy.dayTemperature);
+                .setText("Day Mode " + MainActivity.thermostat.getDayTemperatureValue() + degree);
         
         
         convertView.findViewById(R.id.more_button).setOnClickListener(new View.OnClickListener() {
