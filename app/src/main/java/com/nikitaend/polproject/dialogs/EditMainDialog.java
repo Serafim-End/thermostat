@@ -26,6 +26,7 @@ import com.nikitaend.polproject.view.VerticalSeekBar;
 public class EditMainDialog extends DialogFragment implements DialogInterface.OnClickListener {
 
     private double targetTemperature;
+    private boolean hasChanged = false;
 
     public static EditMainDialog newInstance(double targetTemperature) {
         EditMainDialog editMainDialog = new EditMainDialog();
@@ -96,10 +97,11 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
 
         final VerticalSeekBar seekBar = (VerticalSeekBar) v.findViewById(R.id.vertical_Seekbar);
         seekBar.setMax(250);
-        seekBar.setProgress((int) targetTemperature);
+        seekBar.setProgress((int) targetTemperature*10);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                hasChanged = true;
                 targetTemperature = (progress / 10.0) + 5;
                 editTarget.setTitleText(targetTemperature + "");
             }
@@ -136,8 +138,12 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                targetTemperature = (seekBar.getProgress() / 10.0) + 5;
+                double temp = (seekBar.getProgress() / 10.0);
+                if (hasChanged) {
+                    targetTemperature = (seekBar.getProgress() / 10.0) + 5;
+                } else {
+                    targetTemperature = temp;
+                }
                 try {
                     MainActivity.thermostat.setManualTemperatureValue(targetTemperature);
 
@@ -149,7 +155,7 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
                 }
 
 
-                mListener.onComplete(targetTemperature, true);
+                mListener.onComplete(targetTemperature, MainActivity.thermostat.isVacationMode);
                 dismiss();
             }
         });

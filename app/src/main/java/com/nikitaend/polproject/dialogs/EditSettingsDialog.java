@@ -80,6 +80,7 @@ public class EditSettingsDialog extends DialogFragment implements DialogInterfac
 
         final VerticalSeekBar seekBar = (VerticalSeekBar) v.findViewById(R.id.vertical_settings_Seekbar);
         seekBar.setMax(250);
+        seekBar.setProgress((int)temperature * 10);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

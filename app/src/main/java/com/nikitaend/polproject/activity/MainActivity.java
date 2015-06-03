@@ -105,14 +105,17 @@ public class MainActivity extends Activity
         com.melnykov.fab.FloatingActionButton fabButton =
                 (com.melnykov.fab.FloatingActionButton) findViewById(R.id.fab_main_screen);
         fabButton.show();
-
-        targetCircle.setOnClickListener(new View.OnClickListener() {
+//
+        final CircleView currentCircle = (CircleView) findViewById(R.id.main_screen_current);
+        currentCircle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment dialogFragment = EditMainDialog.newInstance(targetTemperature);
                 dialogFragment.show(getFragmentManager(), "editMainDialog");
             }
         });
+        
+       
 
 
         vocation = MainActivity.thermostat.isVacationMode;
