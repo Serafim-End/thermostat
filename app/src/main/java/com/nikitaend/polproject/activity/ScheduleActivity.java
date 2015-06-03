@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nikitaend.polproject.R;
 import com.nikitaend.polproject.adapter.TemperatureAdapter;
@@ -117,9 +118,70 @@ public class ScheduleActivity extends Activity
 
         TemperatureHolder temperatureHolder =
                 new TemperatureHolder(startTime, endTime, dayOrNight, false);
-        ScheduleActivity.temperatureHoldersHash.get(title).add(temperatureHolder);
-        adapterCard.notifyDataSetChanged();
+        
+        ArrayList<TemperatureHolder> daySchedule = ScheduleActivity.temperatureHoldersHash.get(title);
+        if (daySchedule.size() == 0) {
+            ScheduleActivity.temperatureHoldersHash.get(title).add(temperatureHolder);
+            adapterCard.notifyDataSetChanged();
+        } else {
+            boolean isAdd = true;
+            for (TemperatureHolder holder : daySchedule) {
+                try {
+                    if (compareTimes(holder.startTime, temperatureHolder.endTime)) {
+                        isAdd = true;
+                    }
+
+                    if (compareTimes(temperatureHolder.startTime, holder.endTime)) {
+                        isAdd = true;
+                    } else {
+                        isAdd = false;
+                        break;
+                    }
+                } catch (Exception e) {
+                }
+            }
+            if (isAdd) {
+                ScheduleActivity.temperatureHoldersHash.get(title).add(temperatureHolder);
+                adapterCard.notifyDataSetChanged();
+            } else {
+                Toast.makeText(this, "try to add correct time", Toast.LENGTH_LONG).show();
+            }
+        }
+
 //        MainActivity.thermostat.insertIntervalDataHash();
+    }
+    
+    private boolean compareTimes(String startTime, String endTime) {
+        int startHour = 0;
+        int startMinute = 0;
+        int endHour = 0;
+        int endMinute = 0;
+
+        System.out.println("startTime: " +  startTime);
+        System.out.println("endTime" + endTime);
+        String[] startTimes = startTime.split(" ");
+        if (startTimes[1].contains("PM")) {
+            startHour += 12;
+        }
+        String[] startLeftTime = startTimes[0].split(":");
+        startHour += Integer.parseInt(startLeftTime[0]);
+        startMinute += Integer.parseInt(startLeftTime[1]);
+
+        String[] endTimes = endTime.split(" ");
+        if (endTimes[1].contains("PM")) {
+            endHour += 12;
+        }
+        String[] endLeftTime = endTimes[0].split(":");
+        endHour += Integer.parseInt(endLeftTime[0]);
+        endMinute += Integer.parseInt(endLeftTime[1]);
+
+        if (startHour > endHour) {
+            return true;
+        } else if (startHour == endHour && startMinute >= endMinute) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

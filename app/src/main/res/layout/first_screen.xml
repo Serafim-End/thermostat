@@ -32,15 +32,8 @@
             android:gravity="right"
             android:paddingRight="16dp">
 
-<<<<<<< HEAD
-            <com.nikitaend.polproject.view.CircleView
-                android:id="@+id/main_current_temperature"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_gravity="center"
-=======
             <com.nikitaend.polproject.view.CircleView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/main_screen_current"
->>>>>>> back-branch
                 android:layout_width="225dp"
                 android:layout_height="225dp"
                 android:layout_alignParentTop="true"

@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.SeekBar;
 
 import com.nikitaend.polproject.R;
+import com.nikitaend.polproject.activity.MainActivity;
 import com.nikitaend.polproject.view.CircleView;
 import com.nikitaend.polproject.view.VerticalSeekBar;
 
@@ -128,6 +129,22 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
             @Override
             public void onClick(View v) {
                 dismiss();
+            }
+        });
+
+        CheckBox permanent = (CheckBox) v.findViewById(R.id.permanently_checkBox);
+        permanent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (MainActivity.thermostat != null) {
+                    if (!MainActivity.vocation) {
+                        MainActivity.thermostat.setVacationMode(true);
+                        MainActivity.vocation = true;
+                    } else {
+                        MainActivity.thermostat.setVacationMode(false);
+                        MainActivity.vocation = false;
+                    }
+                }
             }
         });
 

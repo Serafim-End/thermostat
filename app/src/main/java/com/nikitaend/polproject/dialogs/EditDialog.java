@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nikitaend.polproject.R;
 
@@ -91,8 +92,12 @@ public class EditDialog extends DialogFragment
                 String startTime = startTimeTextView.getText().toString();
                 String endTime = endTimeTextView.getText().toString();
                 
-                mListener.onComplete(startTime, endTime, dayNight);
-                dismiss();
+                if (compareTimes(endTime, startTime)) {
+                    mListener.onComplete(startTime, endTime, dayNight);
+                    dismiss();
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), "end time should be later than start time", Toast.LENGTH_LONG).show();
+                }
             }
         });
         
@@ -106,6 +111,43 @@ public class EditDialog extends DialogFragment
         });
         
         return v;
+    }
+
+    private boolean compareTimes(String startTime, String endTime) {
+        int startHour = 0;
+        int startMinute = 0;
+        int endHour = 0;
+        int endMinute = 0;
+
+        System.out.println("startTime: " +  startTime);
+        System.out.println("endTime" + endTime);
+        String[] startTimes = startTime.split(" ");
+
+
+        if (startTimes[1].contains("PM")) {
+            startHour += 12;
+        }
+        String[] startLeftTime = startTimes[0].split(":");
+        startHour += Integer.parseInt(startLeftTime[0]);
+        startMinute += Integer.parseInt(startLeftTime[1]);
+
+        String[] endTimes = endTime.split(" ");
+        if (endTimes[1].contains("PM")) {
+            endHour += 12;
+        }
+        String[] endLeftTime = endTimes[0].split(":");
+        endHour += Integer.parseInt(endLeftTime[0]);
+        endMinute += Integer.parseInt(endLeftTime[1]);
+
+        System.out.println("start hour: " + startHour);
+        System.out.println("end hour: " + endHour);
+        if (startHour > endHour) {
+            return true;
+        } else if (startHour == endHour && startMinute >= endMinute) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void onClick(View v) {

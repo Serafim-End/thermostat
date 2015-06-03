@@ -1,5 +1,7 @@
 package com.nikitaend.polproject.time;
 
+import com.nikitaend.polproject.adapter.holder.TemperatureHolder;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -235,22 +237,42 @@ public class Thermostat implements Runnable {
         Time endTime1 = new Time("Mon 4:30");
 
         Time startTime2 = new Time("Mon 03:20");
-        Time endTime2 = new Time("Mon 03:21");
+        Time endTime2 = new Time("Mon 04:20");
 
         Time startTime3 = new Time("Tue 05:20");
         Time endTime3 = new Time("Tue 10:20");
+        
+        Time startTime4 = new Time("Wed 20:20");
+        Time endTime4 = new Time("Wed 21:40");
 
         Temperature temperature = new Temperature(6.0);
 
         TimeInterval interval = new TimeInterval(10, startTime1, endTime1);
         TimeInterval interval2 = new TimeInterval(temperature.getValue() + 1, startTime2, endTime2);
         TimeInterval interval3 = new TimeInterval(temperature.getValue() + 2, startTime3, endTime3);
+        TimeInterval interval4 = new TimeInterval(temperature.getValue(), startTime4, endTime4);
 
 
         schedule.addInterval(Weekday.MONDAY, interval);
         schedule.addInterval(Weekday.MONDAY, interval2);
         schedule.addInterval(Weekday.MONDAY, interval3);
+        schedule.addInterval(Weekday.WEDNESDAY, interval4);
         
+    }
+
+    public ArrayList<TemperatureHolder> getHolderSchedule(Weekday weekday) {
+        ArrayList<TimeInterval> intervals = schedule.getDaySchedule(weekday).getIntervals();
+        ArrayList<TemperatureHolder> intervalsHolder = new ArrayList<>();
+
+        for (TimeInterval interval : intervals) {
+
+            TemperatureHolder holder = new TemperatureHolder(interval.getStartTime().toString(),
+                    interval.getEndTime().toString(), "AM", true);
+            intervalsHolder.add(holder);
+        }
+
+        return intervalsHolder;
+
     }
     
 //    public void insertIntervalDataHash() {
@@ -279,7 +301,7 @@ public class Thermostat implements Runnable {
             updateTimer();
             updateCurrentTime();
             // System.out.println(currentTime);
-            System.out.println(currentTemperature.getValue());
+//            System.out.println(currentTemperature.getValue());
         }
 
         private void updateTimer() {
@@ -320,7 +342,7 @@ public class Thermostat implements Runnable {
                             targetTemperature = currentTemperature;
                         }
 
-                        System.out.println("bingo!");
+//                        System.out.println("bingo!");
                         updateTemperature();
                     } else {
                         currentTemperature = nightTemperature;

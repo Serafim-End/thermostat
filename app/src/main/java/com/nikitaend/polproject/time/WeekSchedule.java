@@ -17,6 +17,15 @@ public class WeekSchedule implements Serializable {
         initSchedule();
     }
 
+    public DaySchedule getDaySchedule(Weekday weekday) {
+        for (DaySchedule daySchedule : daySchedules) {
+            if (daySchedule.getWeekday() == weekday) {
+                return daySchedule;
+            }
+        }
+        return null;
+    }
+
     /**
      * Adds new interval in day schedule
      *
