@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.SeekBar;
 
 import com.nikitaend.polproject.R;
@@ -97,27 +96,12 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
 
         final VerticalSeekBar seekBar = (VerticalSeekBar) v.findViewById(R.id.vertical_Seekbar);
         seekBar.setMax(250);
-<<<<<<< HEAD
-<<<<<<< HEAD
-        seekBar.setProgress((int) targetTemperature * 10);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-=======
         seekBar.setProgress((int) targetTemperature*10);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 hasChanged = true;
->>>>>>> origin/back-branch
-=======
-        seekBar.setProgress((int) targetTemperature*10);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                hasChanged = true;
->>>>>>> origin/back-branch
                 targetTemperature = (progress / 10.0) + 5;
 //                try {
 //                    MainActivity.thermostat.setManualTemperatureValue(targetTemperature);
@@ -181,16 +165,7 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
 
                 }
 
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-                mListener.onComplete(targetTemperature, false);
-=======
                 mListener.onComplete(targetTemperature, MainActivity.thermostat.isVacationMode);
->>>>>>> origin/back-branch
-=======
-                mListener.onComplete(targetTemperature, MainActivity.thermostat.isVacationMode);
->>>>>>> origin/back-branch
                 dismiss();
             }
         });
