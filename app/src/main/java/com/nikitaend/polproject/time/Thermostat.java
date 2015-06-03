@@ -1,5 +1,8 @@
 package com.nikitaend.polproject.time;
 
+import com.nikitaend.polproject.activity.ScheduleActivity;
+import com.nikitaend.polproject.activity.ScheduleDaysActivity;
+import com.nikitaend.polproject.activity.SettingsActiviy;
 import com.nikitaend.polproject.adapter.holder.TemperatureHolder;
 
 import java.text.SimpleDateFormat;
@@ -85,7 +88,8 @@ public class Thermostat implements Runnable {
         currentTimeListeners = new ArrayList<>();
 
         // TODO: Remove this
-        insertInitialsData();
+//        insertInitialsData();
+        insertFromHash();
     }
 
 
@@ -257,6 +261,57 @@ public class Thermostat implements Runnable {
         schedule.addInterval(Weekday.MONDAY, interval3);
         schedule.addInterval(Weekday.WEDNESDAY, interval4);
         
+    }
+    
+    private void insertFromHash() {
+        for (int i = 0; i < ScheduleActivity.temperatureHoldersHash.size(); i++) {
+            ArrayList<TemperatureHolder> temperatureHolders = 
+                    ScheduleActivity.temperatureHoldersHash.get(ScheduleDaysActivity.weekDays[i]);
+            for (int j = 0; j < temperatureHolders.size(); j++) {
+                try {
+                    String sub = ScheduleDaysActivity.weekDays[i].substring(0, 3);
+                    String[] times = parseForTherm(sub,
+                            temperatureHolders.get(j).startTime,
+                            temperatureHolders.get(j).endTime);
+                    Time start = new Time(times[0]);
+                    Time end = new Time(times[1]);
+                    TimeInterval interval =
+                            new TimeInterval(SettingsActiviy.dayTemperature, start, end);
+
+                    schedule.addInterval(Weekday.getWeekDayByString(sub), interval);
+                } catch (Exception e) {}
+            }
+        }
+    }
+    
+    private String[] parseForTherm(String title, String startTime, String endTime) {
+        String sub = title.substring(0,3);
+        int sHours = 0;
+        int eHours = 0;
+        int sMinutes = 0;
+        int eMinutes = 0;
+
+        String newStartTimes[] = startTime.split(" ");
+        if (newStartTimes[1].contains("PM")) {
+            sHours += 12;
+        }
+        String[] start = newStartTimes[0].split(":");
+        sHours += Integer.parseInt(start[0]);
+        sMinutes += Integer.parseInt(start[1]);
+
+        String[] newEndTimes = endTime.split(" ");
+        if (newEndTimes[1].contains("PM")) {
+            eHours += 12;
+        }
+        String[] end = newEndTimes[0].split(":");
+        eHours += Integer.parseInt(end[0]);
+        eMinutes += Integer.parseInt(end[1]);
+
+        String toStart = sub + " " + sHours + ":" + sMinutes;
+        String toEnd = sub + " " + eMinutes + ": " + eMinutes;
+        
+        String[] times = {toStart, toEnd};
+        return times;
     }
 
     public ArrayList<TemperatureHolder> getHolderSchedule(Weekday weekday) {

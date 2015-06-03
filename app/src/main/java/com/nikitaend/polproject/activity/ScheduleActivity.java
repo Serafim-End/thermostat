@@ -172,6 +172,7 @@ public class ScheduleActivity extends Activity
                         String toEnd = sub + " " + eMinutes + ": " + eMinutes;
                         
                         MainActivity.thermostat.addInterval(toStart, toEnd);
+                        MainActivity.thermostat.run();
                     } catch (Exception e) {}
                 }
             } else {

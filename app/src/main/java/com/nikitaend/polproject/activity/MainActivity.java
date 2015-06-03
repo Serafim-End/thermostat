@@ -76,8 +76,10 @@ public class MainActivity extends Activity
         setContentView(R.layout.activity_main);
         
         try {
-            thermostat =
-                    Thermostat.getInstance(SettingsActiviy.nightTemperature, SettingsActiviy.dayTemperature);
+            thermostat = 
+                    Thermostat.getInstance(SettingsActiviy.nightTemperature,
+                            SettingsActiviy.dayTemperature);
+            
             thermostat.addCurrentTimeListener(this);
             thermostat.addTemperatureListener(this);
             thermostat.run();
