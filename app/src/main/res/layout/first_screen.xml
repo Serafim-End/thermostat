@@ -46,7 +46,7 @@
                 app:subtitleText="CURRENT"
                 app:titleColor="@color/black"
                 app:titleSize="91dp"
-                app:titleText="23.5" />
+                app:titleText="16.0" />
 
             <com.nikitaend.polproject.view.CircleView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/main_screen_target"
@@ -61,7 +61,7 @@
                 app:subtitleText="TARGET"
                 app:titleColor="#000000"
                 app:titleSize="32dp"
-                app:titleText="26.5" />
+                app:titleText="16.0" />
 
         </LinearLayout>
     </LinearLayout>

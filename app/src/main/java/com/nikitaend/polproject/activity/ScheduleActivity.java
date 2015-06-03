@@ -102,10 +102,10 @@ public class ScheduleActivity extends Activity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.the_same_for_all) {
-            DialogFragment sameDialog = SameDialog.newInstance(title);
-            sameDialog.show(getFragmentManager(), "sameDialog");
-        }
+//        if (id == R.id.the_same_for_all) {
+//            DialogFragment sameDialog = SameDialog.newInstance(title);
+//            sameDialog.show(getFragmentManager(), "sameDialog");
+//        }
 
         return super.onOptionsItemSelected(item);
     }
