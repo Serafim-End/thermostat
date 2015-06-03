@@ -48,7 +48,7 @@ public class RemoveDialog extends DialogFragment {
         }
     }
 
-    public View RemoveDialog(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         getDialog().setTitle("Remove interval");
