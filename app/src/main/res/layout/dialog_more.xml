@@ -1,56 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingBottom="8dp"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp">
+    android:layout_height="64dp"
+    android:orientation="horizontal"
+    android:paddingBottom="32dp"
+    android:paddingTop="16dp"
+    android:paddingLeft="16dp"
+    android:id="@+id/remove_dialog_layout"
+    android:paddingRight="16dp">
 
 
-    <LinearLayout
+    <ImageView
+        android:layout_width="18dp"
+        android:layout_height="24dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/remove_dialog_icon"/>
 
-        android:id="@+id/remove_dialog_layout"
+    <TextView
         android:layout_width="match_parent"
-
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="8dp"
+        android:layout_gravity="center_vertical"
         android:paddingLeft="16dp"
-        android:paddingTop="0dp">
+        android:text="REMOVE"
+        android:textColor="@color/red"
+        android:textSize="18dp" />
 
-        <ImageView
-            android:layout_width="18dp"
-            android:layout_height="24dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="0dp"
-            android:background="@drawable/remove_dialog_icon"
-
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:paddingLeft="16dp"
-            android:text="REMOVE"
-            android:textColor="@color/red"
-            android:textSize="18dp" />
-
-    </LinearLayout>
 </LinearLayout>
-
-
-    <!--<LinearLayoutandroid:id="@+id/enabled_dialog_layout"android:layout_width="match_parent"android:layout_height="wrap_content"android:paddingLeft="16dp"android:paddingBottom="8dp"android:orientation="horizontal"android:visibility="invisible">-->
-
-    <!--<ImageViewandroid:layout_width="32dp"android:layout_height="32dp"android:background="@drawable/enabled_icon"/>-->
-
-    <!--<TextViewandroid:layout_width="wrap_content"android:layout_height="wrap_content"android:paddingLeft="16dp"android:paddingRight="16dp"android:textSize="18dp"android:text="ENABLED"android:layout_gravity="center_vertical"android:textColor="@color/black"/><Switchandroid:id="@+id/enabled_element"android:layout_width="match_parent"android:layout_height="wrap_content"android:paddingLeft="16dp"android:layout_gravity="center_vertical"/></LinearLayout> <LinearLayoutandroid:id="@+id/edit_dialog_layout"android:layout_width="match_parent"android:layout_height="wrap_content"android:paddingLeft="16dp"android:paddingBottom="8dp"android:paddingTop="8dp"android:orientation="horizontal">-->
-
-    <!--<ImageViewandroid:layout_width="32dp"android:layout_height="32dp"android:background="@drawable/edit_icon_dialog"/>-->
-
-    <!--<TextViewandroid:paddingLeft="16dp"android:layout_width="match_parent"android:layout_height="wrap_content"android:layout_gravity="center_vertical"android:textSize="18dp"android:textColor="@color/black"android:text="EDIT"/></LinearLayout>--><!-- -->
-
-
