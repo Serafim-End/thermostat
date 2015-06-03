@@ -86,7 +86,6 @@ public class Thermostat implements Runnable {
 
         // TODO: Remove this
         insertInitialsData();
-//        insertIntervalDataHash();
     }
 
 
@@ -274,24 +273,7 @@ public class Thermostat implements Runnable {
         return intervalsHolder;
 
     }
-    
-//    public void insertIntervalDataHash() {
-//        try {
-//            for (int i = 0; i < ScheduleActivity.temperatureHoldersHash.size(); i++) {
-//                ArrayList<TemperatureHolder> temperatureHolders = ScheduleActivity.temperatureHoldersHash.get(ScheduleDaysActivity.weekDays[i]);
-//                for (TemperatureHolder temperatureHolder : temperatureHolders) {
-//                    String newTitle = ScheduleDaysActivity.weekDays[i].substring(0, 3);
-//                    String[] temp1 = temperatureHolder.startTime.split(" ");
-//                    Time startTime = new Time(newTitle + temp1[0]);
-//                    String[] temp2 = temperatureHolder.endTime.split(" ");
-//                    Time endTime = new Time(newTitle + temp2[0]);
-//
-//                    TimeInterval interval1 = new TimeInterval(getCurrentTemperature(), startTime, endTime);
-//                    schedule.addInterval(Weekday.getWeekDayByString(newTitle), interval1);
-//                }
-//            }
-//        } catch (Exception e) {}
-//    }
+
 
     private class TemperatureWatcher extends TimerTask {
         @Override

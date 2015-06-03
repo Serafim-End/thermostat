@@ -143,6 +143,37 @@ public class ScheduleActivity extends Activity
             if (isAdd) {
                 ScheduleActivity.temperatureHoldersHash.get(title).add(temperatureHolder);
                 adapterCard.notifyDataSetChanged();
+                
+                if (MainActivity.thermostat != null) {
+                    try {
+                        String sub = title.substring(0,3);
+                        int sHours = 0;
+                        int eHours = 0;
+                        int sMinutes = 0;
+                        int eMinutes = 0;
+
+                        String newStartTimes[] = temperatureHolder.startTime.split(" ");
+                        if (newStartTimes[1].contains("PM")) {
+                            sHours += 12;
+                        }
+                        String[] start = newStartTimes[0].split(":");
+                        sHours += Integer.parseInt(start[0]);
+                        sMinutes += Integer.parseInt(start[1]);
+                        
+                        String[] newEndTimes = temperatureHolder.endTime.split(" ");
+                        if (newEndTimes[1].contains("PM")) {
+                            eHours += 12;
+                        }
+                        String[] end = newEndTimes[0].split(":");
+                        eHours += Integer.parseInt(end[0]);
+                        eMinutes += Integer.parseInt(end[1]);
+                        
+                        String toStart = sub + " " + sHours + ":" + sMinutes;
+                        String toEnd = sub + " " + eMinutes + ": " + eMinutes;
+                        
+                        MainActivity.thermostat.addInterval(toStart, toEnd);
+                    } catch (Exception e) {}
+                }
             } else {
                 Toast.makeText(this, "try to add correct time", Toast.LENGTH_LONG).show();
             }
@@ -157,8 +188,6 @@ public class ScheduleActivity extends Activity
         int endHour = 0;
         int endMinute = 0;
 
-        System.out.println("startTime: " +  startTime);
-        System.out.println("endTime" + endTime);
         String[] startTimes = startTime.split(" ");
         if (startTimes[1].contains("PM")) {
             startHour += 12;
