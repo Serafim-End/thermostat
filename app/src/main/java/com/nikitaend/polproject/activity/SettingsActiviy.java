@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nikitaend.polproject.R;
 import com.nikitaend.polproject.dialogs.EditSettingsDialog;
@@ -33,7 +34,7 @@ public class SettingsActiviy extends Activity implements TimePickerFragment.OnCo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_settings);
         
         setTitle("Day/Night Settings");
@@ -47,23 +48,25 @@ public class SettingsActiviy extends Activity implements TimePickerFragment.OnCo
                 dialogFragment.show(getFragmentManager(), "timePickerDayTime");
             }
         });
-        
+
+        final double dayTimeTemperature = MainActivity.thermostat.getDayTemperatureValue();
         TextView dayTempTextView = (TextView) findViewById(R.id.settings_day_temperature);
-        dayTempTextView.setText(dayTemperature + degree);
+        dayTempTextView.setText(dayTimeTemperature + degree);
         dayTempTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment dialogFragment = EditSettingsDialog.newInstance(true, dayTemperature);
+                DialogFragment dialogFragment = EditSettingsDialog.newInstance(true, dayTimeTemperature);
                 dialogFragment.show(getFragmentManager(), "editSettingsDay");
             }
         });
-        
+
+        final double nightTimeTemperature = MainActivity.thermostat.getNightTemperatureValue();
         TextView nightTempTextView = (TextView) findViewById(R.id.settings_night_temperature);
-        nightTempTextView.setText(nightTemperature + degree);
+        nightTempTextView.setText(nightTimeTemperature + degree);
         nightTempTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment dialogFragment = EditSettingsDialog.newInstance(false, nightTemperature);
+                DialogFragment dialogFragment = EditSettingsDialog.newInstance(false, nightTimeTemperature);
                 dialogFragment.show(getFragmentManager(), "editSettingsNight");
             }
         });
@@ -82,14 +85,24 @@ public class SettingsActiviy extends Activity implements TimePickerFragment.OnCo
         if (dayNight) {
             TextView dayTextView = (TextView) findViewById(R.id.settings_day_temperature);
             dayTextView.setText(temperature + degree);
-            SettingsActiviy.dayTemperature = temperature;
+            try {
+                MainActivity.thermostat.setDayTemperatureValue(temperature);
+            } catch (Exception e) {
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+//            SettingsActiviy.dayTemperature = temperature;
             
             
 
         } else {
             TextView nightTextView = (TextView) findViewById(R.id.settings_night_temperature);
             nightTextView.setText(temperature + degree);
-            SettingsActiviy.nightTemperature = temperature;
+            try {
+                MainActivity.thermostat.setNightTemperatureValue(temperature);
+            } catch (Exception e) {
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+//            SettingsActiviy.nightTemperature = temperature;
         }
     }
 

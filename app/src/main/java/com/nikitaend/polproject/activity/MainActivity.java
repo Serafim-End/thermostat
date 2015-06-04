@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nikitaend.polproject.NavigationDrawerFragment;
 import com.nikitaend.polproject.R;
@@ -84,7 +85,9 @@ public class MainActivity extends Activity
             thermostat.addTemperatureListener(this);
             thermostat.run();
 
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
 
         final CircleView targetCircle = (CircleView) findViewById(R.id.main_screen_target);
         targetTemperature = Double.parseDouble(targetCircle.getTitleText());

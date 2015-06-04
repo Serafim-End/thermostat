@@ -135,11 +135,11 @@ public class Thermostat implements Runnable {
 
     /**
      * Устанавливает в термостат расписание "отпуска".
-     * <p>
+     * <p/>
      * В этом режиме температура в термостате остается
      * постоянной. Расписание интервалов с температурами
      * в этом режиме тоже не действует.
-     * <p>
+     * <p/>
      * Температура в режиме "отпуска" равна ночной температуре.
      */
     public void setVacationMode(boolean isWorking) {
@@ -174,19 +174,12 @@ public class Thermostat implements Runnable {
     public double getDayTemperatureValue() {
         return dayTemperature.getValue();
     }
-    
-    public void setDayTemperatureValue(double value) throws Exception{
-        Temperature dayTemperature = new Temperature(value);
-        this.dayTemperature = dayTemperature;
+
+    public void setDayTemperatureValue(double value) throws Exception {
+        this.dayTemperature = new Temperature(value);
+        updateDayTimeTemperature();
     }
 
-    public void seDayTemperatureValue(double value) throws Exception {
-        // This variable is not redundant
-        Temperature dayTemperature = new Temperature(value);
-
-        this.dayTemperature = nightTemperature;
-    }
-    
     @Override
     public String toString() {
         return schedule.toString();
@@ -249,9 +242,9 @@ public class Thermostat implements Runnable {
 //        schedule.addInterval(Weekday.MONDAY, interval);
 //        schedule.addInterval(Weekday.MONDAY, interval2);
 //        schedule.addInterval(Weekday.TUESDAY, interval3);
-        
+
     }
-    
+
 //    public void insertIntervalDataHash() {
 //        try {
 //            for (int i = 0; i < ScheduleActivity.temperatureHoldersHash.size(); i++) {
@@ -269,6 +262,18 @@ public class Thermostat implements Runnable {
 //            }
 //        } catch (Exception e) {}
 //    }
+
+    /**
+     * Устанавливает новую дневную температуру для уже существующих интервалов
+     */
+    private void updateDayTimeTemperature() {
+        for (DaySchedule dayShedule : schedule.getDaysSchedule()) {
+            for (TimeInterval interval : dayShedule.getIntervals()) {
+
+                interval.setTemperature(this.dayTemperature);
+            }
+        }
+    }
 
     private class TemperatureWatcher extends TimerTask {
         @Override

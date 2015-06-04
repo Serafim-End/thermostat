@@ -152,7 +152,7 @@ public class TimeInterval implements Serializable {
         return temperature;
     }
 
-    private void setTemperature(Temperature temperature) {
+    public void setTemperature(Temperature temperature) {
         this.temperature = temperature;
     }
 
