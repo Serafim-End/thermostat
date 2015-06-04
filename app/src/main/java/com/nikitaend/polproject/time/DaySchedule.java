@@ -63,6 +63,7 @@ public class DaySchedule implements Serializable {
         for (TimeInterval interval : intervals) {
             if (interval.getId() == intervalID) {
                 intervals.remove(interval);
+                sortIntervals();
                 return;
             }
         }
@@ -79,6 +80,7 @@ public class DaySchedule implements Serializable {
         }
 
         intervals.remove(intervalIndex);
+        sortIntervals();
     }
 
     /**

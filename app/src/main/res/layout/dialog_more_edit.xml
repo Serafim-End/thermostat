@@ -14,7 +14,8 @@
         
         <ImageView
             android:id="@+id/more_edit_clock_imageView"
-            android:layout_width="32dp"
+            android:paddingLeft="5dp"
+            android:layout_width="27dp"
             android:layout_height="32dp"
             android:background="@drawable/more_edit_clock_icon"/>
         

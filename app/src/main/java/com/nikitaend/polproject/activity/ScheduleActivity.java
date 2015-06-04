@@ -16,13 +16,16 @@ import android.widget.Toast;
 import com.nikitaend.polproject.R;
 import com.nikitaend.polproject.adapter.TemperatureAdapter;
 import com.nikitaend.polproject.adapter.holder.TemperatureHolder;
+import com.nikitaend.polproject.adapter.holder.TemperatureHolderComparator;
 import com.nikitaend.polproject.dialogs.EditDialog;
 import com.nikitaend.polproject.dialogs.EditDialogListVIew;
 import com.nikitaend.polproject.dialogs.SameDialog;
 import com.nikitaend.polproject.dialogs.TimePickerFragment;
+import com.nikitaend.polproject.time.TimerIntervalComparator;
 import com.nikitaend.polproject.view.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -129,6 +132,7 @@ public class ScheduleActivity extends Activity
             ScheduleActivity.temperatureHoldersHash.get(title).remove(temperatureHolder);
             return;
         }
+        Collections.sort(ScheduleActivity.temperatureHoldersHash.get(title), new TemperatureHolderComparator());
         adapterCard.notifyDataSetChanged();
     }
 
