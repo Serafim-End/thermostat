@@ -10,29 +10,31 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import com.nikitaend.polproject.R;
+import com.nikitaend.polproject.activity.MainActivity;
 import com.nikitaend.polproject.view.CircleView;
 import com.nikitaend.polproject.view.VerticalSeekBar;
 
 /**
- * 
  * it is editing on main screen with seek bar and clocks
  * implementation of interface - put info to MainActivity
+ *
  * @author Endaltsev Nikita
  *         start at 09.05.15.
  */
 public class EditMainDialog extends DialogFragment implements DialogInterface.OnClickListener {
-    
+
     private double targetTemperature;
-    
+
     public static EditMainDialog newInstance(double targetTemperature) {
         EditMainDialog editMainDialog = new EditMainDialog();
-        
+
         Bundle args = new Bundle();
         args.putDouble("targetTemperature", targetTemperature);
         editMainDialog.setArguments(args);
-        
+
         return editMainDialog;
     }
 
@@ -47,9 +49,8 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            this.mListener = (OnCompleteListener)activity;
-        }
-        catch (final ClassCastException e) {
+            this.mListener = (OnCompleteListener) activity;
+        } catch (final ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement OnCompleteListener");
         }
     }
@@ -62,7 +63,7 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
-
+        System.out.println("CLICK!");
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,10 +75,10 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
 //        final CheckBox permanently = (CheckBox) v.findViewById(R.id.permanently_checkBox);
         final CircleView editTarget = (CircleView) v.findViewById(R.id.edit_target_circleView);
         editTarget.setTitleText(targetTemperature + "");
-        
+
         final VerticalSeekBar seekBar = (VerticalSeekBar) v.findViewById(R.id.vertical_Seekbar);
         seekBar.setMax(250);
-        seekBar.setProgress((int)targetTemperature);
+        seekBar.setProgress((int) targetTemperature);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -112,17 +113,29 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
 //                targetTemperature = (seekBar.getProgress() / 10) + 5;
 //            }
 //        });
-        
+
         Button editBtn = (Button) v.findViewById(R.id.edit_main_dialog_button);
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 targetTemperature = (seekBar.getProgress() / 10.0) + 5;
+                try {
+                    MainActivity.thermostat.setManualTemperatureValue(targetTemperature);
+
+                    System.out.println(targetTemperature);
+                    MainActivity.thermostat.setManualMode(true);
+
+                } catch (Exception e) {
+
+                }
+
+
                 mListener.onComplete(targetTemperature, true);
                 dismiss();
             }
         });
-        
+
         Button cancelBtn = (Button) v.findViewById(R.id.cancel_main_dialog_button);
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,8 +148,8 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
     }
 
     public static double roundToDecimals(double d, int c) {
-        int temp = (int)((d * Math.pow(10, c)));
-        return (((double)temp)/Math.pow(10,c));
+        int temp = (int) ((d * Math.pow(10, c)));
+        return (((double) temp) / Math.pow(10, c));
     }
 
     public void onDismiss(DialogInterface dialog) {

@@ -329,15 +329,15 @@ public class Thermostat implements Runnable {
                 }
                 currentTemperature = manualTemperature;
                 targetTemperature = nightTemperature;
-                System.out.println("Manual Mode");
                 updateTemperature();
-                return;
+
             }
 
             for (DaySchedule daySchedule : schedule.getDaysSchedule()) {
                 for (TimeInterval interval : daySchedule.getIntervals()) {
 
                     if (interval.containsTime(currentTime)) {
+                        setManualMode(false);
                         currentTemperature = interval.getTemperature();
                         targetTemperature = nightTemperature;
                         updateTemperature();
@@ -346,8 +346,10 @@ public class Thermostat implements Runnable {
                     }
                 }
             }
-            currentTemperature = nightTemperature;
-            targetTemperature = getTargetTemperature();
+            if (!isManualMode) {
+                currentTemperature = nightTemperature;
+                targetTemperature = getTargetTemperature();
+            }
             updateTemperature();
         }
 
