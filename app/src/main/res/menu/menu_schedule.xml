@@ -2,9 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.nikitaend.polproject.activity.ScheduleActivity">
     
-    <!--<item android:id="@+id/the_same_for_all"-->
-        <!--android:title="The same schedule for all"-->
-        <!--android:icon="@drawable/same"-->
-        <!--android:orderInCategory="100" -->
-        <!--android:showAsAction="ifRoom" />-->
+    <item android:id="@+id/the_same_for_all"
+        android:title="The same schedule for all"
+        android:icon="@drawable/same"
+        android:orderInCategory="100" 
+        android:showAsAction="ifRoom" />
 </menu>

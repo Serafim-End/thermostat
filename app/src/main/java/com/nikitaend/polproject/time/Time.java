@@ -185,15 +185,6 @@ public class Time implements Serializable {
     }
 
     /**
-     * Проверяет, является ли текущее время полночью
-     * @return true, если время == полночи, false – иначе
-     */
-    public boolean isMidnight() {
-        return ((0 == this.hours) &&
-                (0 == this.minutes));
-    }
-
-    /**
      * Check whether the current time is later than the other time
      *
      * @param time the other time

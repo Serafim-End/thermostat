@@ -105,18 +105,6 @@ public class DaySchedule implements Serializable {
         return null;
     }
 
-    public TimeInterval getNextInterval(Time time) {
-        boolean flag = false;
-
-        for (TimeInterval currentInterval : intervals) {
-            if (currentInterval.getStartTime().isLaterThan(time)) {
-                return currentInterval;
-            }
-        }
-
-        return null;
-    }
-
     public TimeInterval getFirstInterval() {
         if (intervals.size() == 0) {
             return null;
