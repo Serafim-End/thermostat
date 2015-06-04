@@ -43,6 +43,8 @@ public class Thermostat implements Runnable {
      */
     private Temperature targetTemperature;
 
+    private Temperature manualTemperature;
+
     /**
      * Текущее время.
      * По условию, оно течёт быстрее стандартного в 300 раз
@@ -101,6 +103,9 @@ public class Thermostat implements Runnable {
         return instance;
     }
 
+    public boolean isVacationMode() {
+        return isVacationMode;
+    }
 
     public void addInterval(String startTimeString, String endTimeString) throws Exception {
 
@@ -178,6 +183,10 @@ public class Thermostat implements Runnable {
     public void setDayTemperatureValue(double value) throws Exception {
         this.dayTemperature = new Temperature(value);
         updateDayTimeTemperature();
+    }
+
+    public void setManualTemperatureValue(double value) throws Exception {
+        this.manualTemperature = new Temperature(value);
     }
 
     @Override
@@ -309,6 +318,18 @@ public class Thermostat implements Runnable {
                 currentTemperature = nightTemperature;
                 targetTemperature = nightTemperature;
                 updateTemperature();
+                return;
+            }
+
+            if (isManualMode) {
+                if (currentTime.isMidnight()) {
+                    setManualMode(false);
+                    return;
+                }
+                currentTemperature = manualTemperature;
+                targetTemperature = nightTemperature;
+                updateTemperature();
+                return;
             }
 
             for (DaySchedule daySchedule : schedule.getDaysSchedule()) {
@@ -316,20 +337,26 @@ public class Thermostat implements Runnable {
 
                     if (interval.containsTime(currentTime)) {
                         currentTemperature = interval.getTemperature();
-                        TimeInterval nextInterval = schedule.getNextInterval(interval);
-                        if (nextInterval != null) {
-                            targetTemperature = nextInterval.getTemperature();
-                        } else {
-                            targetTemperature = currentTemperature;
-                        }
+                        targetTemperature = nightTemperature;
+                        System.out.println("IN INTERVAL");
 
-                        System.out.println("bingo!");
-                        updateTemperature();
                     } else {
                         currentTemperature = nightTemperature;
-                        updateTemperature();
+                        targetTemperature = getTargetTemperature();
+                        System.out.println("NIGHT MODE");
+
                     }
                 }
+            }
+            updateTemperature();
+        }
+
+        private Temperature getTargetTemperature() {
+            TimeInterval nextInterval = schedule.getNextInterval(currentTime);
+            if (nextInterval != null) {
+                return nextInterval.getTemperature();
+            } else {
+                return nightTemperature;
             }
         }
     }

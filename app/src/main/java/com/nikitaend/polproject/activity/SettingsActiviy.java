@@ -26,8 +26,8 @@ public class SettingsActiviy extends Activity implements TimePickerFragment.OnCo
     
     public TemperatureChangedListener temperatureChangedListener;
     
-    public static double dayTemperature = 25.2;
-    public static double nightTemperature = 19.3;
+    public static double dayTemperature = 25.0;
+    public static double nightTemperature = 16.0;
     public static String dayTime = "08:30 AM";
     private String degree =  (char) 0x00B0 + "C";
     
@@ -39,15 +39,15 @@ public class SettingsActiviy extends Activity implements TimePickerFragment.OnCo
         
         setTitle("Day/Night Settings");
         
-        TextView daytimeTextView = (TextView) findViewById(R.id.settings_daytime);
-        daytimeTextView.setText(dayTime);
-        daytimeTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogFragment dialogFragment = TimePickerFragment.newInstance(true);
-                dialogFragment.show(getFragmentManager(), "timePickerDayTime");
-            }
-        });
+//        TextView daytimeTextView = (TextView) findViewById(R.id.settings_daytime);
+//        daytimeTextView.setText(dayTime);
+//        daytimeTextView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                DialogFragment dialogFragment = TimePickerFragment.newInstance(true);
+//                dialogFragment.show(getFragmentManager(), "timePickerDayTime");
+//            }
+//        });
 
         final double dayTimeTemperature = MainActivity.thermostat.getDayTemperatureValue();
         TextView dayTempTextView = (TextView) findViewById(R.id.settings_day_temperature);
@@ -76,8 +76,8 @@ public class SettingsActiviy extends Activity implements TimePickerFragment.OnCo
     @Override
     public void onComplete(boolean startEndTime, String timeHolder) {
         dayTime = timeHolder;
-        TextView dayTimeTextView = (TextView) findViewById(R.id.settings_daytime);
-        dayTimeTextView.setText(timeHolder);
+//        TextView dayTimeTextView = (TextView) findViewById(R.id.settings_daytime);
+//        dayTimeTextView.setText(timeHolder);
     }
 
     @Override

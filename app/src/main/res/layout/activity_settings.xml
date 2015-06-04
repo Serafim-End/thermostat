@@ -115,72 +115,72 @@
 
     </RelativeLayout>
 
-    <View
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/settings_facebook_page"
-        android:background="#CCC" />
-    
-    <TextView
-        android:paddingLeft="96dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Other Settings"/>
+    <!--<View-->
+        <!--android:layout_marginLeft="32dp"-->
+        <!--android:layout_marginRight="16dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:layout_below="@+id/settings_facebook_page"-->
+        <!--android:background="#CCC" />-->
+    <!-- -->
+    <!--<TextView-->
+        <!--android:paddingLeft="96dp"-->
+        <!--android:paddingTop="16dp"-->
+        <!--android:paddingBottom="16dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Other Settings"/>-->
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:paddingRight="16dp">
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:paddingLeft="16dp"-->
+        <!--android:paddingTop="8dp"-->
+        <!--android:paddingBottom="8dp"-->
+        <!--android:paddingRight="16dp">-->
 
-        <ImageView
-            android:id="@+id/time_change_imageView"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:background="@drawable/time_change_icon"/>
+        <!--<ImageView-->
+            <!--android:id="@+id/time_change_imageView"-->
+            <!--android:layout_width="64dp"-->
+            <!--android:layout_height="64dp"-->
+            <!--android:background="@drawable/time_change_icon"/>-->
 
-        <TextView
-            android:id="@+id/settings_dateTime_name"
-            android:paddingLeft="16dp"
-            android:paddingTop="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Start daytime"
-            android:textSize="18dp"
-            android:textColor="@color/black"
-            android:layout_toEndOf="@+id/time_change_imageView"
-            android:layout_toRightOf="@+id/time_change_imageView"/>
+        <!--<TextView-->
+            <!--android:id="@+id/settings_dateTime_name"-->
+            <!--android:paddingLeft="16dp"-->
+            <!--android:paddingTop="8dp"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Start daytime"-->
+            <!--android:textSize="18dp"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:layout_toEndOf="@+id/time_change_imageView"-->
+            <!--android:layout_toRightOf="@+id/time_change_imageView"/>-->
 
-        <TextView
-            android:paddingLeft="16dp"
-            android:paddingTop="8dp"
-            android:id="@+id/settings_dateTime_time"
-            android:layout_below="@+id/settings_dateTime_name"
-            android:layout_toEndOf="@+id/time_change_imageView"
-            android:layout_toRightOf="@+id/time_change_imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="12dp"
-            android:text="When you start the daytime"/>
+        <!--<TextView-->
+            <!--android:paddingLeft="16dp"-->
+            <!--android:paddingTop="8dp"-->
+            <!--android:id="@+id/settings_dateTime_time"-->
+            <!--android:layout_below="@+id/settings_dateTime_name"-->
+            <!--android:layout_toEndOf="@+id/time_change_imageView"-->
+            <!--android:layout_toRightOf="@+id/time_change_imageView"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="12dp"-->
+            <!--android:text="When you start the daytime"/>-->
 
-        <TextView
-            android:id="@+id/settings_daytime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="08:30 AM"
-            android:textColor="@color/black"
-            android:textSize="18dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"/>
+        <!--<TextView-->
+            <!--android:id="@+id/settings_daytime"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="08:30 AM"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:textSize="18dp"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:layout_alignParentRight="true"/>-->
 
-    </RelativeLayout>
+    <!--</RelativeLayout>-->
 
 </LinearLayout>

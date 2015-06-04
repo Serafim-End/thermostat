@@ -71,7 +71,7 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
         getDialog().setTitle("Temperature editing");
         final View v = inflater.inflate(R.layout.dialog_main_edit, null);
 
-        final CheckBox permanently = (CheckBox) v.findViewById(R.id.permanently_checkBox);
+//        final CheckBox permanently = (CheckBox) v.findViewById(R.id.permanently_checkBox);
         final CircleView editTarget = (CircleView) v.findViewById(R.id.edit_target_circleView);
         editTarget.setTitleText(targetTemperature + "");
         
@@ -118,7 +118,7 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
             @Override
             public void onClick(View v) {
                 targetTemperature = (seekBar.getProgress() / 10.0) + 5;
-                mListener.onComplete(targetTemperature, permanently.isEnabled());
+                mListener.onComplete(targetTemperature, true);
                 dismiss();
             }
         });
