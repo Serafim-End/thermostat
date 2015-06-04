@@ -317,6 +317,7 @@ public class Thermostat implements Runnable {
             if (isVacationMode) {
                 currentTemperature = nightTemperature;
                 targetTemperature = nightTemperature;
+                System.out.println("Vacation Mode");
                 updateTemperature();
                 return;
             }
@@ -328,6 +329,7 @@ public class Thermostat implements Runnable {
                 }
                 currentTemperature = manualTemperature;
                 targetTemperature = nightTemperature;
+                System.out.println("Manual Mode");
                 updateTemperature();
                 return;
             }
@@ -338,16 +340,14 @@ public class Thermostat implements Runnable {
                     if (interval.containsTime(currentTime)) {
                         currentTemperature = interval.getTemperature();
                         targetTemperature = nightTemperature;
-                        System.out.println("IN INTERVAL");
-
-                    } else {
-                        currentTemperature = nightTemperature;
-                        targetTemperature = getTargetTemperature();
-                        System.out.println("NIGHT MODE");
+                        updateTemperature();
+                        return;
 
                     }
                 }
             }
+            currentTemperature = nightTemperature;
+            targetTemperature = getTargetTemperature();
             updateTemperature();
         }
 
