@@ -115,26 +115,21 @@ public class MainActivity extends Activity
         });
 
 
-        vocation = MainActivity.thermostat.isVacationMode;
         Switch permanent = (Switch) findViewById(R.id.radioButton);
         permanent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (thermostat != null) {
-                    if (!MainActivity.thermostat.isVacationMode) {
+                    if (!vocation) {
                         thermostat.setVacationMode(true);
+                        vocation = true;
                     } else {
                         thermostat.setVacationMode(false);
+                        vocation = false;
                     }
                 }
             }
         });
-        
-        if (thermostat.isVacationMode == true) {
-            permanent.setChecked(true);
-        } else {
-            permanent.setChecked(false);
-        }
         
         fabButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,10 +207,7 @@ public class MainActivity extends Activity
     public void onComplete(double target, Boolean setPermanently) {
         CircleView targetCircle = (CircleView) findViewById(R.id.main_screen_target);
         targetTemperature = target;
-
-        Switch permanent = (Switch) findViewById(R.id.radioButton);
         targetCircle.setTitleText(targetTemperature + "");
-        permanent.setChecked(setPermanently);
     }
 
 
