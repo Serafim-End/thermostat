@@ -63,7 +63,7 @@ public class Thermostat implements Runnable {
 
     private boolean isManualMode = false;
 
-    private final static int MINUTES_PER_ONE = 5;
+    private final static int MINUTES_PER_ONE = 1;
 
     private Thermostat(double nightTemperature, double dayTemperature) throws Exception {
         schedule = new WeekSchedule();
@@ -217,7 +217,7 @@ public class Thermostat implements Runnable {
     @Override
     public void run() {
         Timer timer = new Timer();
-        timer.schedule(new TemperatureWatcher(), 0, 1000);
+        timer.schedule(new TemperatureWatcher(), 0, 200);
     }
 
     public String getCurrTime() {
@@ -290,7 +290,7 @@ public class Thermostat implements Runnable {
             String[] time = fulltime[1].split(":");
             int hours = Integer.parseInt(time[0]);
             int minutes = Integer.parseInt(time[1]);
-            minutes -= (minutes % 5);
+//            minutes -= (minutes % 5);
             try {
                 currentTime.setHours(hours);
                 currentTime.setMinutes(minutes);
@@ -301,7 +301,6 @@ public class Thermostat implements Runnable {
         }
 
         private void observeTemperature() {
-
             if (isVacationMode) {
                 currentTemperature = nightTemperature;
                 targetTemperature = nightTemperature;
