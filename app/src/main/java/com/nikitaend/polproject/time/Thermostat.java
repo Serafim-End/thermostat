@@ -223,8 +223,7 @@ public class Thermostat implements Runnable {
     public String getCurrTime() {
         SimpleDateFormat timeFormat = new SimpleDateFormat("E HH:mm", Locale.US);
         timeFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-        String time = timeFormat.format(currDate.getTime());
-        return time;
+        return timeFormat.format(currDate.getTime());
     }
 
     private GregorianCalendar currDate = new GregorianCalendar();
@@ -249,7 +248,7 @@ public class Thermostat implements Runnable {
 
         schedule.addInterval(Weekday.MONDAY, interval);
         schedule.addInterval(Weekday.MONDAY, interval2);
-        schedule.addInterval(Weekday.MONDAY, interval3);
+        schedule.addInterval(Weekday.TUESDAY, interval3);
         
     }
     
@@ -279,7 +278,7 @@ public class Thermostat implements Runnable {
             updateTimer();
             updateCurrentTime();
             // System.out.println(currentTime);
-            System.out.println(currentTemperature.getValue());
+//            System.out.println(currentTemperature.getValue());
         }
 
         private void updateTimer() {

@@ -119,19 +119,21 @@ public class TimePickerFragment extends DialogFragment
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         String timeToHolder = "";
-        minute = minute - (minute % 5);
+//        minute = minute - (minute % 5);
 //                + (int)(Math.abs((double)(minute % TIME_PICKER_INTERVAL)/TIME_PICKER_INTERVAL) * TIME_PICKER_INTERVAL);
         if (minute == 60) {
             minute = 0;
             hourOfDay += 1;
         }
-        
-        if (hourOfDay > 12) {
-            timeToHolder = (hourOfDay - 12) + ":" + minute + " PM";
-        } else {
-            timeToHolder = hourOfDay + ":" + minute + " AM";
-        }
 
+
+//        if (hourOfDay > 12) {
+//            timeToHolder = (hourOfDay - 12) + ":" + minute + " PM";
+//        } else {
+//            timeToHolder = hourOfDay + ":" + minute + " AM";
+//        }
+        timeToHolder = hourOfDay + ":" + minute;
+        System.out.println(timeToHolder);
         if (startEndTime) {
             startTime = timeToHolder;
         } else { endTime = timeToHolder; }

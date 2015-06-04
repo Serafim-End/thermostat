@@ -221,7 +221,7 @@ public class MainActivity extends Activity
             }
         });
 
-        System.out.println(currentTime);
+        //System.out.println(currentTime);
     }
 
     @Override
@@ -237,7 +237,7 @@ public class MainActivity extends Activity
             }
         });
 
-        System.out.println(targetTemperature + " cur: " + currentTemperature);
+       // System.out.println(targetTemperature + " cur: " + currentTemperature);
 
     }
 

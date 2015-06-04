@@ -47,7 +47,7 @@ public class TemperatureAdapter extends ArrayAdapter<TemperatureHolder> {
         
         TemperatureHolder data = getItem(position);
         ((TextView) convertView.findViewById(R.id.time_textView))
-                .setText(data.startTime + " - " + data.endTime);
+                .setText(data.startTime + " – " + data.endTime);
         
         if (data.dayNight == "PM") {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -57,7 +57,7 @@ public class TemperatureAdapter extends ArrayAdapter<TemperatureHolder> {
         }
         
         ((TextView) convertView.findViewById(R.id.card_temperature_textView))
-                .setText("Day Mode " + SettingsActiviy.dayTemperature);
+                .setText("Day Mode " + SettingsActiviy.dayTemperature + " degrees");
         
         
         convertView.findViewById(R.id.more_button).setOnClickListener(new View.OnClickListener() {
