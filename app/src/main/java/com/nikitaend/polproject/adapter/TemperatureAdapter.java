@@ -30,7 +30,8 @@ public class TemperatureAdapter extends ArrayAdapter<TemperatureHolder> {
     public DialogFragment dialogFragment;
     String title;
     Context mContext;
-    
+    private String degree =  (char) 0x00B0 + "C";
+
     public TemperatureAdapter(Context context, int resource,
                               ArrayList<TemperatureHolder> temperatureHolders, String title) {
         super(context, R.layout.card_schedule, temperatureHolders);
@@ -57,7 +58,7 @@ public class TemperatureAdapter extends ArrayAdapter<TemperatureHolder> {
         }
         
         ((TextView) convertView.findViewById(R.id.card_temperature_textView))
-                .setText("Day Mode " + SettingsActiviy.dayTemperature + " degrees");
+                .setText("Day Mode " + SettingsActiviy.dayTemperature + degree);
         
         
         convertView.findViewById(R.id.more_button).setOnClickListener(new View.OnClickListener() {

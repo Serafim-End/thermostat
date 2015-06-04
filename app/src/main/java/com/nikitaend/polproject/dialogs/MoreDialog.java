@@ -50,50 +50,51 @@ public class MoreDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.dialog_more, null);
-        
-        LinearLayout enabledSwitch = (LinearLayout) v.findViewById(R.id.enabled_dialog_layout);
-        enabledSwitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // something if on and else
-            }
-        });
 
-        final Switch isEnabledSwitch = (Switch) v.findViewById(R.id.enabled_element);
-        if (isEnabledSwitch.isChecked()) {
-            isEnabled = true;
-        }
+        isEnabled = true;
+//        LinearLayout enabledSwitch = (LinearLayout) v.findViewById(R.id.enabled_dialog_layout);
+//        enabledSwitch.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // something if on and else
+//            }
+//        });
+//
+//        final Switch isEnabledSwitch = (Switch) v.findViewById(R.id.enabled_element);
+//        if (isEnabledSwitch.isChecked()) {
+//            isEnabled = true;
+//        }
+//
+//        isEnabledSwitch.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                if (isEnabledSwitch.isChecked()) {
+//                    isEnabled = true;
+//                } else { isEnabled = false; }
+//
+//                TemperatureHolder holder =
+//                        ScheduleActivity.temperatureHoldersHash.get(title).get(indexOfElement);
+//                holder.isEnabled = isEnabled;
+//                ScheduleActivity.temperatureHoldersHash.get(title).set(indexOfElement, holder);
+//            }
+//        });
         
-        isEnabledSwitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                
-                if (isEnabledSwitch.isChecked()) {
-                    isEnabled = true;
-                } else { isEnabled = false; }
-
-                TemperatureHolder holder =
-                        ScheduleActivity.temperatureHoldersHash.get(title).get(indexOfElement);
-                holder.isEnabled = isEnabled;
-                ScheduleActivity.temperatureHoldersHash.get(title).set(indexOfElement, holder);
-            }
-        });
-        
-        LinearLayout editLayout = (LinearLayout) v.findViewById(R.id.edit_dialog_layout);
-        editLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TemperatureHolder holder =
-                        ScheduleActivity.temperatureHoldersHash.get(title).get(indexOfElement);
-                
-                DialogFragment editDialog =
-                        EditDialogListVIew.newInstance(indexOfElement,
-                                holder.startTime, holder.endTime, holder.dayNight, title);
-                
-                editDialog.show(getFragmentManager(), "dialogEditListView");
-                dismiss();
-            }
-        });
+//        LinearLayout editLayout = (LinearLayout) v.findViewById(R.id.edit_dialog_layout);
+//        editLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                TemperatureHolder holder =
+//                        ScheduleActivity.temperatureHoldersHash.get(title).get(indexOfElement);
+//
+//                DialogFragment editDialog =
+//                        EditDialogListVIew.newInstance(indexOfElement,
+//                                holder.startTime, holder.endTime, holder.dayNight, title);
+//
+//                editDialog.show(getFragmentManager(), "dialogEditListView");
+//                dismiss();
+//            }
+//        });
         
         LinearLayout removeLayout = (LinearLayout) v.findViewById(R.id.remove_dialog_layout);
         removeLayout.setOnClickListener(new View.OnClickListener() {
