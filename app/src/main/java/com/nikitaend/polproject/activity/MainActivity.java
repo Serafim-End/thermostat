@@ -105,6 +105,7 @@ public class MainActivity extends Activity
                 (com.melnykov.fab.FloatingActionButton) findViewById(R.id.fab_main_screen);
         fabButton.show();
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 //        targetCircle.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -118,6 +119,9 @@ public class MainActivity extends Activity
 =======
 //
 >>>>>>> origin/back-branch
+=======
+//
+>>>>>>> origin/back-branch
         final CircleView currentCircle = (CircleView) findViewById(R.id.main_screen_current);
         currentCircle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,6 +132,10 @@ public class MainActivity extends Activity
         });
         
        
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/back-branch
 
         vocation = MainActivity.thermostat.isVacationMode;
         Switch permanent = (Switch) findViewById(R.id.radioButton);

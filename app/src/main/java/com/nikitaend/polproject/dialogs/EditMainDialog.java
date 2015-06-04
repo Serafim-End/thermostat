@@ -98,11 +98,19 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
         final VerticalSeekBar seekBar = (VerticalSeekBar) v.findViewById(R.id.vertical_Seekbar);
         seekBar.setMax(250);
 <<<<<<< HEAD
+<<<<<<< HEAD
         seekBar.setProgress((int) targetTemperature * 10);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
+=======
+        seekBar.setProgress((int) targetTemperature*10);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                hasChanged = true;
+>>>>>>> origin/back-branch
 =======
         seekBar.setProgress((int) targetTemperature*10);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -175,7 +183,11 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
                 mListener.onComplete(targetTemperature, false);
+=======
+                mListener.onComplete(targetTemperature, MainActivity.thermostat.isVacationMode);
+>>>>>>> origin/back-branch
 =======
                 mListener.onComplete(targetTemperature, MainActivity.thermostat.isVacationMode);
 >>>>>>> origin/back-branch
