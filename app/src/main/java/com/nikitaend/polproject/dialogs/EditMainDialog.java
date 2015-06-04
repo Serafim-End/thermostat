@@ -26,6 +26,7 @@ import com.nikitaend.polproject.view.VerticalSeekBar;
 public class EditMainDialog extends DialogFragment implements DialogInterface.OnClickListener {
 
     private double targetTemperature;
+    private boolean hasChanged = false;
 
     public static EditMainDialog newInstance(double targetTemperature) {
         EditMainDialog editMainDialog = new EditMainDialog();
@@ -71,23 +72,23 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
         getDialog().setTitle("Temperature editing");
         final View v = inflater.inflate(R.layout.dialog_main_edit, null);
 
-        final CheckBox permanently = (CheckBox) v.findViewById(R.id.permanently_checkBox);
-        permanently.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (MainActivity.thermostat.isVacationMode) {
-                    MainActivity.thermostat.setVacationMode(false);
-                } else {
-                    MainActivity.thermostat.setVacationMode(true);
-                }
-            }
-        });
-
-        if (MainActivity.thermostat.isVacationMode == true) {
-            permanently.setChecked(true);
-        } else {
-            permanently.setChecked(false);
-        }
+//        final CheckBox permanently = (CheckBox) v.findViewById(R.id.permanently_checkBox);
+//        permanently.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (MainActivity.thermostat.isVacationMode) {
+//                    MainActivity.thermostat.setVacationMode(false);
+//                } else {
+//                    MainActivity.thermostat.setVacationMode(true);
+//                }
+//            }
+//        });
+//
+//        if (MainActivity.thermostat.isVacationMode == true) {
+//            permanently.setChecked(true);
+//        } else {
+//            permanently.setChecked(false);
+//        }
 
 //        final CheckBox permanently = (CheckBox) v.findViewById(R.id.permanently_checkBox);
         final CircleView editTarget = (CircleView) v.findViewById(R.id.edit_target_circleView);
@@ -96,11 +97,31 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
 
         final VerticalSeekBar seekBar = (VerticalSeekBar) v.findViewById(R.id.vertical_Seekbar);
         seekBar.setMax(250);
-        seekBar.setProgress((int) targetTemperature);
+<<<<<<< HEAD
+        seekBar.setProgress((int) targetTemperature * 10);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+=======
+        seekBar.setProgress((int) targetTemperature*10);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                hasChanged = true;
+>>>>>>> origin/back-branch
                 targetTemperature = (progress / 10.0) + 5;
+//                try {
+//                    MainActivity.thermostat.setManualTemperatureValue(targetTemperature);
+//
+//                    System.out.println(targetTemperature);
+//                    MainActivity.thermostat.setManualMode(true);
+//
+//                } catch (Exception e) {
+//
+//                }
+
+
                 editTarget.setTitleText(targetTemperature + "");
             }
 
@@ -136,8 +157,12 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                targetTemperature = (seekBar.getProgress() / 10.0) + 5;
+                double temp = (seekBar.getProgress() / 10.0);
+                if (hasChanged) {
+                    targetTemperature = (seekBar.getProgress() / 10.0) + 5;
+                } else {
+                    targetTemperature = temp;
+                }
                 try {
                     MainActivity.thermostat.setManualTemperatureValue(targetTemperature);
 
@@ -149,7 +174,11 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
                 }
 
 
-                mListener.onComplete(targetTemperature, true);
+<<<<<<< HEAD
+                mListener.onComplete(targetTemperature, false);
+=======
+                mListener.onComplete(targetTemperature, MainActivity.thermostat.isVacationMode);
+>>>>>>> origin/back-branch
                 dismiss();
             }
         });
