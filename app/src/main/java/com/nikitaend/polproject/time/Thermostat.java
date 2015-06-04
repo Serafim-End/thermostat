@@ -317,7 +317,6 @@ public class Thermostat implements Runnable {
             if (isVacationMode) {
                 currentTemperature = nightTemperature;
                 targetTemperature = nightTemperature;
-                System.out.println("Vacation Mode");
                 updateTemperature();
                 return;
             }

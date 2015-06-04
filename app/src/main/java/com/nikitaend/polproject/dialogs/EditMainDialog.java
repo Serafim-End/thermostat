@@ -71,23 +71,23 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
         getDialog().setTitle("Temperature editing");
         final View v = inflater.inflate(R.layout.dialog_main_edit, null);
 
-        final CheckBox permanently = (CheckBox) v.findViewById(R.id.permanently_checkBox);
-        permanently.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (MainActivity.thermostat.isVacationMode) {
-                    MainActivity.thermostat.setVacationMode(false);
-                } else {
-                    MainActivity.thermostat.setVacationMode(true);
-                }
-            }
-        });
-
-        if (MainActivity.thermostat.isVacationMode == true) {
-            permanently.setChecked(true);
-        } else {
-            permanently.setChecked(false);
-        }
+//        final CheckBox permanently = (CheckBox) v.findViewById(R.id.permanently_checkBox);
+//        permanently.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (MainActivity.thermostat.isVacationMode) {
+//                    MainActivity.thermostat.setVacationMode(false);
+//                } else {
+//                    MainActivity.thermostat.setVacationMode(true);
+//                }
+//            }
+//        });
+//
+//        if (MainActivity.thermostat.isVacationMode == true) {
+//            permanently.setChecked(true);
+//        } else {
+//            permanently.setChecked(false);
+//        }
 
 //        final CheckBox permanently = (CheckBox) v.findViewById(R.id.permanently_checkBox);
         final CircleView editTarget = (CircleView) v.findViewById(R.id.edit_target_circleView);
@@ -96,11 +96,23 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
 
         final VerticalSeekBar seekBar = (VerticalSeekBar) v.findViewById(R.id.vertical_Seekbar);
         seekBar.setMax(250);
-        seekBar.setProgress((int) targetTemperature);
+        seekBar.setProgress((int) targetTemperature * 10);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
                 targetTemperature = (progress / 10.0) + 5;
+//                try {
+//                    MainActivity.thermostat.setManualTemperatureValue(targetTemperature);
+//
+//                    System.out.println(targetTemperature);
+//                    MainActivity.thermostat.setManualMode(true);
+//
+//                } catch (Exception e) {
+//
+//                }
+
+
                 editTarget.setTitleText(targetTemperature + "");
             }
 
@@ -149,7 +161,7 @@ public class EditMainDialog extends DialogFragment implements DialogInterface.On
                 }
 
 
-                mListener.onComplete(targetTemperature, true);
+                mListener.onComplete(targetTemperature, false);
                 dismiss();
             }
         });

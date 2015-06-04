@@ -39,18 +39,17 @@ import java.util.HashMap;
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
         EditMainDialog.OnCompleteListener, CurrentTimeListener, TemperatureListener {
-    
+
     double targetTemperature = 25;
 
     final Context mContext = this;
-    
 
 
     // time
 //    TimeZone timeZone = new SimpleTimeZone(3, TimeZone.getAvailableIDs(3)[0]);
 //    Calendar calendar = Calendar.getInstance(timeZone, Locale.getDefault());
 
-    
+
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -65,19 +64,19 @@ public class MainActivity extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 //        makeSomeGoal();
-        
+
         if (ScheduleActivity.temperatureHoldersHash == null) {
             ScheduleActivity.temperatureHoldersHash = new HashMap<>();
             for (String day : ScheduleDaysActivity.weekDays) {
                 ScheduleActivity.temperatureHoldersHash.put(day, new ArrayList<TemperatureHolder>());
             }
         }
-        
+
         setContentView(R.layout.activity_main);
-        
+
         try {
             thermostat =
                     Thermostat.getInstance(SettingsActiviy.nightTemperature, SettingsActiviy.dayTemperature);
@@ -91,7 +90,7 @@ public class MainActivity extends Activity
 
         final CircleView targetCircle = (CircleView) findViewById(R.id.main_screen_target);
         targetTemperature = Double.parseDouble(targetCircle.getTitleText());
-        
+
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -106,14 +105,23 @@ public class MainActivity extends Activity
                 (com.melnykov.fab.FloatingActionButton) findViewById(R.id.fab_main_screen);
         fabButton.show();
 
-        targetCircle.setOnClickListener(new View.OnClickListener() {
+//        targetCircle.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                DialogFragment dialogFragment = EditMainDialog.newInstance(targetTemperature);
+//                dialogFragment.show(getFragmentManager(), "editMainDialog");
+//            }
+//        });
+
+
+        final CircleView currentCircle = (CircleView) findViewById(R.id.main_screen_current);
+        currentCircle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment dialogFragment = EditMainDialog.newInstance(targetTemperature);
                 dialogFragment.show(getFragmentManager(), "editMainDialog");
             }
         });
-
 
         vocation = MainActivity.thermostat.isVacationMode;
         Switch permanent = (Switch) findViewById(R.id.radioButton);
@@ -129,13 +137,13 @@ public class MainActivity extends Activity
                 }
             }
         });
-        
+
         if (thermostat.isVacationMode == true) {
             permanent.setChecked(true);
         } else {
             permanent.setChecked(false);
         }
-        
+
         fabButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,7 +151,7 @@ public class MainActivity extends Activity
                 dialogFragment.show(getFragmentManager(), "editMainDialog");
             }
         });
-        
+
         ((LinearLayout) findViewById(R.id.calendarLayout)).setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -187,7 +195,7 @@ public class MainActivity extends Activity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-            getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
 //        }
         return true;
     }
@@ -219,10 +227,9 @@ public class MainActivity extends Activity
     }
 
 
-
     @Override
     public void update(final String currentTime) {
-        
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -242,19 +249,19 @@ public class MainActivity extends Activity
             public void run() {
                 CircleView target = (CircleView) findViewById(R.id.main_screen_target);
                 target.setTitleText(targetTemperature + "");
-                
+
                 CircleView current = (CircleView) findViewById(R.id.main_screen_current);
                 current.setTitleText(currentTemperature + "");
             }
         });
 
-       // System.out.println(targetTemperature + " cur: " + currentTemperature);
+        // System.out.println(targetTemperature + " cur: " + currentTemperature);
 
     }
 
     // end of methods that make time higher
-    
-    
+
+
     /**
      * A placeholder fragment containing a simple view.
      */
