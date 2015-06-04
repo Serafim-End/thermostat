@@ -328,7 +328,7 @@ public class Thermostat implements Runnable {
                     return;
                 }
                 currentTemperature = manualTemperature;
-                targetTemperature = nightTemperature;
+                targetTemperature = getTargetTemperature();
                 updateTemperature();
 
             }
